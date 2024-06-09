@@ -67,9 +67,6 @@ function QueryData(queryString, preserveDuplicates){
 				this[key] = value;
 				
 			}
-			
 		}
-		
 	}
-	
 }

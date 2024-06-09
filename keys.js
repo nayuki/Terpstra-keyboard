@@ -131,10 +131,6 @@ codeToCoords_dell={
 	219 : new Point(5, -1), // [
 	//221 : new Point(6, -1), // ]
 	13 : new Point(7, -1), // enter
-	
-	
-	
-	
 };
 
 (function dell(){
@@ -165,8 +161,6 @@ codeToCoords_dell={
 		codeToCoords[code] = new Point(-6+i, 1);
 	});
 })();
-
-
 
 
 //check to see if we have params
@@ -235,16 +229,13 @@ function hideRevealColors() {
 		document.getElementById("fundamental_colorLabel").style.display = 'block';
 		document.getElementById("note_colors").style.display = 'none';
 		document.getElementById("note_colorsLabel").style.display = 'none';
-		
 	} else {
 		document.getElementById("fundamental_color").style.display = 'none';
 		document.getElementById("fundamental_colorLabel").style.display = 'none';
 		document.getElementById("note_colors").style.display = 'block';
 		document.getElementById("note_colorsLabel").style.display = 'block';
 	}
-	
 	changeURL();
-	
 }
 
 function hideRevealEnum() {
@@ -328,7 +319,6 @@ function changeURL() {
 	});
 	
 	document.title = description;
-	
 	window.history.replaceState({}, '', url);
 }
 
@@ -365,14 +355,12 @@ function parseScaleColors() {
 
 function calculateRotationMatrix(rotation, center) {
 	var m = [];
-	
 	m[0] = Math.cos(rotation);
 	m[1] = Math.sin(rotation);
 	m[2] = -m[1];
 	m[3] = m[0];
 	m[4] = center.x - m[0] * center.x - m[2] * center.y;
 	m[5] = center.y - m[1] * center.x - m[3] * center.y;
-	
 	return m;
 }
 
@@ -441,7 +429,6 @@ function back() {
 }
 
 function goKeyboard() {
-	
 	changeURL();
 	
 	// Set up screen
@@ -552,7 +539,6 @@ function goKeyboard() {
 			fileName: "WMRIByzantineST",
 			fade: 0.1
 		}
-		
 	];
 	
 	//console.log(instruments[instrumentOption]);
@@ -716,7 +702,6 @@ function goKeyboard() {
 function onKeyDown(e) {
 	e.preventDefault();//
 	
-	
 	if (e.keyCode == 32) { // Spacebar
 		settings.sustain = true;
 	} else if (!settings.isMouseDown && !settings.isTouchDown
@@ -786,7 +771,6 @@ function onKeyUp(e) {
 			}
 		}
 	}
-	
 }
 
 function mouseActive(e) {
@@ -900,7 +884,6 @@ function hexCoordsToScreen(hex) { /* Point */
 }
 
 function drawHex(p, c) { /* Point, color */
-	
 	var hexCenter = hexCoordsToScreen(p);
 	
 	// Calculate hex vertices
@@ -1046,7 +1029,6 @@ function centsToColor(cents, pressed) {
 		}
 		
 		return rgb(returnColor[0], returnColor[1], returnColor[2]);
-		
 	}
 	
 	var fcolor = hex2rgb("#" + settings.fundamental_color);
@@ -1291,7 +1273,6 @@ function onLoadError(e) {
 }
 
 
-
 function tempAlert(msg, duration) {
 	var el = document.createElement("div");
 	el.setAttribute("style", "position:absolute;top:40%;left:20%;background-color:white; font-size:25px;");
@@ -1455,9 +1436,7 @@ function nameToHex(colour) {
 		return "#" + colour;
 	}
 	
-	
 	return "#EDEDE4"; //default button color!
-	
 }
 
 function hex2rgb(col) {
@@ -1555,6 +1534,5 @@ if(init_keyboard_onload)
 {
 	//hide landing page
 	document.getElementById('landing-page').style.display ='none';
-	
 	setTimeout(function(){ goKeyboard(); }, 1500);
 }
