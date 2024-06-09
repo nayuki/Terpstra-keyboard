@@ -306,7 +306,7 @@ function changeURL() {
 	var description = "Terpstra Keyboard WebApp";
 	
 	scaleLines.forEach(function(line) {
-		if (!(foundDescription) && !(line.match(/^\!/)) && line.match(/[a-zA-Z]+/)) {
+		if (!foundDescription && !line.match(/^\!/) && line.match(/[a-zA-Z]+/)) {
 			foundDescription = true;
 			description = line;
 		}
@@ -322,7 +322,7 @@ function parseScale() {
 	settings.scale = [];
 	var scaleLines = document.getElementById("scale").value.split("\n");
 	scaleLines.forEach(function(line) {
-		if (line.match(/^[1234567890.\s/]+$/) && !(line.match(/^\s+$/))) {
+		if (line.match(/^[1234567890.\s/]+$/) && !line.match(/^\s+$/)) {
 			if (line.match(/\//)) {
 				// ratio
 				var nd = line.split("/");
@@ -731,7 +731,7 @@ function mouseActive(e) {
 		settings.activeHexObjects[0].noteOn(cents);
 		drawHex(coords, centsToColor(cents, true));
 	} else {
-		if (!(coords.equals(settings.activeHexObjects[0].coords))) {
+		if (!coords.equals(settings.activeHexObjects[0].coords)) {
 			settings.activeHexObjects[0].noteOff();
 			drawHex(settings.activeHexObjects[0].coords,
 				centsToColor(hexCoordsToCents(settings.activeHexObjects[0].coords, false)));
@@ -788,7 +788,7 @@ function handleTouch(e) {
 				found = true;
 			}
 		}
-		if (!(found)) {
+		if (!found) {
 			var newHex = new ActiveHex(coords);
 			var cents = hexCoordsToCents(coords);
 			newHex.noteOn(cents);
@@ -1140,7 +1140,7 @@ ActiveHex.prototype.noteOn = function(cents) {
 		}
 	}
 	
-	if (!(settings.sampleBuffer[sampleNumber])) // Sample not yet loaded
+	if (!settings.sampleBuffer[sampleNumber]) // Sample not yet loaded
 		return;
 	
 	source.buffer = settings.sampleBuffer[sampleNumber]; // tell the source which sound to play
