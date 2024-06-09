@@ -1,22 +1,22 @@
-var volume=1.4;
+var volume = 1.4;
 window.addEventListener('keydown',e=>{
 	e.preventDefault();
 	if (e.code==='ArrowDown') {//ctrl
 		if (volume>=0.1) {
-			volume=+(volume-0.1).toFixed(2);
+			volume = +(volume-0.1).toFixed(2);
 			console.log(volume);
 		}
 	} else if (e.code==='ArrowUp') {
 		e.preventDefault();
 		if (volume<=2.9) {
-			volume=+(volume+0.1).toFixed(2);
+			volume = +(volume+0.1).toFixed(2);
 			console.log(volume);
 		}
 	}
 });
 
 
-keyCodeToCoords_mac={
+keyCodeToCoords_mac = {
 	27 : new Point(-5, -3), // esc
 	112 : new Point(-4, -3), // f1
 	113 : new Point(-3, -3), // f2
@@ -89,7 +89,7 @@ keyCodeToCoords_mac={
 	//16 : new Point(5, 1), // shift
 };
 
-codeToCoords_mac={
+codeToCoords_mac = {
 	'Backslash' : new Point(6, 0), // \
 	'ShiftRight' : new Point(5, 1),
 	'IntlBackslash' : new Point(-6, 1),
@@ -97,10 +97,10 @@ codeToCoords_mac={
 	'Backquote' : new Point(-6, -2),
 	'BracketRight' : new Point(6, -1), // ]
 }
-codeToCoords={};
-keyCodeToCoords={};
+codeToCoords = {};
+keyCodeToCoords = {};
 
-codeToCoords_dell={
+codeToCoords_dell = {
 	'Backquote' : new Point(-6, -2), // `
 	'Digit1' : new Point(-5, -2), // 1
 	'Digit2' : new Point(-4, -2), // 2
@@ -133,13 +133,13 @@ codeToCoords_dell={
 };
 
 (function dell() {
-	var lines=[];
-	lines[0]=["Escape", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8"];
-	lines[5]=["F9", "F10", "F11", "F12","принтскрин", "Insert", "Delete"];
-	lines[1]=["Backquote", "Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6", "Digit7", "Digit8", "Digit9", "Digit0", "Minus", "Equal", "Backspace"];
-	lines[2]= ["Tab", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "BracketLeft", "BracketRight", "Backslash"];
-	lines[3]=["CapsLock", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "Quote", "Enter"];
-	lines[4]=["ShiftLeft", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period", "Slash", "ShiftRight"];
+	var lines = [];
+	lines[0] = ["Escape", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8"];
+	lines[5] = ["F9", "F10", "F11", "F12","принтскрин", "Insert", "Delete"];
+	lines[1] = ["Backquote", "Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6", "Digit7", "Digit8", "Digit9", "Digit0", "Minus", "Equal", "Backspace"];
+	lines[2] = ["Tab", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "BracketLeft", "BracketRight", "Backslash"];
+	lines[3] = ["CapsLock", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "Quote", "Enter"];
+	lines[4] = ["ShiftLeft", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period", "Slash", "ShiftRight"];
 	
 	lines[0].forEach((code,i)=>
 		codeToCoords[code] = new Point(-6+i, -3)
@@ -1511,6 +1511,6 @@ function noPreset() {
 //initialize keyboard on load
 if (init_keyboard_onload) {
 	//hide landing page
-	document.getElementById('landing-page').style.display ='none';
+	document.getElementById('landing-page').style.display = 'none';
 	setTimeout(function() { goKeyboard(); }, 1500);
 }
