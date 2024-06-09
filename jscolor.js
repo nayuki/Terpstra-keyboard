@@ -1023,8 +1023,8 @@ var jsc = {
 		this.shadowColor = 'rgba(0,0,0,0.2)'; // CSS color
 		this.pointerColor = '#4C4C4C'; // px
 		this.pointerBorderColor = '#FFFFFF'; // px
-        this.pointerBorderWidth = 1; // px
-        this.pointerThickness = 2; // px
+		this.pointerBorderWidth = 1; // px
+		this.pointerThickness = 2; // px
 		this.zIndex = 1000;
 		this.container = null; // where to append the color picker (BODY element by default)
 
