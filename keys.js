@@ -1,25 +1,197 @@
-//check\set preset
+var volume=1.4;
+window.addEventListener('keydown',e=>{
+  e.preventDefault();
+  if (e.code==='ArrowDown'){//ctrl
+    if (volume>=0.1){
+      volume=+(volume-0.1).toFixed(2);
+      console.log(volume);
+    }
+  }
+  else if (e.code==='ArrowUp'){
+    e.preventDefault();
+    if (volume<=2.9){
+      volume=+(volume+0.1).toFixed(2);
+      console.log(volume);
+    }
+  }
+});
+
+
+keyCodeToCoords_mac={
+  27 : new Point(-5, -3), // esc
+  112 : new Point(-4, -3), // f1
+  113 : new Point(-3, -3), // f2
+  114 : new Point(-2, -3), // f3
+  115 : new Point(-1, -3), // f4
+  116 : new Point(0, -3), // f5
+  117 : new Point(1, -3), // f6
+  118 : new Point(2, -3), // f7
+  119 : new Point(3, -3), // f8
+  120 : new Point(4, -3), // f9
+  121 : new Point(5, -3), // f10
+  122 : new Point(6, -3), // f11
+  123 : new Point(7, -3), // f12
+  
+
+  //192 : new Point(-6, -2), // `
+  49 : new Point(-5, -2), // 1
+  50 : new Point(-4, -2), // 2
+  51 : new Point(-3, -2), // 3
+  52 : new Point(-2, -2), // 4
+  53 : new Point(-1, -2), // 5
+  54 : new Point(0, -2), // 6
+  55 : new Point(1, -2), // 7
+  56 : new Point(2, -2), // 8
+  57 : new Point(3, -2), // 9
+  48 : new Point(4, -2), // 0
+  189 : new Point(5, -2), // -
+  187 : new Point(6, -2), // =
+  8 : new Point(7, -2), // backspace
+
+  9 : new Point(-6, -1), // tab
+  81 : new Point(-5, -1), // Q
+  87 : new Point(-4, -1), // W
+  69 : new Point(-3, -1), // E
+  82 : new Point(-2, -1), // R
+  84 : new Point(-1, -1), // T
+  89 : new Point(0, -1), // Y
+  85 : new Point(1, -1), // U
+  73 : new Point(2, -1), // I
+  79 : new Point(3, -1), // O
+  80 : new Point(4, -1), // P
+  219 : new Point(5, -1), // [
+  //221 : new Point(6, -1), // ]
+  13 : new Point(7, -1), // enter
+
+  //20 : new Point(-6, 0), // caps lock
+  65 : new Point(-5, 0), // A
+  83 : new Point(-4, 0), // S
+  68 : new Point(-3, 0), // D
+  70 : new Point(-2, 0), // F
+  71 : new Point(-1, 0), // G
+  72 : new Point(0, 0), // H
+  74 : new Point(1, 0), // J
+  75 : new Point(2, 0), // K
+  76 : new Point(3, 0), // L
+  186 : new Point(4, 0), // ;
+  222 : new Point(5, 0), // '
+  //220 : new Point(6, 0), // \
+
+  90 : new Point(-5, 1), // Z
+  88 : new Point(-4, 1), // X
+  67 : new Point(-3, 1), // C
+  86 : new Point(-2, 1), // V
+  66 : new Point(-1, 1), // B
+  78 : new Point(0, 1), // N
+  77 : new Point(1, 1), // M
+  188 : new Point(2, 1), // ,
+  190 : new Point(3, 1), // .
+  191 : new Point(4, 1), // /
+  //16 : new Point(5, 1), // shift
+};
+
+codeToCoords_mac={
+  'Backslash' : new Point(6, 0), // \
+  'ShiftRight' : new Point(5, 1),
+  'IntlBackslash' : new Point(-6, 1),
+  'ShiftLeft' : new Point(-7, 1),
+  'Backquote' : new Point(-6, -2),
+  'BracketRight' : new Point(6, -1), // ]
+}
+codeToCoords={};
+keyCodeToCoords={};
+
+codeToCoords_dell={
+  'Backquote' : new Point(-6, -2), // `
+  'Digit1' : new Point(-5, -2), // 1
+  'Digit2' : new Point(-4, -2), // 2
+  'Digit3' : new Point(-3, -2), // 3
+  'Digit4' : new Point(-2, -2), // 4
+  'Digit5' : new Point(-1, -2), // 5
+  'Digit6' : new Point(0, -2), // 6
+  'Digit7' : new Point(1, -2), // 7
+  'Digit8' : new Point(2, -2), // 8
+  'Digit9' : new Point(3, -2), // 9
+  'Digit0' : new Point(4, -2), // 0
+  'Minus' : new Point(5, -2), // -
+  'Equal' : new Point(6, -2), // =
+  'Backspace' : new Point(7, -2), // backspace
+
+  Tab : new Point(-6, -1), // tab
+  KeyQ : new Point(-5, -1), // Q
+  87 : new Point(-4, -1), // W
+  69 : new Point(-3, -1), // E
+  82 : new Point(-2, -1), // R
+  84 : new Point(-1, -1), // T
+  89 : new Point(0, -1), // Y
+  85 : new Point(1, -1), // U
+  73 : new Point(2, -1), // I
+  79 : new Point(3, -1), // O
+  80 : new Point(4, -1), // P
+  219 : new Point(5, -1), // [
+  //221 : new Point(6, -1), // ]
+  13 : new Point(7, -1), // enter
+
+
+
+
+};
+
+(function dell(){
+  var lines=[];
+  lines[0]=["Escape", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8"];
+  lines[5]=["F9", "F10", "F11", "F12","принтскрин", "Insert", "Delete"];
+  lines[1]=["Backquote", "Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6", "Digit7", "Digit8", "Digit9", "Digit0", "Minus", "Equal", "Backspace"];
+  lines[2]= ["Tab", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "BracketLeft", "BracketRight", "Backslash"];
+  lines[3]=["CapsLock", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "Quote", "Enter"];
+  lines[4]=["ShiftLeft", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period", "Slash", "ShiftRight"];
+
+  lines[0].forEach((code,i)=>{
+    codeToCoords[code] = new Point(-6+i, -3);
+  });
+  lines[5].forEach((code,i)=>{
+    codeToCoords[code] = new Point(-6+8+i, -3);
+  });
+  lines[1].forEach((code,i)=>{
+    codeToCoords[code] = new Point(-6+i, -2);
+  });
+  lines[2].forEach((code,i)=>{
+    codeToCoords[code] = new Point(-6+i, -1);
+  });
+  lines[3].forEach((code,i)=>{
+    codeToCoords[code] = new Point(-6+i, 0);
+  });
+  lines[4].forEach((code,i)=>{
+    codeToCoords[code] = new Point(-6+i, 1);
+  });
+})();
+
+
+
+
+//check to see if we have params
 var init_keyboard_onload = true;
 if(decodeURIComponent(window.location.search) == '')
 {
   init_keyboard_onload = false;
 }
 
+//check\set preset
 checkPreset(16);
 // fill in form
 document.getElementById('settingsForm').onsubmit = goKeyboard;
 
 var getData = new QueryData(location.search, true);
-document.getElementById("fundamental").value = ("fundamental" in getData) ? getData.fundamental : 263.09212;
-document.getElementById("rSteps").value = ("right" in getData) ? getData.right : 5;
-document.getElementById("urSteps").value = ("upright" in getData) ? getData.upright : 2;
-document.getElementById("hexSize").value = ("size" in getData) ? getData.size : 50;
+document.getElementById("fundamental").value = ("fundamental" in getData) ? getData.fundamental : 440;
+document.getElementById("rSteps").value = ("right" in getData) ? getData.right : 3;
+document.getElementById("urSteps").value = ("upright" in getData) ? getData.upright : 10;
+document.getElementById("hexSize").value = ("size" in getData) ? getData.size : 60;
 document.getElementById("rotation").value = ("rotation" in getData) ? getData.rotation : 343.897886248;
-document.getElementById("instrument").value = ("instrument" in getData) ? getData.instrument : "organ";
+document.getElementById("instrument").value = ("instrument" in getData) ? getData.instrument : "rhodes";
 document.getElementById("enum").checked = ("enum" in getData) ? JSON.parse(getData["enum"]) : false;
-document.getElementById("equivSteps").value = ("equivSteps" in getData) ? getData.equivSteps : 31;
+document.getElementById("equivSteps").value = ("equivSteps" in getData) ? getData.equivSteps : 17;
 document.getElementById("spectrum_colors").checked = ("spectrum_colors" in getData) ? JSON.parse(getData.spectrum_colors) : false;
-document.getElementById("fundamental_color").value = ("fundamental_color" in getData) ? getData.fundamental_color : '#55ff55';
+document.getElementById("fundamental_color").value = ("fundamental_color" in getData) ? getData.fundamental_color : '#41ff2e';
 document.getElementById("no_labels").checked = ("no_labels" in getData) ? JSON.parse(getData.no_labels) : false;
 
 
@@ -379,12 +551,6 @@ function goKeyboard() {
     }, {
       fileName: "WMRIByzantineST",
       fade: 0.1
-    }, {
-      fileName: "WMRI-in6-har7-",
-      fade: 0.1
-    }, {
-      fileName: "WMRI-in7-har6-",
-      fade: 0.1
     }
 
   ];
@@ -404,7 +570,7 @@ function goKeyboard() {
   if (typeof(is_key_event_added) == 'undefined') {
     is_key_event_added = 1;
     settings.pressedKeys = [];
-    settings.keyCodeToCoords = {
+    settings.keyCodeToCoords = keyCodeToCoords/*{
       49 : new Point(-5, -2), // 1
       50 : new Point(-4, -2), // 2
       51 : new Point(-3, -2), // 3
@@ -453,7 +619,7 @@ function goKeyboard() {
       188 : new Point(2, 1), // ,
       190 : new Point(3, 1), // .
       191 : new Point(4, 1), // /
-    };
+    };*/
     window.addEventListener("keydown", onKeyDown, false);
     window.addEventListener("keyup", onKeyUp, false);
   }
@@ -548,6 +714,9 @@ function goKeyboard() {
 }
 
 function onKeyDown(e) {
+  e.preventDefault();//
+
+
   if (e.keyCode == 32) { // Spacebar
     settings.sustain = true;
   } else if (!settings.isMouseDown && !settings.isTouchDown
@@ -555,6 +724,19 @@ function onKeyDown(e) {
       && settings.pressedKeys.indexOf(e.keyCode) == -1) {
     settings.pressedKeys.push(e.keyCode);
     var coords = settings.keyCodeToCoords[e.keyCode];
+    var hex = new ActiveHex(coords);
+    settings.activeHexObjects.push(hex);
+    var cents = hexCoordsToCents(coords);
+    drawHex(coords, centsToColor(cents, true));
+    hex.noteOn(cents);
+  }
+
+  //Hatsevich:
+  else if(!settings.isMouseDown && !settings.isTouchDown
+    && (e.code in codeToCoords)
+    && settings.pressedKeys.indexOf(e.code) == -1){
+    settings.pressedKeys.push(e.code);
+    var coords = codeToCoords[e.code];
     var hex = new ActiveHex(coords);
     settings.activeHexObjects.push(hex);
     var cents = hexCoordsToCents(coords);
@@ -586,6 +768,25 @@ function onKeyUp(e) {
       }
     }
   }
+
+  //Hatsevich:
+  else if (!settings.isMouseDown && !settings.isTouchDown
+        && (e.code in codeToCoords)) {
+      var keyIndex = settings.pressedKeys.indexOf(e.code);
+      if (keyIndex != -1) {
+        settings.pressedKeys.splice(keyIndex, 1);
+        var coords = codeToCoords[e.code];
+        drawHex(coords, centsToColor(hexCoordsToCents(coords), false));
+        var hexIndex = settings.activeHexObjects.findIndex(function(hex) {
+          return coords.equals(hex.coords);
+        });
+        if (hexIndex != -1) {
+          settings.activeHexObjects[hexIndex].noteOff();
+          settings.activeHexObjects.splice(hexIndex, 1);
+        }
+      }
+    }
+
 }
 
 function mouseActive(e) {
@@ -1028,7 +1229,7 @@ ActiveHex.prototype.noteOn = function(cents) {
   // Connect the gain node to the destination.
   gainNode.connect(settings.audioContext.destination);
   source.connect(gainNode); // connect the source to the context's destination (the speakers)
-  gainNode.gain.value = 0.3;
+  gainNode.gain.value = volume;
   source.start(0); // play the source now
   this.source = source;
   this.gainNode = gainNode;
@@ -1159,7 +1360,7 @@ function nameToHex(colour) {
     "greenyellow": "#adff2f",
     "honeydew": "#f0fff0",
     "hotpink": "#ff69b4",
-    "indianred": "#cd5c5c",
+    "indianred ": "#cd5c5c",
     "indigo": "#4b0082",
     "ivory": "#fffff0",
     "khaki": "#f0e68c",
