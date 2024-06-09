@@ -173,17 +173,17 @@ checkPreset(16);
 document.getElementById("settingsForm").onsubmit = goKeyboard;
 
 var getData = new QueryData(location.search, true);
-document.getElementById("fundamental").value = ("fundamental" in getData) ? getData.fundamental : 440;
-document.getElementById("rSteps").value = ("right" in getData) ? getData.right : 3;
-document.getElementById("urSteps").value = ("upright" in getData) ? getData.upright : 10;
-document.getElementById("hexSize").value = ("size" in getData) ? getData.size : 60;
-document.getElementById("rotation").value = ("rotation" in getData) ? getData.rotation : 343.897886248;
-document.getElementById("instrument").value = ("instrument" in getData) ? getData.instrument : "rhodes";
-document.getElementById("enum").checked = ("enum" in getData) ? JSON.parse(getData["enum"]) : false;
-document.getElementById("equivSteps").value = ("equivSteps" in getData) ? getData.equivSteps : 17;
-document.getElementById("spectrum_colors").checked = ("spectrum_colors" in getData) ? JSON.parse(getData.spectrum_colors) : false;
-document.getElementById("fundamental_color").value = ("fundamental_color" in getData) ? getData.fundamental_color : "#41ff2e";
-document.getElementById("no_labels").checked = ("no_labels" in getData) ? JSON.parse(getData.no_labels) : false;
+document.getElementById("fundamental").value = "fundamental" in getData ? getData.fundamental : 440;
+document.getElementById("rSteps").value = "right" in getData ? getData.right : 3;
+document.getElementById("urSteps").value = "upright" in getData ? getData.upright : 10;
+document.getElementById("hexSize").value = "size" in getData ? getData.size : 60;
+document.getElementById("rotation").value = "rotation" in getData ? getData.rotation : 343.897886248;
+document.getElementById("instrument").value = "instrument" in getData ? getData.instrument : "rhodes";
+document.getElementById("enum").checked = "enum" in getData ? JSON.parse(getData["enum"]) : false;
+document.getElementById("equivSteps").value = "equivSteps" in getData ? getData.equivSteps : 17;
+document.getElementById("spectrum_colors").checked = "spectrum_colors" in getData ? JSON.parse(getData.spectrum_colors) : false;
+document.getElementById("fundamental_color").value = "fundamental_color" in getData ? getData.fundamental_color : "#41ff2e";
+document.getElementById("no_labels").checked = "no_labels" in getData ? JSON.parse(getData.no_labels) : false;
 
 
 var global_pressed_interval;
@@ -810,7 +810,7 @@ function handleTouch(e) {
 }
 
 function drawGrid() {
-	var max = (settings.centerpoint.x > settings.centerpoint.y) ?
+	var max = settings.centerpoint.x > settings.centerpoint.y ?
 		settings.centerpoint.x / settings.hexSize :
 		settings.centerpoint.y / settings.hexSize;
 	max = Math.floor(max);
@@ -983,7 +983,7 @@ function centsToColor(cents, pressed) {
 		reduced += 1;
 	h = (reduced + h) % 1;
 	
-	v = (pressed) ? v - (v / 2) : v;
+	v = pressed ? v - (v / 2) : v;
 	
 	returnColor = HSVtoRGB(h, s, v);
 	
@@ -1437,7 +1437,7 @@ function getContrastYIQ(hexcolor) {
 	var g = parseInt(hexcolor.substr(2, 2), 16);
 	var b = parseInt(hexcolor.substr(4, 2), 16);
 	var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-	return (yiq >= 128) ? "black" : "white";
+	return yiq >= 128 ? "black" : "white";
 }
 
 function rgbToHex(r, g, b) {
