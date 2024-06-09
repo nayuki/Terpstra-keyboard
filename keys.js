@@ -258,19 +258,19 @@ function Point(x, y) {
 }
 
 Point.prototype.equals = function(p) {
-	return (this.x == p.x && this.y == p.y);
+	return this.x == p.x && this.y == p.y;
 };
 
 Point.prototype.plus = function(p) {
 	var x = this.x + p.x;
 	var y = this.y + p.y;
-	return (new Point(x, y));
+	return new Point(x, y);
 };
 
 Point.prototype.minus = function(p) {
 	var x = this.x - p.x;
 	var y = this.y - p.y;
-	return (new Point(x, y));
+	return new Point(x, y);
 };
 
 function changeURL() {
@@ -826,7 +826,7 @@ function drawGrid() {
 function hexCoordsToScreen(hex) { /* Point */
 	var screenX = settings.centerpoint.x + hex.x * settings.hexWidth + hex.y * settings.hexWidth / 2;
 	var screenY = settings.centerpoint.y + hex.y * settings.hexVert;
-	return (new Point(screenX, screenY));
+	return new Point(screenX, screenY);
 }
 
 function drawHex(p, c) { /* Point, color */
@@ -1041,7 +1041,7 @@ function getHexCoordsAt(coords) {
 		}
 	}
 	
-	return (closestHex);
+	return closestHex;
 }
 
 function rgb(r, g, b) {
