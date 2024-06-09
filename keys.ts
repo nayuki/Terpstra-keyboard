@@ -186,7 +186,7 @@ const codeToCoords_dell = {
 
 
 //check to see if we have params
-var init_keyboard_onload = true;
+var init_keyboard_onload: boolean = true;
 if (decodeURIComponent(window.location.search) == "")
 	init_keyboard_onload = false;
 
@@ -304,8 +304,8 @@ function changeURL() {
 	// Find scl file description for the page title
 	
 	var scaleLines = document.getElementById("scale").value.split("\n");
-	var first = true;
-	var foundDescription = false;
+	var first: boolean = true;
+	var foundDescription: boolean = false;
 	var description = "Terpstra Keyboard WebApp";
 	
 	scaleLines.forEach(function(line) {
@@ -785,7 +785,7 @@ function handleTouch(e) {
 	for (var i = 0; i < e.targetTouches.length; i++) {
 		var coords = getHexCoordsAt(new Point(e.targetTouches[i].pageX - settings.canvas.offsetLeft,
 			e.targetTouches[i].pageY - settings.canvas.offsetTop));
-		var found = false;
+		var found: boolean = false;
 		
 		for (var j = 0; j < settings.activeHexObjects.length; j++) {
 			if (coords.equals(settings.activeHexObjects[j].coords)) {
@@ -949,7 +949,7 @@ function drawHex(p, c) { /* Point, color */
 	settings.context.restore();
 }
 
-function centsToColor(cents, pressed) {
+function centsToColor(cents, pressed: boolean) {
 	var returnColor;
 	if (!settings.spectrum_colors) {
 		if (typeof(settings.keycolors[global_pressed_interval]) === "undefined")

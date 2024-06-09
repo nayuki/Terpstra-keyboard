@@ -25,7 +25,7 @@ http://creativecommons.org/publicdomain/zero/1.0/legalcode
  *                      overwrite earler occurrences. This optional parameter
  *                      defaults to false.
  */
-function QueryData(queryString, preserveDuplicates) {
+function QueryData(queryString, preserveDuplicates?: boolean) {
 	
 	// if a query string wasn't specified, use the query string from the URL
 	if (queryString == undefined)
