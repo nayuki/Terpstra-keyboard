@@ -1,12 +1,12 @@
 var volume = 1.4;
-window.addEventListener('keydown', e => {
+window.addEventListener("keydown", e => {
 	e.preventDefault();
-	if (e.code === 'ArrowDown') {//ctrl
+	if (e.code === "ArrowDown") {//ctrl
 		if (volume >= 0.1) {
 			volume = +(volume - 0.1).toFixed(2);
 			console.log(volume);
 		}
-	} else if (e.code === 'ArrowUp') {
+	} else if (e.code === "ArrowUp") {
 		e.preventDefault();
 		if (volume <= 2.9) {
 			volume = +(volume + 0.1).toFixed(2);
@@ -90,31 +90,31 @@ keyCodeToCoords_mac = {
 };
 
 codeToCoords_mac = {
-	'Backslash' : new Point(6, 0), // \
-	'ShiftRight' : new Point(5, 1),
-	'IntlBackslash' : new Point(-6, 1),
-	'ShiftLeft' : new Point(-7, 1),
-	'Backquote' : new Point(-6, -2),
-	'BracketRight' : new Point(6, -1), // ]
+	"Backslash" : new Point(6, 0), // \
+	"ShiftRight" : new Point(5, 1),
+	"IntlBackslash" : new Point(-6, 1),
+	"ShiftLeft" : new Point(-7, 1),
+	"Backquote" : new Point(-6, -2),
+	"BracketRight" : new Point(6, -1), // ]
 }
 codeToCoords = {};
 keyCodeToCoords = {};
 
 codeToCoords_dell = {
-	'Backquote' : new Point(-6, -2), // `
-	'Digit1' : new Point(-5, -2), // 1
-	'Digit2' : new Point(-4, -2), // 2
-	'Digit3' : new Point(-3, -2), // 3
-	'Digit4' : new Point(-2, -2), // 4
-	'Digit5' : new Point(-1, -2), // 5
-	'Digit6' : new Point(0, -2), // 6
-	'Digit7' : new Point(1, -2), // 7
-	'Digit8' : new Point(2, -2), // 8
-	'Digit9' : new Point(3, -2), // 9
-	'Digit0' : new Point(4, -2), // 0
-	'Minus' : new Point(5, -2), // -
-	'Equal' : new Point(6, -2), // =
-	'Backspace' : new Point(7, -2), // backspace
+	"Backquote" : new Point(-6, -2), // `
+	"Digit1" : new Point(-5, -2), // 1
+	"Digit2" : new Point(-4, -2), // 2
+	"Digit3" : new Point(-3, -2), // 3
+	"Digit4" : new Point(-2, -2), // 4
+	"Digit5" : new Point(-1, -2), // 5
+	"Digit6" : new Point(0, -2), // 6
+	"Digit7" : new Point(1, -2), // 7
+	"Digit8" : new Point(2, -2), // 8
+	"Digit9" : new Point(3, -2), // 9
+	"Digit0" : new Point(4, -2), // 0
+	"Minus" : new Point(5, -2), // -
+	"Equal" : new Point(6, -2), // =
+	"Backspace" : new Point(7, -2), // backspace
 	
 	Tab : new Point(-6, -1), // tab
 	KeyQ : new Point(-5, -1), // Q
@@ -164,13 +164,13 @@ codeToCoords_dell = {
 
 //check to see if we have params
 var init_keyboard_onload = true;
-if (decodeURIComponent(window.location.search) == '')
+if (decodeURIComponent(window.location.search) == "")
 	init_keyboard_onload = false;
 
 //check\set preset
 checkPreset(16);
 // fill in form
-document.getElementById('settingsForm').onsubmit = goKeyboard;
+document.getElementById("settingsForm").onsubmit = goKeyboard;
 
 var getData = new QueryData(location.search, true);
 document.getElementById("fundamental").value = ("fundamental" in getData) ? getData.fundamental : 440;
@@ -182,7 +182,7 @@ document.getElementById("instrument").value = ("instrument" in getData) ? getDat
 document.getElementById("enum").checked = ("enum" in getData) ? JSON.parse(getData["enum"]) : false;
 document.getElementById("equivSteps").value = ("equivSteps" in getData) ? getData.equivSteps : 17;
 document.getElementById("spectrum_colors").checked = ("spectrum_colors" in getData) ? JSON.parse(getData.spectrum_colors) : false;
-document.getElementById("fundamental_color").value = ("fundamental_color" in getData) ? getData.fundamental_color : '#41ff2e';
+document.getElementById("fundamental_color").value = ("fundamental_color" in getData) ? getData.fundamental_color : "#41ff2e";
 document.getElementById("no_labels").checked = ("no_labels" in getData) ? JSON.parse(getData.no_labels) : false;
 
 
@@ -204,30 +204,30 @@ hideRevealEnum();
 
 function hideRevealNames() {
 	if (document.getElementById("enum").checked) {
-		document.getElementById("equivSteps").style.display = 'block';
-		document.getElementById("names").style.display = 'none';
-		document.getElementById("numberLabel").style.display = 'block';
-		document.getElementById("namesLabel").style.display = 'none';
+		document.getElementById("equivSteps").style.display = "block";
+		document.getElementById("names").style.display = "none";
+		document.getElementById("numberLabel").style.display = "block";
+		document.getElementById("namesLabel").style.display = "none";
 	} else {
-		document.getElementById("equivSteps").style.display = 'none';
-		document.getElementById("names").style.display = 'block';
-		document.getElementById("numberLabel").style.display = 'none';
-		document.getElementById("namesLabel").style.display = 'block';
+		document.getElementById("equivSteps").style.display = "none";
+		document.getElementById("names").style.display = "block";
+		document.getElementById("numberLabel").style.display = "none";
+		document.getElementById("namesLabel").style.display = "block";
 	}
 	changeURL();
 }
 
 function hideRevealColors() {
 	if (document.getElementById("spectrum_colors").checked) {
-		document.getElementById("fundamental_color").style.display = 'block';
-		document.getElementById("fundamental_colorLabel").style.display = 'block';
-		document.getElementById("note_colors").style.display = 'none';
-		document.getElementById("note_colorsLabel").style.display = 'none';
+		document.getElementById("fundamental_color").style.display = "block";
+		document.getElementById("fundamental_colorLabel").style.display = "block";
+		document.getElementById("note_colors").style.display = "none";
+		document.getElementById("note_colorsLabel").style.display = "none";
 	} else {
-		document.getElementById("fundamental_color").style.display = 'none';
-		document.getElementById("fundamental_colorLabel").style.display = 'none';
-		document.getElementById("note_colors").style.display = 'block';
-		document.getElementById("note_colorsLabel").style.display = 'block';
+		document.getElementById("fundamental_color").style.display = "none";
+		document.getElementById("fundamental_colorLabel").style.display = "none";
+		document.getElementById("note_colors").style.display = "block";
+		document.getElementById("note_colorsLabel").style.display = "block";
 	}
 	changeURL();
 }
@@ -235,18 +235,18 @@ function hideRevealColors() {
 function hideRevealEnum() {
 	if (document.getElementById("no_labels").checked) {
 		document.getElementById("enum").disabled = true;
-		document.getElementById("equivSteps").style.display = 'none';
-		document.getElementById("names").style.display = 'none';
-		document.getElementById("numberLabel").style.display = 'none';
-		document.getElementById("namesLabel").style.display = 'none';
+		document.getElementById("equivSteps").style.display = "none";
+		document.getElementById("names").style.display = "none";
+		document.getElementById("numberLabel").style.display = "none";
+		document.getElementById("namesLabel").style.display = "none";
 	} else {
 		document.getElementById("enum").disabled = false;
-		if (!document.getElementById('enum').checked) {
-			document.getElementById("namesLabel").style.display = 'block';
-			document.getElementById("names").style.display = 'block';
+		if (!document.getElementById("enum").checked) {
+			document.getElementById("namesLabel").style.display = "block";
+			document.getElementById("names").style.display = "block";
 		} else {
-			document.getElementById("equivSteps").style.display = 'block';
-			document.getElementById("numberLabel").style.display = 'block';
+			document.getElementById("equivSteps").style.display = "block";
+			document.getElementById("numberLabel").style.display = "block";
 		}
 	}
 	changeURL();
@@ -290,17 +290,17 @@ function changeURL() {
 		"&no_labels=" + document.getElementById("no_labels").checked;
 	
 	url += "&scale=";
-	url += encodeURIComponent(document.getElementById('scale').value);
+	url += encodeURIComponent(document.getElementById("scale").value);
 	
 	url += "&names=";
-	url += encodeURIComponent(document.getElementById('names').value);
+	url += encodeURIComponent(document.getElementById("names").value);
 	
 	url += "&note_colors=";
-	url += encodeURIComponent(document.getElementById('note_colors').value);
+	url += encodeURIComponent(document.getElementById("note_colors").value);
 	
 	// Find scl file description for the page title
 	
-	var scaleLines = document.getElementById('scale').value.split('\n');
+	var scaleLines = document.getElementById("scale").value.split("\n");
 	var first = true;
 	var foundDescription = false;
 	var description = "Terpstra Keyboard WebApp";
@@ -313,19 +313,19 @@ function changeURL() {
 	});
 	
 	document.title = description;
-	window.history.replaceState({}, '', url);
+	window.history.replaceState({}, "", url);
 }
 
 var settings = {};
 
 function parseScale() {
 	settings.scale = [];
-	var scaleLines = document.getElementById('scale').value.split('\n');
+	var scaleLines = document.getElementById("scale").value.split("\n");
 	scaleLines.forEach(function(line) {
 		if (line.match(/^[1234567890.\s/]+$/) && !(line.match(/^\s+$/))) {
 			if (line.match(/\//)) {
 				// ratio
-				var nd = line.split('/');
+				var nd = line.split("/");
 				var ratio = 1200 * Math.log(parseInt(nd[0]) / parseInt(nd[1])) / Math.log(2);
 				settings.scale.push(ratio);
 			} else {
@@ -341,7 +341,7 @@ function parseScale() {
 
 function parseScaleColors() {
 	settings.keycolors = [];
-	var colorsArray = document.getElementById('note_colors').value.split('\n');
+	var colorsArray = document.getElementById("note_colors").value.split("\n");
 	colorsArray.forEach(function(line) {
 		settings.keycolors.push(line);
 	});
@@ -371,11 +371,11 @@ function resizeHandler() {
 	var newWidth = window.innerWidth;
 	var newHeight = window.innerHeight;
 	
-	settings.canvas.style.height = newHeight + 'px';
-	settings.canvas.style.width = newWidth + 'px';
+	settings.canvas.style.height = newHeight + "px";
+	settings.canvas.style.width = newWidth + "px";
 	
-	settings.canvas.style.marginTop = (-newHeight / 2) + 'px';
-	settings.canvas.style.marginLeft = (-newWidth / 2) + 'px';
+	settings.canvas.style.marginTop = (-newHeight / 2) + "px";
+	settings.canvas.style.marginLeft = (-newWidth / 2) + "px";
 	
 	settings.canvas.width = newWidth;
 	settings.canvas.height = newHeight;
@@ -418,7 +418,7 @@ function back() {
 	document.getElementById("keyboard").style.display = "none";
 	document.getElementById("backButton").style.display = "none";
 	document.getElementById("landing-page").style.display = "block";
-	document.body.style.overflow = 'scroll';
+	document.body.style.overflow = "scroll";
 }
 
 function goKeyboard() {
@@ -428,7 +428,7 @@ function goKeyboard() {
 	
 	document.getElementById("landing-page").style.display = "none";
 	document.getElementById("keyboard").style.display = "block";
-	document.body.style.overflow = 'hidden';
+	document.body.style.overflow = "hidden";
 	document.getElementById("backButton").style.display = "block";
 	
 	// set up settings constants
@@ -440,25 +440,25 @@ function goKeyboard() {
 	settings.rotation = (document.getElementById("rotation").value * 2 * Math.PI) / 360;
 	parseScale();
 	parseScaleColors();
-	settings.names = document.getElementById('names').value.split('\n');
-	settings["enum"] = document.getElementById('enum').checked;
-	settings.equivSteps = parseInt(document.getElementById('equivSteps').value);
+	settings.names = document.getElementById("names").value.split("\n");
+	settings["enum"] = document.getElementById("enum").checked;
+	settings.equivSteps = parseInt(document.getElementById("equivSteps").value);
 	
-	settings.canvas = document.getElementById('keyboard');
-	settings.context = settings.canvas.getContext('2d');
+	settings.canvas = document.getElementById("keyboard");
+	settings.context = settings.canvas.getContext("2d");
 	
 	settings.hexHeight = settings.hexSize * 2;
 	settings.hexVert = settings.hexHeight * 3 / 4;
 	settings.hexWidth = Math.sqrt(3) / 2 * settings.hexHeight;
 	
-	settings.no_labels = document.getElementById('no_labels').checked;
-	settings.spectrum_colors = document.getElementById('spectrum_colors').checked;
-	settings.fundamental_color = document.getElementById('fundamental_color').value;
+	settings.no_labels = document.getElementById("no_labels").checked;
+	settings.spectrum_colors = document.getElementById("spectrum_colors").checked;
+	settings.fundamental_color = document.getElementById("fundamental_color").value;
 	
 	// Set up resize handler
 	
-	window.addEventListener('resize', resizeHandler, false);
-	window.addEventListener('orientationchange', resizeHandler, false);
+	window.addEventListener("resize", resizeHandler, false);
+	window.addEventListener("orientationchange", resizeHandler, false);
 	
 	//... and give it an initial call
 	
@@ -546,7 +546,7 @@ function goKeyboard() {
 	//settings.canvas.addEventListener("keydown", onKeyDown, false); // Firefox isn't firing :(
 	//settings.canvas.addEventListener("keyup", onKeyUp, false);
 	
-	if (typeof(is_key_event_added) == 'undefined') {
+	if (typeof(is_key_event_added) == "undefined") {
 		is_key_event_added = 1;
 		settings.pressedKeys = [];
 		settings.keyCodeToCoords = keyCodeToCoords/*{
@@ -604,7 +604,7 @@ function goKeyboard() {
 	}
 	
 	//iPad Shake to toggle sustain
-	if (typeof window.DeviceMotionEvent != 'undefined') {
+	if (typeof window.DeviceMotionEvent != "undefined") {
 		var lastShakeCheck = 0;
 		var lastShakeCount = 0;
 		
@@ -620,7 +620,7 @@ function goKeyboard() {
 			z2 = 0;
 		
 		// Listen to motion events and update the position
-		window.addEventListener('devicemotion', function(e) {
+		window.addEventListener("devicemotion", function(e) {
 			x1 = e.accelerationIncludingGravity.x;
 			y1 = e.accelerationIncludingGravity.y;
 			z1 = e.accelerationIncludingGravity.z;
@@ -642,10 +642,10 @@ function goKeyboard() {
 						for (var note = 0; note < settings.sustainedNotes.length; note++)
 							settings.sustainedNotes[note].noteOff();
 						settings.sustainedNotes = [];
-						tempAlert('Sustain Off', 900);
+						tempAlert("Sustain Off", 900);
 					} else {
 						settings.sustain = true;
-						tempAlert('Sustain On', 900);
+						tempAlert("Sustain On", 900);
 					}
 				}
 			}
@@ -921,10 +921,10 @@ function drawHex(p, c) { /* Point, color */
 	for (var i = 1; i < 6; i++)
 		settings.context.lineTo(x2[i], y2[i]);
 	settings.context.closePath();
-	settings.context.strokeStyle = 'black';
+	settings.context.strokeStyle = "black";
 	settings.context.lineWidth = 5;
 	settings.context.shadowBlur = 15;
-	settings.context.shadowColor = 'black';
+	settings.context.shadowColor = "black";
 	settings.context.shadowOffsetX = 0;
 	settings.context.shadowOffsetY = 0;
 	settings.context.stroke();
@@ -938,8 +938,8 @@ function drawHex(p, c) { /* Point, color */
 		settings.context.lineTo(x[i], y[i]);
 	settings.context.closePath();
 	settings.context.lineWidth = 2;
-	settings.context.lineJoin = 'round';
-	settings.context.strokeStyle = 'black';
+	settings.context.lineJoin = "round";
+	settings.context.strokeStyle = "black";
 	settings.context.stroke();
 	
 	// Add note name and equivalence interval multiple
@@ -989,7 +989,7 @@ function drawHex(p, c) { /* Point, color */
 function centsToColor(cents, pressed) {
 	var returnColor;
 	if (!settings.spectrum_colors) {
-		if (typeof(settings.keycolors[global_pressed_interval]) === 'undefined')
+		if (typeof(settings.keycolors[global_pressed_interval]) === "undefined")
 			returnColor = "#EDEDE4";
 		else
 			returnColor = settings.keycolors[global_pressed_interval];
@@ -1217,7 +1217,7 @@ ActiveHex.prototype.noteOff = function() {
 	}
 };
 
-window.addEventListener('load', init, false);
+window.addEventListener("load", init, false);
 
 function init() {
 	try {
@@ -1225,7 +1225,7 @@ function init() {
 		window.AudioContext = window.AudioContext || window.webkitAudioContext;
 		settings.audioContext = new AudioContext();
 	} catch (e) {
-		alert('Web Audio API is not supported in this browser');
+		alert("Web Audio API is not supported in this browser");
 	}
 }
 
@@ -1235,10 +1235,10 @@ function loadSample(name, iteration) {
 	var sampleFreqs = ["110", "220", "440", "880"];
 	//for (var i = 0; i < 4; ++i) {
 	var request = new XMLHttpRequest();
-	var url = 'sounds/' + name + sampleFreqs[iteration] + '.mp3';
+	var url = "sounds/" + name + sampleFreqs[iteration] + ".mp3";
 	//console.log(iteration);
-	request.open('GET', url, true);
-	request.responseType = 'arraybuffer';
+	request.open("GET", url, true);
+	request.responseType = "arraybuffer";
 	
 	// Decode asynchronously
 	request.onload = function() {
@@ -1412,7 +1412,7 @@ function nameToHex(colour) {
 		"yellowgreen": "#9acd32"
 	};
 
-	if (typeof colours[colour.toLowerCase()] != 'undefined')
+	if (typeof colours[colour.toLowerCase()] != "undefined")
 		return colours[colour.toLowerCase()];
 	else if (colour.indexOf("#") == 0)
 		return colour;
@@ -1424,7 +1424,7 @@ function nameToHex(colour) {
 
 function hex2rgb(col) {
 	var r, g, b;
-	if (col.charAt(0) == '#')
+	if (col.charAt(0) == "#")
 		col = col.substr(1);
 	r = col.charAt(0) + col.charAt(1);
 	g = col.charAt(2) + col.charAt(3);
@@ -1479,7 +1479,7 @@ function getContrastYIQ(hexcolor) {
 	var g = parseInt(hexcolor.substr(2, 2), 16);
 	var b = parseInt(hexcolor.substr(4, 2), 16);
 	var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-	return (yiq >= 128) ? 'black' : 'white';
+	return (yiq >= 128) ? "black" : "white";
 }
 
 function rgbToHex(r, g, b) {
@@ -1488,11 +1488,11 @@ function rgbToHex(r, g, b) {
 
 
 function checkPreset(init) {
-	var mselect = document.getElementById('quicklinks');
+	var mselect = document.getElementById("quicklinks");
 	var url_str = window.location.href;
 	
 	//first check for .htm as end of url and set the default preset (31ET)
-	if (url_str.substr(url_str.length - 4) == '.htm')
+	if (url_str.substr(url_str.length - 4) == ".htm")
 		mselect.value = mselect.options[init].value;
 	for (var i = 0; i < mselect.length; i++) {
 		if (url_str.indexOf(mselect.options[i].value) != -1) {
@@ -1503,7 +1503,7 @@ function checkPreset(init) {
 }
 
 function noPreset() {
-	ms = document.getElementById('quicklinks');
+	ms = document.getElementById("quicklinks");
 	ms.value = ms.options[0].value;
 }
 
@@ -1511,6 +1511,6 @@ function noPreset() {
 //initialize keyboard on load
 if (init_keyboard_onload) {
 	//hide landing page
-	document.getElementById('landing-page').style.display = 'none';
+	document.getElementById("landing-page").style.display = "none";
 	setTimeout(function() { goKeyboard(); }, 1500);
 }
