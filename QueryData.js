@@ -33,7 +33,8 @@ function QueryData(queryString, preserveDuplicates) {
 	}
 	
 	// remove the leading question mark from the query string if it is present
-	if (queryString.charAt(0) == '?') queryString = queryString.substring(1);
+	if (queryString.charAt(0) == '?')
+		queryString = queryString.substring(1);
 	
 	// check whether the query string is empty
 	if (queryString.length > 0) {
@@ -58,7 +59,8 @@ function QueryData(queryString, preserveDuplicates) {
 			if (preserveDuplicates) {
 				
 				// create the value array if necessary and store the value
-				if (!(key in this)) this[key] = [];
+				if (!(key in this))
+					this[key] = [];
 				this[key].push(value);
 				
 			}else {

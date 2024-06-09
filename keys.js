@@ -1039,7 +1039,8 @@ function centsToColor(cents, pressed) {
 	var v = fcolor.v / 100;
 	//var h = 145/360; // green
 	var reduced = (cents / 1200) % 1;
-	if (reduced < 0) reduced += 1;
+	if (reduced < 0)
+		reduced += 1;
 	h = (reduced + h) % 1;
 	
 	v = (pressed) ? v - (v / 2) : v;
@@ -1200,7 +1201,8 @@ ActiveHex.prototype.noteOn = function(cents) {
 		}
 	}
 	
-	if (!(settings.sampleBuffer[sampleNumber])) return; // Sample not yet loaded
+	if (!(settings.sampleBuffer[sampleNumber])) // Sample not yet loaded
+		return;
 	
 	source.buffer = settings.sampleBuffer[sampleNumber]; // tell the source which sound to play
 	source.playbackRate.value = freq / sampleFreq;
@@ -1261,7 +1263,8 @@ function loadSample(name, iteration) {
 	request.onload = function() {
 		settings.audioContext.decodeAudioData(request.response, function(buffer) {
 			settings.sampleBuffer[iteration] = buffer;
-			if (iteration < 3) loadSample(name, iteration + 1);
+			if (iteration < 3)
+				loadSample(name, iteration + 1);
 		}, onLoadError);
 	};
 	request.send();
