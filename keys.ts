@@ -173,17 +173,17 @@ checkPreset(16);
 document.getElementById("settingsForm").onsubmit = goKeyboard;
 
 var getData = new QueryData(location.search, true);
-document.getElementById("fundamental").value = "fundamental" in getData ? getData.fundamental : 440;
-document.getElementById("rSteps").value = "right" in getData ? getData.right : 3;
-document.getElementById("urSteps").value = "upright" in getData ? getData.upright : 10;
-document.getElementById("hexSize").value = "size" in getData ? getData.size : 60;
-document.getElementById("rotation").value = "rotation" in getData ? getData.rotation : 343.897886248;
+getInputById("fundamental").value = "fundamental" in getData ? getData.fundamental : 440;
+getInputById("rSteps").value = "right" in getData ? getData.right : 3;
+getInputById("urSteps").value = "upright" in getData ? getData.upright : 10;
+getInputById("hexSize").value = "size" in getData ? getData.size : 60;
+getInputById("rotation").value = "rotation" in getData ? getData.rotation : 343.897886248;
 document.getElementById("instrument").value = "instrument" in getData ? getData.instrument : "rhodes";
-document.getElementById("enum").checked = "enum" in getData ? JSON.parse(getData["enum"]) : false;
-document.getElementById("equivSteps").value = "equivSteps" in getData ? getData.equivSteps : 17;
-document.getElementById("spectrum_colors").checked = "spectrum_colors" in getData ? JSON.parse(getData.spectrum_colors) : false;
-document.getElementById("fundamental_color").value = "fundamental_color" in getData ? getData.fundamental_color : "#41ff2e";
-document.getElementById("no_labels").checked = "no_labels" in getData ? JSON.parse(getData.no_labels) : false;
+getInputById("enum").checked = "enum" in getData ? JSON.parse(getData["enum"]) : false;
+getInputById("equivSteps").value = "equivSteps" in getData ? getData.equivSteps : 17;
+getInputById("spectrum_colors").checked = "spectrum_colors" in getData ? JSON.parse(getData.spectrum_colors) : false;
+getInputById("fundamental_color").value = "fundamental_color" in getData ? getData.fundamental_color : "#41ff2e";
+getInputById("no_labels").checked = "no_labels" in getData ? JSON.parse(getData.no_labels) : false;
 
 
 var global_pressed_interval;
@@ -203,7 +203,7 @@ hideRevealColors();
 hideRevealEnum();
 
 function hideRevealNames() {
-	if (document.getElementById("enum").checked) {
+	if (getInputById("enum").checked) {
 		document.getElementById("equivSteps").style.display = "block";
 		document.getElementById("names").style.display = "none";
 		document.getElementById("numberLabel").style.display = "block";
@@ -218,7 +218,7 @@ function hideRevealNames() {
 }
 
 function hideRevealColors() {
-	if (document.getElementById("spectrum_colors").checked) {
+	if (getInputById("spectrum_colors").checked) {
 		document.getElementById("fundamental_color").style.display = "block";
 		document.getElementById("fundamental_colorLabel").style.display = "block";
 		document.getElementById("note_colors").style.display = "none";
@@ -233,15 +233,15 @@ function hideRevealColors() {
 }
 
 function hideRevealEnum() {
-	if (document.getElementById("no_labels").checked) {
-		document.getElementById("enum").disabled = true;
+	if (getInputById("no_labels").checked) {
+		getInputById("enum").disabled = true;
 		document.getElementById("equivSteps").style.display = "none";
 		document.getElementById("names").style.display = "none";
 		document.getElementById("numberLabel").style.display = "none";
 		document.getElementById("namesLabel").style.display = "none";
 	} else {
-		document.getElementById("enum").disabled = false;
-		if (!document.getElementById("enum").checked) {
+		getInputById("enum").disabled = false;
+		if (!getInputById("enum").checked) {
 			document.getElementById("namesLabel").style.display = "block";
 			document.getElementById("names").style.display = "block";
 		} else {
@@ -277,17 +277,17 @@ function changeURL() {
 	var url = window.location.pathname + "?";
 	// add fundamental, right, upright, size
 	
-	url += "fundamental=" + document.getElementById("fundamental").value +
-		"&right=" + document.getElementById("rSteps").value +
-		"&upright=" + document.getElementById("urSteps").value +
-		"&size=" + document.getElementById("hexSize").value +
-		"&rotation=" + document.getElementById("rotation").value +
+	url += "fundamental=" + getInputById("fundamental").value +
+		"&right=" + getInputById("rSteps").value +
+		"&upright=" + getInputById("urSteps").value +
+		"&size=" + getInputById("hexSize").value +
+		"&rotation=" + getInputById("rotation").value +
 		"&instrument=" + document.getElementById("instrument").value +
-		"&enum=" + document.getElementById("enum").checked +
-		"&equivSteps=" + document.getElementById("equivSteps").value +
-		"&spectrum_colors=" + document.getElementById("spectrum_colors").checked +
-		"&fundamental_color=" + document.getElementById("fundamental_color").value +
-		"&no_labels=" + document.getElementById("no_labels").checked;
+		"&enum=" + getInputById("enum").checked +
+		"&equivSteps=" + getInputById("equivSteps").value +
+		"&spectrum_colors=" + getInputById("spectrum_colors").checked +
+		"&fundamental_color=" + getInputById("fundamental_color").value +
+		"&no_labels=" + getInputById("no_labels").checked;
 	
 	url += "&scale=";
 	url += encodeURIComponent(document.getElementById("scale").value);
@@ -435,16 +435,16 @@ function goKeyboard() {
 	
 	// set up settings constants
 	
-	settings.fundamental = document.getElementById("fundamental").value;
-	settings.rSteps = document.getElementById("rSteps").value;
-	settings.urSteps = parseFloat(settings.rSteps) - parseFloat(document.getElementById("urSteps").value); // Adjust to different coordinate system
-	settings.hexSize = document.getElementById("hexSize").value;
-	settings.rotation = (document.getElementById("rotation").value * 2 * Math.PI) / 360;
+	settings.fundamental = getInputById("fundamental").value;
+	settings.rSteps = getInputById("rSteps").value;
+	settings.urSteps = parseFloat(settings.rSteps) - parseFloat(getInputById("urSteps").value); // Adjust to different coordinate system
+	settings.hexSize = getInputById("hexSize").value;
+	settings.rotation = (getInputById("rotation").value * 2 * Math.PI) / 360;
 	parseScale();
 	parseScaleColors();
 	settings.names = document.getElementById("names").value.split("\n");
-	settings["enum"] = document.getElementById("enum").checked;
-	settings.equivSteps = parseInt(document.getElementById("equivSteps").value);
+	settings["enum"] = getInputById("enum").checked;
+	settings.equivSteps = parseInt(getInputById("equivSteps").value);
 	
 	settings.canvas = document.getElementById("keyboard");
 	settings.context = settings.canvas.getContext("2d");
@@ -453,9 +453,9 @@ function goKeyboard() {
 	settings.hexVert = settings.hexHeight * 3 / 4;
 	settings.hexWidth = Math.sqrt(3) / 2 * settings.hexHeight;
 	
-	settings.no_labels = document.getElementById("no_labels").checked;
-	settings.spectrum_colors = document.getElementById("spectrum_colors").checked;
-	settings.fundamental_color = document.getElementById("fundamental_color").value;
+	settings.no_labels = getInputById("no_labels").checked;
+	settings.spectrum_colors = getInputById("spectrum_colors").checked;
+	settings.fundamental_color = getInputById("fundamental_color").value;
 	
 	// Set up resize handler
 	
@@ -1468,6 +1468,14 @@ let ms: HTMLElement|null;
 function noPreset() {
 	ms = document.getElementById("quicklinks");
 	ms.value = ms.options[0].value;
+}
+
+
+function getInputById(id: string): HTMLInputElement {
+	const elem: HTMLElement|null = document.getElementById(id);
+	if (elem instanceof HTMLInputElement)
+		return elem;
+	throw `HTML element not found: <input id="${id}">`;
 }
 
 
