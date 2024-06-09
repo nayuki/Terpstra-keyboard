@@ -361,7 +361,7 @@ function calculateRotationMatrix(rotation, center) {
 function applyMatrixToPoint(m, p) { /*Array, Point*/
 	return new Point(
 		m[0] * p.x + m[2] * p.y + m[4],
-		m[1] * p.x + m[3] * p.y + m[5]
+		m[1] * p.x + m[3] * p.y + m[5],
 	);
 }
 
@@ -531,7 +531,7 @@ function goKeyboard() {
 		}, {
 			fileName: "WMRIByzantineST",
 			fade: 0.1
-		}
+		},
 	];
 	
 	//console.log(instruments[instrumentOption]);
@@ -804,7 +804,7 @@ function getPosition(element) {
 	}
 	return {
 		x: xPosition,
-		y: yPosition
+		y: yPosition,
 	};
 }
 
@@ -1151,7 +1151,7 @@ function HSVtoRGB2(h, s, v) {
 	return {
 		red: Math.floor(r * 255),
 		green: Math.floor(g * 255),
-		blue: Math.floor(b * 255)
+		blue: Math.floor(b * 255),
 	};
 }
 
@@ -1409,7 +1409,7 @@ function nameToHex(colour) {
 		"white": "#ffffff",
 		"whitesmoke": "#f5f5f5",
 		"yellow": "#ffff00",
-		"yellowgreen": "#9acd32"
+		"yellowgreen": "#9acd32",
 	};
 
 	if (typeof colours[colour.toLowerCase()] != "undefined")
@@ -1469,7 +1469,7 @@ function rgb2hsv(r1, g1, b1) {
 	return {
 		h: Math.round(h * 360),
 		s: Math.round(s * 100),
-		v: Math.round(v * 100)
+		v: Math.round(v * 100),
 	};
 }
 
