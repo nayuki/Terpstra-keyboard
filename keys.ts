@@ -1475,18 +1475,12 @@ function noPreset() {
 
 
 function getElementById(id: string): HTMLElement {
-	const elem: HTMLElement|null = document.getElementById(id);
-	if (elem instanceof HTMLElement)
-		return elem;
-	throw "HTML element with ID not found: " + id;
+	return getElemById(id, HTMLElement);
 }
 
 
 function getInputById(id: string): HTMLInputElement {
-	const elem: HTMLElement|null = document.getElementById(id);
-	if (elem instanceof HTMLInputElement)
-		return elem;
-	throw `HTML element not found: <input id="${id}">`;
+	return getElemById(id, HTMLInputElement);
 }
 
 
