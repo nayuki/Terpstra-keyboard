@@ -141,32 +141,31 @@ codeToCoords_dell={
 	lines[3]=["CapsLock", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "Quote", "Enter"];
 	lines[4]=["ShiftLeft", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period", "Slash", "ShiftRight"];
 	
-	lines[0].forEach((code,i)=>{
-		codeToCoords[code] = new Point(-6+i, -3);
-	});
-	lines[5].forEach((code,i)=>{
-		codeToCoords[code] = new Point(-6+8+i, -3);
-	});
-	lines[1].forEach((code,i)=>{
-		codeToCoords[code] = new Point(-6+i, -2);
-	});
-	lines[2].forEach((code,i)=>{
-		codeToCoords[code] = new Point(-6+i, -1);
-	});
-	lines[3].forEach((code,i)=>{
-		codeToCoords[code] = new Point(-6+i, 0);
-	});
-	lines[4].forEach((code,i)=>{
-		codeToCoords[code] = new Point(-6+i, 1);
-	});
+	lines[0].forEach((code,i)=>
+		codeToCoords[code] = new Point(-6+i, -3)
+	);
+	lines[5].forEach((code,i)=>
+		codeToCoords[code] = new Point(-6+8+i, -3)
+	);
+	lines[1].forEach((code,i)=>
+		codeToCoords[code] = new Point(-6+i, -2)
+	);
+	lines[2].forEach((code,i)=>
+		codeToCoords[code] = new Point(-6+i, -1)
+	);
+	lines[3].forEach((code,i)=>
+		codeToCoords[code] = new Point(-6+i, 0)
+	);
+	lines[4].forEach((code,i)=>
+		codeToCoords[code] = new Point(-6+i, 1)
+	);
 })();
 
 
 //check to see if we have params
 var init_keyboard_onload = true;
-if (decodeURIComponent(window.location.search) == '') {
+if (decodeURIComponent(window.location.search) == '')
 	init_keyboard_onload = false;
-}
 
 //check\set preset
 checkPreset(16);
@@ -190,17 +189,14 @@ document.getElementById("no_labels").checked = ("no_labels" in getData) ? JSON.p
 var global_pressed_interval;
 var current_text_color = "#000000";
 
-if ("scale" in getData) {
+if ("scale" in getData)
 	document.getElementById("scale").value = getData.scale[0];
-}
 
-if ("names" in getData) {
+if ("names" in getData)
 	document.getElementById("names").value = getData.names[0];
-}
 
-if ("note_colors" in getData) {
+if ("note_colors" in getData)
 	document.getElementById("note_colors").value = getData.note_colors[0];
-}
 
 hideRevealNames();
 hideRevealColors();
@@ -392,9 +388,8 @@ function resizeHandler() {
 	
 	// Rotate about it
 	
-	if (settings.rotationMatrix) {
+	if (settings.rotationMatrix)
 		settings.context.restore();
-	}
 	settings.context.save();
 	
 	settings.rotationMatrix = calculateRotationMatrix(-settings.rotation, settings.centerpoint);
@@ -644,9 +639,8 @@ function goKeyboard() {
 					
 					if (settings.sustain == true) {
 						settings.sustain = false;
-						for (var note = 0; note < settings.sustainedNotes.length; note++) {
+						for (var note = 0; note < settings.sustainedNotes.length; note++)
 							settings.sustainedNotes[note].noteOff();
-						}
 						settings.sustainedNotes = [];
 						tempAlert('Sustain Off', 900);
 					} else {
@@ -673,9 +667,8 @@ function goKeyboard() {
 	
 	settings.isMouseDown = false;
 	settings.canvas.addEventListener("mousedown", function(e) {
-		if (settings.pressedKeys.length != 0 || settings.isTouchDown) {
+		if (settings.pressedKeys.length != 0 || settings.isTouchDown)
 			return;
-		}
 		settings.isMouseDown = true;
 		settings.canvas.addEventListener("mousemove", mouseActive, false);
 		mouseActive(e);
@@ -683,9 +676,8 @@ function goKeyboard() {
 	
 	settings.canvas.addEventListener("mouseup", function(e) {
 		settings.isMouseDown = false;
-		if (settings.pressedKeys.length != 0 || settings.isTouchDown) {
+		if (settings.pressedKeys.length != 0 || settings.isTouchDown)
 			return;
-		}
 		settings.canvas.removeEventListener("mousemove", mouseActive);
 		if (settings.activeHexObjects.length > 0) {
 			var coords = settings.activeHexObjects[0].coords;
@@ -700,9 +692,9 @@ function goKeyboard() {
 function onKeyDown(e) {
 	e.preventDefault();//
 	
-	if (e.keyCode == 32) { // Spacebar
+	if (e.keyCode == 32) // Spacebar
 		settings.sustain = true;
-	} else if (!settings.isMouseDown && !settings.isTouchDown
+	else if (!settings.isMouseDown && !settings.isTouchDown
 			&& (e.keyCode in settings.keyCodeToCoords)
 			&& settings.pressedKeys.indexOf(e.keyCode) == -1) {
 		settings.pressedKeys.push(e.keyCode);
@@ -731,9 +723,8 @@ function onKeyDown(e) {
 function onKeyUp(e) {
 	if (e.keyCode == 32) { // Spacebar
 		settings.sustain = false;
-		for (var note = 0; note < settings.sustainedNotes.length; note++) {
+		for (var note = 0; note < settings.sustainedNotes.length; note++)
 			settings.sustainedNotes[note].noteOff();
-		}
 		settings.sustainedNotes = [];
 	} else if (!settings.isMouseDown && !settings.isTouchDown
 			&& (e.keyCode in settings.keyCodeToCoords)) {
@@ -825,9 +816,8 @@ function handleTouch(e) {
 	}
 	settings.isTouchDown = e.targetTouches.length != 0;
 	
-	for (var i = 0; i < settings.activeHexObjects.length; i++) {
+	for (var i = 0; i < settings.activeHexObjects.length; i++)
 		settings.activeHexObjects[i].release = true;
-	}
 	
 	for (var i = 0; i < e.targetTouches.length; i++) {
 		var coords = getHexCoordsAt(new Point(e.targetTouches[i].pageX - settings.canvas.offsetLeft,
@@ -898,9 +888,8 @@ function drawHex(p, c) { /* Point, color */
 	
 	settings.context.beginPath();
 	settings.context.moveTo(x[0], y[0]);
-	for (var i = 1; i < 6; i++) {
+	for (var i = 1; i < 6; i++)
 		settings.context.lineTo(x[i], y[i]);
-	}
 	settings.context.closePath();
 	settings.context.fillStyle = c;
 	settings.context.fill();
@@ -910,9 +899,8 @@ function drawHex(p, c) { /* Point, color */
 	settings.context.save();
 	settings.context.beginPath();
 	settings.context.moveTo(x[0], y[0]);
-	for (var i = 1; i < 6; i++) {
+	for (var i = 1; i < 6; i++)
 		settings.context.lineTo(x[i], y[i]);
-	}
 	settings.context.closePath();
 	settings.context.clip();
 	
@@ -930,9 +918,8 @@ function drawHex(p, c) { /* Point, color */
 	
 	settings.context.beginPath();
 	settings.context.moveTo(x2[0], y2[0]);
-	for (var i = 1; i < 6; i++) {
+	for (var i = 1; i < 6; i++)
 		settings.context.lineTo(x2[i], y2[i]);
-	}
 	settings.context.closePath();
 	settings.context.strokeStyle = 'black';
 	settings.context.lineWidth = 5;
@@ -947,9 +934,8 @@ function drawHex(p, c) { /* Point, color */
 	
 	settings.context.beginPath();
 	settings.context.moveTo(x[0], y[0]);
-	for (var i = 1; i < 6; i++) {
+	for (var i = 1; i < 6; i++)
 		settings.context.lineTo(x[i], y[i]);
-	}
 	settings.context.closePath();
 	settings.context.lineWidth = 2;
 	settings.context.lineJoin = 'round';
@@ -973,9 +959,8 @@ function drawHex(p, c) { /* Point, color */
 	var equivSteps = settings["enum"] ? parseInt(settings.equivSteps) : settings.scale.length;
 	var equivMultiple = Math.floor(note / equivSteps);
 	var reducedNote = note % equivSteps;
-	if (reducedNote < 0) {
+	if (reducedNote < 0)
 		reducedNote = equivSteps + reducedNote;
-	}
 	
 	if (!settings.no_labels) {
 		var name = settings["enum"] ? "" + reducedNote : settings.names[reducedNote];
@@ -1004,11 +989,10 @@ function drawHex(p, c) { /* Point, color */
 function centsToColor(cents, pressed) {
 	var returnColor;
 	if (!settings.spectrum_colors) {
-		if (typeof(settings.keycolors[global_pressed_interval]) === 'undefined') {
+		if (typeof(settings.keycolors[global_pressed_interval]) === 'undefined')
 			returnColor = "#EDEDE4";
-		} else {
+		else
 			returnColor = settings.keycolors[global_pressed_interval];
-		}
 		
 		var oldColor = returnColor;
 		
@@ -1052,9 +1036,8 @@ function centsToColor(cents, pressed) {
 }
 
 function roundTowardZero(val) {
-	if (val < 0) {
+	if (val < 0)
 		return Math.ceil(val);
-	}
 	return Math.floor(val);
 }
 
@@ -1218,9 +1201,9 @@ ActiveHex.prototype.noteOn = function(cents) {
 };
 
 ActiveHex.prototype.noteOff = function() {
-	if (settings.sustain) {
+	if (settings.sustain)
 		settings.sustainedNotes.push(this);
-	} else {
+	else {
 		var fadeout = settings.audioContext.currentTime + settings.sampleFadeout;
 		if (this.gainNode) {
 			this.gainNode.gain.setTargetAtTime(0, settings.audioContext.currentTime,
@@ -1429,22 +1412,20 @@ function nameToHex(colour) {
 		"yellowgreen": "#9acd32"
 	};
 
-	if (typeof colours[colour.toLowerCase()] != 'undefined') {
+	if (typeof colours[colour.toLowerCase()] != 'undefined')
 		return colours[colour.toLowerCase()];
-	} else if (colour.indexOf("#") == 0) {
+	else if (colour.indexOf("#") == 0)
 		return colour;
-	} else if (colour.length == 6 && colour.indexOf("#") == -1) {
+	else if (colour.length == 6 && colour.indexOf("#") == -1)
 		return "#" + colour;
-	}
 	
 	return "#EDEDE4"; //default button color!
 }
 
 function hex2rgb(col) {
 	var r, g, b;
-	if (col.charAt(0) == '#') {
+	if (col.charAt(0) == '#')
 		col = col.substr(1);
-	}
 	r = col.charAt(0) + col.charAt(1);
 	g = col.charAt(2) + col.charAt(3);
 	b = col.charAt(4) + col.charAt(5);
@@ -1466,26 +1447,24 @@ function rgb2hsv(r1, g1, b1) {
 			return (v - c) / 6 / diff + 1 / 2;
 		};
 	
-	if (diff == 0) {
+	if (diff == 0)
 		h = s = 0;
-	} else {
+	else {
 		s = diff / v;
 		rr = diffc(r);
 		gg = diffc(g);
 		bb = diffc(b);
 		
-		if (r === v) {
+		if (r === v)
 			h = bb - gg;
-		} else if (g === v) {
+		else if (g === v)
 			h = (1 / 3) + rr - bb;
-		} else if (b === v) {
+		else if (b === v)
 			h = (2 / 3) + gg - rr;
-		}
-		if (h < 0) {
+		if (h < 0)
 			h += 1;
-		} else if (h > 1) {
+		else if (h > 1)
 			h -= 1;
-		}
 	}
 	return {
 		h: Math.round(h * 360),
@@ -1513,9 +1492,8 @@ function checkPreset(init) {
 	var url_str = window.location.href;
 	
 	//first check for .htm as end of url and set the default preset (31ET)
-	if (url_str.substr(url_str.length - 4) == '.htm') {
+	if (url_str.substr(url_str.length - 4) == '.htm')
 		mselect.value = mselect.options[init].value;
-	}
 	for (var i = 0; i < mselect.length; i++) {
 		if (url_str.indexOf(mselect.options[i].value) != -1) {
 			//this is the correct preset

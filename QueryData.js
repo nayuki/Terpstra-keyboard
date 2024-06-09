@@ -28,9 +28,8 @@ http://creativecommons.org/publicdomain/zero/1.0/legalcode
 function QueryData(queryString, preserveDuplicates) {
 	
 	// if a query string wasn't specified, use the query string from the URL
-	if (queryString == undefined) {
+	if (queryString == undefined)
 		queryString = location.search ? location.search : '';
-	}
 	
 	// remove the leading question mark from the query string if it is present
 	if (queryString.charAt(0) == '?')
