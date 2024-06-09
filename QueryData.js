@@ -25,10 +25,10 @@ http://creativecommons.org/publicdomain/zero/1.0/legalcode
  *                      overwrite earler occurrences. This optional parameter
  *                      defaults to false.
  */
-function QueryData(queryString, preserveDuplicates){
+function QueryData(queryString, preserveDuplicates) {
 	
 	// if a query string wasn't specified, use the query string from the URL
-	if (queryString == undefined){
+	if (queryString == undefined) {
 		queryString = location.search ? location.search : '';
 	}
 	
@@ -36,7 +36,7 @@ function QueryData(queryString, preserveDuplicates){
 	if (queryString.charAt(0) == '?') queryString = queryString.substring(1);
 	
 	// check whether the query string is empty
-	if (queryString.length > 0){
+	if (queryString.length > 0) {
 		
 		// replace plus signs in the query string with spaces
 		queryString = queryString.replace(/\+/g, ' ');
@@ -45,7 +45,7 @@ function QueryData(queryString, preserveDuplicates){
 		var queryComponents = queryString.split(/[&;]/g);
 		
 		// loop over the query string components
-		for (var index = 0; index < queryComponents.length; index ++){
+		for (var index = 0; index < queryComponents.length; index ++) {
 			
 			// extract this component's key-value pair
 			var keyValuePair = queryComponents[index].split('=');
@@ -55,13 +55,13 @@ function QueryData(queryString, preserveDuplicates){
 			                 : '';
 			
 			// check whether duplicates should be preserved
-			if (preserveDuplicates){
+			if (preserveDuplicates) {
 				
 				// create the value array if necessary and store the value
 				if (!(key in this)) this[key] = [];
 				this[key].push(value);
 				
-			}else{
+			}else {
 				
 				// store the value
 				this[key] = value;

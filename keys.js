@@ -1,15 +1,15 @@
 var volume=1.4;
 window.addEventListener('keydown',e=>{
 	e.preventDefault();
-	if (e.code==='ArrowDown'){//ctrl
-		if (volume>=0.1){
+	if (e.code==='ArrowDown') {//ctrl
+		if (volume>=0.1) {
 			volume=+(volume-0.1).toFixed(2);
 			console.log(volume);
 		}
 	}
-	else if (e.code==='ArrowUp'){
+	else if (e.code==='ArrowUp') {
 		e.preventDefault();
-		if (volume<=2.9){
+		if (volume<=2.9) {
 			volume=+(volume+0.1).toFixed(2);
 			console.log(volume);
 		}
@@ -133,7 +133,7 @@ codeToCoords_dell={
 	13 : new Point(7, -1), // enter
 };
 
-(function dell(){
+(function dell() {
 	var lines=[];
 	lines[0]=["Escape", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8"];
 	lines[5]=["F9", "F10", "F11", "F12","принтскрин", "Insert", "Delete"];
@@ -719,7 +719,7 @@ function onKeyDown(e) {
 	//Hatsevich:
 	else if(!settings.isMouseDown && !settings.isTouchDown
 		&& (e.code in codeToCoords)
-		&& settings.pressedKeys.indexOf(e.code) == -1){
+		&& settings.pressedKeys.indexOf(e.code) == -1) {
 		settings.pressedKeys.push(e.code);
 		var coords = codeToCoords[e.code];
 		var hex = new ActiveHex(coords);
@@ -1534,5 +1534,5 @@ if(init_keyboard_onload)
 {
 	//hide landing page
 	document.getElementById('landing-page').style.display ='none';
-	setTimeout(function(){ goKeyboard(); }, 1500);
+	setTimeout(function() { goKeyboard(); }, 1500);
 }
