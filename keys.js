@@ -165,8 +165,7 @@ codeToCoords_dell={
 
 //check to see if we have params
 var init_keyboard_onload = true;
-if(decodeURIComponent(window.location.search) == '')
-{
+if (decodeURIComponent(window.location.search) == '') {
 	init_keyboard_onload = false;
 }
 
@@ -1533,8 +1532,7 @@ function noPreset() {
 
 
 //initialize keyboard on load
-if(init_keyboard_onload)
-{
+if (init_keyboard_onload) {
 	//hide landing page
 	document.getElementById('landing-page').style.display ='none';
 	setTimeout(function() { goKeyboard(); }, 1500);
