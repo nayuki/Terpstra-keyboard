@@ -25,7 +25,7 @@ http://creativecommons.org/publicdomain/zero/1.0/legalcode
  *                      overwrite earler occurrences. This optional parameter
  *                      defaults to false.
  */
-function QueryData(queryString, preserveDuplicates?: boolean) {
+function QueryData(queryString?: string, preserveDuplicates?: boolean) {
 	
 	// if a query string wasn't specified, use the query string from the URL
 	if (queryString == undefined)
@@ -49,8 +49,8 @@ function QueryData(queryString, preserveDuplicates?: boolean) {
 			
 			// extract this component's key-value pair
 			var keyValuePair = queryComponents[index].split("=");
-			var key          = decodeURIComponent(keyValuePair[0]);
-			var value        = keyValuePair.length > 1
+			var key: string          = decodeURIComponent(keyValuePair[0]);
+			var value: string        = keyValuePair.length > 1
 			                 ? decodeURIComponent(keyValuePair[1])
 			                 : "";
 			

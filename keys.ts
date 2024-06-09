@@ -210,7 +210,7 @@ getInputById("no_labels").checked = "no_labels" in getData ? JSON.parse(getData.
 
 
 var global_pressed_interval: number;
-var current_text_color = "#000000";
+var current_text_color: string = "#000000";
 
 if ("scale" in getData)
 	document.getElementById("scale").value = getData.scale[0];
@@ -277,7 +277,7 @@ function hideRevealEnum() {
 
 
 function changeURL() {
-	var url = window.location.pathname + "?";
+	var url: string = window.location.pathname + "?";
 	// add fundamental, right, upright, size
 	
 	url += "fundamental=" + getInputById("fundamental").value +
@@ -306,7 +306,7 @@ function changeURL() {
 	var scaleLines = document.getElementById("scale").value.split("\n");
 	var first: boolean = true;
 	var foundDescription: boolean = false;
-	var description = "Terpstra Keyboard WebApp";
+	var description: string = "Terpstra Keyboard WebApp";
 	
 	scaleLines.forEach(function(line) {
 		if (!foundDescription && !line.match(/^\!/) && line.match(/[a-zA-Z]+/)) {
@@ -797,7 +797,7 @@ function handleTouch(e) {
 			var newHex = new ActiveHex(coords);
 			var cents: number = hexCoordsToCents(coords);
 			newHex.noteOn(cents);
-			var c = centsToColor(cents, true);
+			var c: string = centsToColor(cents, true);
 			drawHex(coords, c);
 			settings.activeHexObjects.push(newHex);
 		}
@@ -807,7 +807,7 @@ function handleTouch(e) {
 		if (settings.activeHexObjects[i].release) {
 			settings.activeHexObjects[i].noteOff();
 			var coords = settings.activeHexObjects[i].coords;
-			var c = centsToColor(hexCoordsToCents(coords), false);
+			var c: string = centsToColor(hexCoordsToCents(coords), false);
 			drawHex(coords, c);
 			settings.activeHexObjects.splice(i, 1);
 		}
@@ -822,7 +822,7 @@ function drawGrid() {
 	for (var r = -max; r < max; r++) {
 		for (var ur = -max; ur < max; ur++) {
 			var coords = new Point(r, ur);
-			var c = centsToColor(hexCoordsToCents(coords), false);
+			var c: string = centsToColor(hexCoordsToCents(coords), false);
 			drawHex(coords, c);
 		}
 	}
@@ -834,7 +834,7 @@ function hexCoordsToScreen(hex) { /* Point */
 	return new Point(screenX, screenY);
 }
 
-function drawHex(p, c) { /* Point, color */
+function drawHex(p, c: string) { /* Point, color */
 	var hexCenter = hexCoordsToScreen(p);
 	
 	// Calculate hex vertices
@@ -926,7 +926,7 @@ function drawHex(p, c) { /* Point, color */
 		reducedNote = equivSteps + reducedNote;
 	
 	if (!settings.no_labels) {
-		var name = settings["enum"] ? "" + reducedNote : settings.names[reducedNote];
+		var name: string = settings["enum"] ? "" + reducedNote : settings.names[reducedNote];
 		if (name) {
 			settings.context.save();
 			var scaleFactor: number = name.length > 3 ? 3 / name.length : 1;
@@ -949,15 +949,15 @@ function drawHex(p, c) { /* Point, color */
 	settings.context.restore();
 }
 
-function centsToColor(cents: number, pressed: boolean) {
-	var returnColor;
+function centsToColor(cents: number, pressed: boolean): string {
+	var returnColor: string;
 	if (!settings.spectrum_colors) {
 		if (typeof(settings.keycolors[global_pressed_interval]) === "undefined")
 			returnColor = "#EDEDE4";
 		else
 			returnColor = settings.keycolors[global_pressed_interval];
 		
-		var oldColor = returnColor;
+		var oldColor: string = returnColor;
 		
 		//convert color name to hex
 		returnColor = nameToHex(returnColor);
@@ -1049,11 +1049,11 @@ function getHexCoordsAt(coords) {
 	return closestHex;
 }
 
-function rgb(r: number, g: number, b: number) {
+function rgb(r: number, g: number, b: number): string {
 	return "rgb(" + r + "," + g + "," + b + ")";
 }
 
-function HSVtoRGB(h: number, s: number, v: number) {
+function HSVtoRGB(h: number, s: number, v: number): string {
 	var r: number, g: number, b: number, i: number, f: number, p: number, q: number, t: number;
 	i = Math.floor(h * 6);
 	f = h * 6 - i;
@@ -1192,13 +1192,13 @@ function init() {
 	}
 }
 
-function loadSample(name, iteration: number) {
+function loadSample(name: string, iteration: number) {
 	// It seems audioContext doesn't cope with simultaneous decodeAudioData calls ):
 	
 	var sampleFreqs = ["110", "220", "440", "880"];
 	//for (var i = 0; i < 4; ++i) {
 	var request = new XMLHttpRequest();
-	var url = "sounds/" + name + sampleFreqs[iteration] + ".mp3";
+	var url: string = "sounds/" + name + sampleFreqs[iteration] + ".mp3";
 	//console.log(iteration);
 	request.open("GET", url, true);
 	request.responseType = "arraybuffer";
@@ -1220,7 +1220,7 @@ function onLoadError(e) {
 }
 
 
-function tempAlert(msg, duration: number) {
+function tempAlert(msg: string, duration: number) {
 	var el = document.createElement("div");
 	el.setAttribute("style", "position:absolute;top:40%;left:20%;background-color:white; font-size:25px;");
 	el.innerHTML = msg;
@@ -1231,7 +1231,7 @@ function tempAlert(msg, duration: number) {
 }
 
 
-function nameToHex(colour) {
+function nameToHex(colour: string): string {
 	var colours = {
 		"aliceblue": "#f0f8ff",
 		"antiquewhite": "#faebd7",
@@ -1385,7 +1385,7 @@ function nameToHex(colour) {
 	return "#EDEDE4"; //default button color!
 }
 
-function hex2rgb(col) {
+function hex2rgb(col: string) {
 	var r, g, b;
 	if (col.charAt(0) == "#")
 		col = col.substr(1);
@@ -1436,7 +1436,7 @@ function rgb2hsv(r1: number, g1: number, b1: number) {
 	};
 }
 
-function getContrastYIQ(hexcolor) {
+function getContrastYIQ(hexcolor: string): string {
 	hexcolor = hexcolor.replace("#", "");
 	var r: number = parseInt(hexcolor.substr(0, 2), 16);
 	var g: number = parseInt(hexcolor.substr(2, 2), 16);
@@ -1445,14 +1445,14 @@ function getContrastYIQ(hexcolor) {
 	return yiq >= 128 ? "black" : "white";
 }
 
-function rgbToHex(r: number, g: number, b: number) {
+function rgbToHex(r: number, g: number, b: number): string {
 	return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
 
 function checkPreset(init: number) {
 	var mselect = document.getElementById("quicklinks");
-	var url_str = window.location.href;
+	var url_str: string = window.location.href;
 	
 	//first check for .htm as end of url and set the default preset (31ET)
 	if (url_str.substr(url_str.length - 4) == ".htm")
