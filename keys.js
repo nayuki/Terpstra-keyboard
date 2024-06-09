@@ -17,119 +17,119 @@ window.addEventListener("keydown", e => {
 
 
 keyCodeToCoords_mac = {
-	27 : new Point(-5, -3), // esc
-	112 : new Point(-4, -3), // f1
-	113 : new Point(-3, -3), // f2
-	114 : new Point(-2, -3), // f3
-	115 : new Point(-1, -3), // f4
-	116 : new Point(0, -3), // f5
-	117 : new Point(1, -3), // f6
-	118 : new Point(2, -3), // f7
-	119 : new Point(3, -3), // f8
-	120 : new Point(4, -3), // f9
-	121 : new Point(5, -3), // f10
-	122 : new Point(6, -3), // f11
-	123 : new Point(7, -3), // f12
+	27: new Point(-5, -3), // esc
+	112: new Point(-4, -3), // f1
+	113: new Point(-3, -3), // f2
+	114: new Point(-2, -3), // f3
+	115: new Point(-1, -3), // f4
+	116: new Point(0, -3), // f5
+	117: new Point(1, -3), // f6
+	118: new Point(2, -3), // f7
+	119: new Point(3, -3), // f8
+	120: new Point(4, -3), // f9
+	121: new Point(5, -3), // f10
+	122: new Point(6, -3), // f11
+	123: new Point(7, -3), // f12
 	
 	
-	//192 : new Point(-6, -2), // `
-	49 : new Point(-5, -2), // 1
-	50 : new Point(-4, -2), // 2
-	51 : new Point(-3, -2), // 3
-	52 : new Point(-2, -2), // 4
-	53 : new Point(-1, -2), // 5
-	54 : new Point(0, -2), // 6
-	55 : new Point(1, -2), // 7
-	56 : new Point(2, -2), // 8
-	57 : new Point(3, -2), // 9
-	48 : new Point(4, -2), // 0
-	189 : new Point(5, -2), // -
-	187 : new Point(6, -2), // =
-	8 : new Point(7, -2), // backspace
+	//192: new Point(-6, -2), // `
+	49: new Point(-5, -2), // 1
+	50: new Point(-4, -2), // 2
+	51: new Point(-3, -2), // 3
+	52: new Point(-2, -2), // 4
+	53: new Point(-1, -2), // 5
+	54: new Point(0, -2), // 6
+	55: new Point(1, -2), // 7
+	56: new Point(2, -2), // 8
+	57: new Point(3, -2), // 9
+	48: new Point(4, -2), // 0
+	189: new Point(5, -2), // -
+	187: new Point(6, -2), // =
+	8: new Point(7, -2), // backspace
 	
-	9 : new Point(-6, -1), // tab
-	81 : new Point(-5, -1), // Q
-	87 : new Point(-4, -1), // W
-	69 : new Point(-3, -1), // E
-	82 : new Point(-2, -1), // R
-	84 : new Point(-1, -1), // T
-	89 : new Point(0, -1), // Y
-	85 : new Point(1, -1), // U
-	73 : new Point(2, -1), // I
-	79 : new Point(3, -1), // O
-	80 : new Point(4, -1), // P
-	219 : new Point(5, -1), // [
-	//221 : new Point(6, -1), // ]
-	13 : new Point(7, -1), // enter
+	9: new Point(-6, -1), // tab
+	81: new Point(-5, -1), // Q
+	87: new Point(-4, -1), // W
+	69: new Point(-3, -1), // E
+	82: new Point(-2, -1), // R
+	84: new Point(-1, -1), // T
+	89: new Point(0, -1), // Y
+	85: new Point(1, -1), // U
+	73: new Point(2, -1), // I
+	79: new Point(3, -1), // O
+	80: new Point(4, -1), // P
+	219: new Point(5, -1), // [
+	//221: new Point(6, -1), // ]
+	13: new Point(7, -1), // enter
 	
-	//20 : new Point(-6, 0), // caps lock
-	65 : new Point(-5, 0), // A
-	83 : new Point(-4, 0), // S
-	68 : new Point(-3, 0), // D
-	70 : new Point(-2, 0), // F
-	71 : new Point(-1, 0), // G
-	72 : new Point(0, 0), // H
-	74 : new Point(1, 0), // J
-	75 : new Point(2, 0), // K
-	76 : new Point(3, 0), // L
-	186 : new Point(4, 0), // ;
-	222 : new Point(5, 0), // '
-	//220 : new Point(6, 0), // \
+	//20: new Point(-6, 0), // caps lock
+	65: new Point(-5, 0), // A
+	83: new Point(-4, 0), // S
+	68: new Point(-3, 0), // D
+	70: new Point(-2, 0), // F
+	71: new Point(-1, 0), // G
+	72: new Point(0, 0), // H
+	74: new Point(1, 0), // J
+	75: new Point(2, 0), // K
+	76: new Point(3, 0), // L
+	186: new Point(4, 0), // ;
+	222: new Point(5, 0), // '
+	//220: new Point(6, 0), // \
 	
-	90 : new Point(-5, 1), // Z
-	88 : new Point(-4, 1), // X
-	67 : new Point(-3, 1), // C
-	86 : new Point(-2, 1), // V
-	66 : new Point(-1, 1), // B
-	78 : new Point(0, 1), // N
-	77 : new Point(1, 1), // M
-	188 : new Point(2, 1), // ,
-	190 : new Point(3, 1), // .
-	191 : new Point(4, 1), // /
-	//16 : new Point(5, 1), // shift
+	90: new Point(-5, 1), // Z
+	88: new Point(-4, 1), // X
+	67: new Point(-3, 1), // C
+	86: new Point(-2, 1), // V
+	66: new Point(-1, 1), // B
+	78: new Point(0, 1), // N
+	77: new Point(1, 1), // M
+	188: new Point(2, 1), // ,
+	190: new Point(3, 1), // .
+	191: new Point(4, 1), // /
+	//16: new Point(5, 1), // shift
 };
 
 codeToCoords_mac = {
-	"Backslash" : new Point(6, 0), // \
-	"ShiftRight" : new Point(5, 1),
-	"IntlBackslash" : new Point(-6, 1),
-	"ShiftLeft" : new Point(-7, 1),
-	"Backquote" : new Point(-6, -2),
-	"BracketRight" : new Point(6, -1), // ]
+	"Backslash": new Point(6, 0), // \
+	"ShiftRight": new Point(5, 1),
+	"IntlBackslash": new Point(-6, 1),
+	"ShiftLeft": new Point(-7, 1),
+	"Backquote": new Point(-6, -2),
+	"BracketRight": new Point(6, -1), // ]
 }
 codeToCoords = {};
 keyCodeToCoords = {};
 
 codeToCoords_dell = {
-	"Backquote" : new Point(-6, -2), // `
-	"Digit1" : new Point(-5, -2), // 1
-	"Digit2" : new Point(-4, -2), // 2
-	"Digit3" : new Point(-3, -2), // 3
-	"Digit4" : new Point(-2, -2), // 4
-	"Digit5" : new Point(-1, -2), // 5
-	"Digit6" : new Point(0, -2), // 6
-	"Digit7" : new Point(1, -2), // 7
-	"Digit8" : new Point(2, -2), // 8
-	"Digit9" : new Point(3, -2), // 9
-	"Digit0" : new Point(4, -2), // 0
-	"Minus" : new Point(5, -2), // -
-	"Equal" : new Point(6, -2), // =
-	"Backspace" : new Point(7, -2), // backspace
+	"Backquote": new Point(-6, -2), // `
+	"Digit1": new Point(-5, -2), // 1
+	"Digit2": new Point(-4, -2), // 2
+	"Digit3": new Point(-3, -2), // 3
+	"Digit4": new Point(-2, -2), // 4
+	"Digit5": new Point(-1, -2), // 5
+	"Digit6": new Point(0, -2), // 6
+	"Digit7": new Point(1, -2), // 7
+	"Digit8": new Point(2, -2), // 8
+	"Digit9": new Point(3, -2), // 9
+	"Digit0": new Point(4, -2), // 0
+	"Minus": new Point(5, -2), // -
+	"Equal": new Point(6, -2), // =
+	"Backspace": new Point(7, -2), // backspace
 	
-	Tab : new Point(-6, -1), // tab
-	KeyQ : new Point(-5, -1), // Q
-	87 : new Point(-4, -1), // W
-	69 : new Point(-3, -1), // E
-	82 : new Point(-2, -1), // R
-	84 : new Point(-1, -1), // T
-	89 : new Point(0, -1), // Y
-	85 : new Point(1, -1), // U
-	73 : new Point(2, -1), // I
-	79 : new Point(3, -1), // O
-	80 : new Point(4, -1), // P
-	219 : new Point(5, -1), // [
-	//221 : new Point(6, -1), // ]
-	13 : new Point(7, -1), // enter
+	Tab: new Point(-6, -1), // tab
+	KeyQ: new Point(-5, -1), // Q
+	87: new Point(-4, -1), // W
+	69: new Point(-3, -1), // E
+	82: new Point(-2, -1), // R
+	84: new Point(-1, -1), // T
+	89: new Point(0, -1), // Y
+	85: new Point(1, -1), // U
+	73: new Point(2, -1), // I
+	79: new Point(3, -1), // O
+	80: new Point(4, -1), // P
+	219: new Point(5, -1), // [
+	//221: new Point(6, -1), // ]
+	13: new Point(7, -1), // enter
 };
 
 (function dell() {
@@ -508,54 +508,54 @@ function goKeyboard() {
 		is_key_event_added = 1;
 		settings.pressedKeys = [];
 		settings.keyCodeToCoords = keyCodeToCoords/*{
-			49 : new Point(-5, -2), // 1
-			50 : new Point(-4, -2), // 2
-			51 : new Point(-3, -2), // 3
-			52 : new Point(-2, -2), // 4
-			53 : new Point(-1, -2), // 5
-			54 : new Point(0, -2), // 6
-			55 : new Point(1, -2), // 7
-			56 : new Point(2, -2), // 8
-			57 : new Point(3, -2), // 9
-			48 : new Point(4, -2), // 0
-			189 : new Point(5, -2), // -
-			187 : new Point(6, -2), // =
+			49: new Point(-5, -2), // 1
+			50: new Point(-4, -2), // 2
+			51: new Point(-3, -2), // 3
+			52: new Point(-2, -2), // 4
+			53: new Point(-1, -2), // 5
+			54: new Point(0, -2), // 6
+			55: new Point(1, -2), // 7
+			56: new Point(2, -2), // 8
+			57: new Point(3, -2), // 9
+			48: new Point(4, -2), // 0
+			189: new Point(5, -2), // -
+			187: new Point(6, -2), // =
 			
-			81 : new Point(-5, -1), // Q
-			87 : new Point(-4, -1), // W
-			69 : new Point(-3, -1), // E
-			82 : new Point(-2, -1), // R
-			84 : new Point(-1, -1), // T
-			89 : new Point(0, -1), // Y
-			85 : new Point(1, -1), // U
-			73 : new Point(2, -1), // I
-			79 : new Point(3, -1), // O
-			80 : new Point(4, -1), // P
-			219 : new Point(5, -1), // [
-			221 : new Point(6, -1), // ]
+			81: new Point(-5, -1), // Q
+			87: new Point(-4, -1), // W
+			69: new Point(-3, -1), // E
+			82: new Point(-2, -1), // R
+			84: new Point(-1, -1), // T
+			89: new Point(0, -1), // Y
+			85: new Point(1, -1), // U
+			73: new Point(2, -1), // I
+			79: new Point(3, -1), // O
+			80: new Point(4, -1), // P
+			219: new Point(5, -1), // [
+			221: new Point(6, -1), // ]
 			
-			65 : new Point(-5, 0), // A
-			83 : new Point(-4, 0), // S
-			68 : new Point(-3, 0), // D
-			70 : new Point(-2, 0), // F
-			71 : new Point(-1, 0), // G
-			72 : new Point(0, 0), // H
-			74 : new Point(1, 0), // J
-			75 : new Point(2, 0), // K
-			76 : new Point(3, 0), // L
-			186 : new Point(4, 0), // ;
-			222 : new Point(5, 0), // '
+			65: new Point(-5, 0), // A
+			83: new Point(-4, 0), // S
+			68: new Point(-3, 0), // D
+			70: new Point(-2, 0), // F
+			71: new Point(-1, 0), // G
+			72: new Point(0, 0), // H
+			74: new Point(1, 0), // J
+			75: new Point(2, 0), // K
+			76: new Point(3, 0), // L
+			186: new Point(4, 0), // ;
+			222: new Point(5, 0), // '
 			
-			90 : new Point(-5, 1), // Z
-			88 : new Point(-4, 1), // X
-			67 : new Point(-3, 1), // C
-			86 : new Point(-2, 1), // V
-			66 : new Point(-1, 1), // B
-			78 : new Point(0, 1), // N
-			77 : new Point(1, 1), // M
-			188 : new Point(2, 1), // ,
-			190 : new Point(3, 1), // .
-			191 : new Point(4, 1), // /
+			90: new Point(-5, 1), // Z
+			88: new Point(-4, 1), // X
+			67: new Point(-3, 1), // C
+			86: new Point(-2, 1), // V
+			66: new Point(-1, 1), // B
+			78: new Point(0, 1), // N
+			77: new Point(1, 1), // M
+			188: new Point(2, 1), // ,
+			190: new Point(3, 1), // .
+			191: new Point(4, 1), // /
 		};*/
 		window.addEventListener("keydown", onKeyDown, false);
 		window.addEventListener("keyup", onKeyUp, false);
