@@ -1,15 +1,15 @@
 var volume = 1.4;
-window.addEventListener('keydown',e=>{
+window.addEventListener('keydown',e => {
 	e.preventDefault();
-	if (e.code==='ArrowDown') {//ctrl
-		if (volume>=0.1) {
-			volume = +(volume-0.1).toFixed(2);
+	if (e.code === 'ArrowDown') {//ctrl
+		if (volume >= 0.1) {
+			volume = +(volume - 0.1).toFixed(2);
 			console.log(volume);
 		}
-	} else if (e.code==='ArrowUp') {
+	} else if (e.code === 'ArrowUp') {
 		e.preventDefault();
-		if (volume<=2.9) {
-			volume = +(volume+0.1).toFixed(2);
+		if (volume <= 2.9) {
+			volume = +(volume + 0.1).toFixed(2);
 			console.log(volume);
 		}
 	}
@@ -141,23 +141,23 @@ codeToCoords_dell = {
 	lines[3] = ["CapsLock", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "Quote", "Enter"];
 	lines[4] = ["ShiftLeft", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period", "Slash", "ShiftRight"];
 	
-	lines[0].forEach((code,i)=>
-		codeToCoords[code] = new Point(-6+i, -3)
+	lines[0].forEach((code,i) =>
+		codeToCoords[code] = new Point(-6 + i, -3)
 	);
-	lines[5].forEach((code,i)=>
-		codeToCoords[code] = new Point(-6+8+i, -3)
+	lines[5].forEach((code,i) =>
+		codeToCoords[code] = new Point(-6 + 8 + i, -3)
 	);
-	lines[1].forEach((code,i)=>
-		codeToCoords[code] = new Point(-6+i, -2)
+	lines[1].forEach((code,i) =>
+		codeToCoords[code] = new Point(-6 + i, -2)
 	);
-	lines[2].forEach((code,i)=>
-		codeToCoords[code] = new Point(-6+i, -1)
+	lines[2].forEach((code,i) =>
+		codeToCoords[code] = new Point(-6 + i, -1)
 	);
-	lines[3].forEach((code,i)=>
-		codeToCoords[code] = new Point(-6+i, 0)
+	lines[3].forEach((code,i) =>
+		codeToCoords[code] = new Point(-6 + i, 0)
 	);
-	lines[4].forEach((code,i)=>
-		codeToCoords[code] = new Point(-6+i, 1)
+	lines[4].forEach((code,i) =>
+		codeToCoords[code] = new Point(-6 + i, 1)
 	);
 })();
 
@@ -1019,7 +1019,7 @@ function centsToColor(cents, pressed) {
 	var h = fcolor.h / 360;
 	var s = fcolor.s / 100;
 	var v = fcolor.v / 100;
-	//var h = 145/360; // green
+	//var h = 145 / 360; // green
 	var reduced = (cents / 1200) % 1;
 	if (reduced < 0)
 		reduced += 1;
