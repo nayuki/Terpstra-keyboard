@@ -734,7 +734,7 @@ function mouseActive(e) {
 		if (!(coords.equals(settings.activeHexObjects[0].coords))) {
 			settings.activeHexObjects[0].noteOff();
 			drawHex(settings.activeHexObjects[0].coords,
-					centsToColor(hexCoordsToCents(settings.activeHexObjects[0].coords, false)));
+				centsToColor(hexCoordsToCents(settings.activeHexObjects[0].coords, false)));
 			
 			settings.activeHexObjects[0] = new ActiveHex(coords);
 			var cents = hexCoordsToCents(coords);
@@ -779,7 +779,7 @@ function handleTouch(e) {
 	
 	for (var i = 0; i < e.targetTouches.length; i++) {
 		var coords = getHexCoordsAt(new Point(e.targetTouches[i].pageX - settings.canvas.offsetLeft,
-				e.targetTouches[i].pageY - settings.canvas.offsetTop));
+			e.targetTouches[i].pageY - settings.canvas.offsetTop));
 		var found = false;
 		
 		for (var j = 0; j < settings.activeHexObjects.length; j++) {
@@ -811,8 +811,8 @@ function handleTouch(e) {
 
 function drawGrid() {
 	var max = (settings.centerpoint.x > settings.centerpoint.y) ?
-			settings.centerpoint.x / settings.hexSize :
-			settings.centerpoint.y / settings.hexSize;
+		settings.centerpoint.x / settings.hexSize :
+		settings.centerpoint.y / settings.hexSize;
 	max = Math.floor(max);
 	for (var r = -max; r < max; r++) {
 		for (var ur = -max; ur < max; ur++) {
@@ -1165,7 +1165,7 @@ ActiveHex.prototype.noteOff = function() {
 		var fadeout = settings.audioContext.currentTime + settings.sampleFadeout;
 		if (this.gainNode) {
 			this.gainNode.gain.setTargetAtTime(0, settings.audioContext.currentTime,
-					settings.sampleFadeout);
+				settings.sampleFadeout);
 		}
 		if (this.source) {
 			// This is a terrible fudge. Please forgive me - it's late, I'm tired, I
