@@ -368,6 +368,80 @@ function applyMatrixToPoint(m: Array<number>, p) { /*Array, Point*/
 	);
 }
 
+
+
+class ActiveHex {
+	
+	public release: boolean = false;
+	public freq: number = 440;
+	private source: AudioBufferSourceNode;
+	private gainNode: GainNode;
+	
+	public constructor(
+		public coords: Point) {}
+	
+	
+	public noteOn(cents: number): void {
+		var freq: number = settings.fundamental * Math.pow(2, cents / 1200);
+		var source = settings.audioContext.createBufferSource(); // creates a sound source
+		// Choose sample
+		var sampleFreq: number = 110;
+		var sampleNumber: number = 0;
+		if (freq > 155) {
+			if (freq > 311) {
+				if (freq > 622) {
+					sampleFreq = 880;
+					sampleNumber = 3;
+				} else {
+					sampleFreq = 440;
+					sampleNumber = 2;
+				}
+			} else {
+				sampleFreq = 220;
+				sampleNumber = 1;
+			}
+		}
+		
+		if (!settings.sampleBuffer[sampleNumber]) // Sample not yet loaded
+			return;
+		
+		source.buffer = settings.sampleBuffer[sampleNumber]; // tell the source which sound to play
+		source.playbackRate.value = freq / sampleFreq;
+		// Create a gain node.
+		var gainNode = settings.audioContext.createGain();
+		// Connect the source to the gain node.
+		source.connect(gainNode);
+		// Connect the gain node to the destination.
+		gainNode.connect(settings.audioContext.destination);
+		source.connect(gainNode); // connect the source to the context's destination (the speakers)
+		gainNode.gain.value = volume;
+		source.start(0); // play the source now
+		this.source = source;
+		this.gainNode = gainNode;
+	}
+	
+	
+	public noteOff(): void {
+		if (settings.sustain)
+			settings.sustainedNotes.push(this);
+		else {
+			var fadeout: number = settings.audioContext.currentTime + settings.sampleFadeout;
+			if (this.gainNode) {
+				this.gainNode.gain.setTargetAtTime(0, settings.audioContext.currentTime,
+					settings.sampleFadeout);
+			}
+			if (this.source) {
+				// This is a terrible fudge. Please forgive me - it's late, I'm tired, I
+				// have a deadline, I've got other shit to do
+				this.source.stop(fadeout + 4);
+			}
+		}
+	}
+	
+}
+
+
+
 function resizeHandler(): void {
 	// Resize Inner and outer coordinates of canvas to preserve aspect ratio
 	
@@ -1117,68 +1191,6 @@ function HSVtoRGB2(h: number, s: number, v: number) {
 		blue: Math.floor(b * 255),
 	};
 }
-
-function ActiveHex(coords) {
-	this.coords = coords;
-	this.release = false;
-	this.freq = 440;
-}
-
-ActiveHex.prototype.noteOn = function(cents: number): void {
-	var freq: number = settings.fundamental * Math.pow(2, cents / 1200);
-	var source = settings.audioContext.createBufferSource(); // creates a sound source
-	// Choose sample
-	var sampleFreq: number = 110;
-	var sampleNumber: number = 0;
-	if (freq > 155) {
-		if (freq > 311) {
-			if (freq > 622) {
-				sampleFreq = 880;
-				sampleNumber = 3;
-			} else {
-				sampleFreq = 440;
-				sampleNumber = 2;
-			}
-		} else {
-			sampleFreq = 220;
-			sampleNumber = 1;
-		}
-	}
-	
-	if (!settings.sampleBuffer[sampleNumber]) // Sample not yet loaded
-		return;
-	
-	source.buffer = settings.sampleBuffer[sampleNumber]; // tell the source which sound to play
-	source.playbackRate.value = freq / sampleFreq;
-	// Create a gain node.
-	var gainNode = settings.audioContext.createGain();
-	// Connect the source to the gain node.
-	source.connect(gainNode);
-	// Connect the gain node to the destination.
-	gainNode.connect(settings.audioContext.destination);
-	source.connect(gainNode); // connect the source to the context's destination (the speakers)
-	gainNode.gain.value = volume;
-	source.start(0); // play the source now
-	this.source = source;
-	this.gainNode = gainNode;
-};
-
-ActiveHex.prototype.noteOff = function(): void {
-	if (settings.sustain)
-		settings.sustainedNotes.push(this);
-	else {
-		var fadeout: number = settings.audioContext.currentTime + settings.sampleFadeout;
-		if (this.gainNode) {
-			this.gainNode.gain.setTargetAtTime(0, settings.audioContext.currentTime,
-				settings.sampleFadeout);
-		}
-		if (this.source) {
-			// This is a terrible fudge. Please forgive me - it's late, I'm tired, I
-			// have a deadline, I've got other shit to do
-			this.source.stop(fadeout + 4);
-		}
-	}
-};
 
 window.addEventListener("load", init, false);
 
