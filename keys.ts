@@ -1,4 +1,4 @@
-var volume = 1.4;
+var volume: number = 1.4;
 window.addEventListener("keydown", e => {
 	e.preventDefault();
 	if (e.code === "ArrowDown") {//ctrl
@@ -26,14 +26,14 @@ class Point {
 	}
 	
 	public plus(p: Point): Point {
-		var x = this.x + p.x;
-		var y = this.y + p.y;
+		var x: number = this.x + p.x;
+		var y: number = this.y + p.y;
 		return new Point(x, y);
 	}
 	
 	public minus(p: Point): Point {
-		var x = this.x - p.x;
-		var y = this.y - p.y;
+		var x: number = this.x - p.x;
+		var y: number = this.y - p.y;
 		return new Point(x, y);
 	}
 }
@@ -209,7 +209,7 @@ getInputById("fundamental_color").value = "fundamental_color" in getData ? getDa
 getInputById("no_labels").checked = "no_labels" in getData ? JSON.parse(getData.no_labels) : false;
 
 
-var global_pressed_interval;
+var global_pressed_interval: number;
 var current_text_color = "#000000";
 
 if ("scale" in getData)
@@ -329,7 +329,7 @@ function parseScale() {
 			if (line.match(/\//)) {
 				// ratio
 				var nd = line.split("/");
-				var ratio = 1200 * Math.log(parseInt(nd[0]) / parseInt(nd[1])) / Math.log(2);
+				var ratio: number = 1200 * Math.log(parseInt(nd[0]) / parseInt(nd[1])) / Math.log(2);
 				settings.scale.push(ratio);
 			} else {
 				if (line.match(/\./))
@@ -350,7 +350,7 @@ function parseScaleColors() {
 	});
 }
 
-function calculateRotationMatrix(rotation, center) {
+function calculateRotationMatrix(rotation: number, center) {
 	var m = [];
 	m[0] = Math.cos(rotation);
 	m[1] = Math.sin(rotation);
@@ -371,8 +371,8 @@ function applyMatrixToPoint(m, p) { /*Array, Point*/
 function resizeHandler() {
 	// Resize Inner and outer coordinates of canvas to preserve aspect ratio
 	
-	var newWidth = window.innerWidth;
-	var newHeight = window.innerHeight;
+	var newWidth: number = window.innerWidth;
+	var newHeight: number = window.innerHeight;
 	
 	settings.canvas.style.height = newHeight + "px";
 	settings.canvas.style.width = newWidth + "px";
@@ -385,8 +385,8 @@ function resizeHandler() {
 	
 	// Find new centerpoint
 	
-	var centerX = newWidth / 2;
-	var centerY = newHeight / 2;
+	var centerX: number = newWidth / 2;
+	var centerY: number = newHeight / 2;
 	settings.centerpoint = new Point(centerX, centerY);
 	
 	// Rotate about it
@@ -568,19 +568,19 @@ function goKeyboard() {
 	
 	//iPad Shake to toggle sustain
 	if (typeof window.DeviceMotionEvent != "undefined") {
-		var lastShakeCheck = 0;
-		var lastShakeCount = 0;
+		var lastShakeCheck: number = 0;
+		var lastShakeCount: number = 0;
 		
 		// Shake sensitivity (a lower number is more)
-		var sensitivity = 5;
+		var sensitivity: number = 5;
 		
 		// Position variables
-		var x1 = 0,
-			y1 = 0,
-			z1 = 0,
-			x2 = 0,
-			y2 = 0,
-			z2 = 0;
+		var x1: number = 0,
+			y1: number = 0,
+			z1: number = 0,
+			x2: number = 0,
+			y2: number = 0,
+			z2: number = 0;
 		
 		// Listen to motion events and update the position
 		window.addEventListener("devicemotion", function(e) {
@@ -593,7 +593,7 @@ function goKeyboard() {
 		// if the change is greater than the sensitivity
 		setInterval(function() {
 			lastShakeCheck++;
-			var change = Math.abs(x1 - x2 + y1 - y2 + z1 - z2);
+			var change: number = Math.abs(x1 - x2 + y1 - y2 + z1 - z2);
 			
 			if (change > sensitivity) {
 				
@@ -664,7 +664,7 @@ function onKeyDown(e) {
 		var coords = settings.keyCodeToCoords[e.keyCode];
 		var hex = new ActiveHex(coords);
 		settings.activeHexObjects.push(hex);
-		var cents = hexCoordsToCents(coords);
+		var cents: number = hexCoordsToCents(coords);
 		drawHex(coords, centsToColor(cents, true));
 		hex.noteOn(cents);
 	}
@@ -677,7 +677,7 @@ function onKeyDown(e) {
 		var coords = codeToCoords[e.code];
 		var hex = new ActiveHex(coords);
 		settings.activeHexObjects.push(hex);
-		var cents = hexCoordsToCents(coords);
+		var cents: number = hexCoordsToCents(coords);
 		drawHex(coords, centsToColor(cents, true));
 		hex.noteOn(cents);
 	}
@@ -696,7 +696,7 @@ function onKeyUp(e) {
 			settings.pressedKeys.splice(keyIndex, 1);
 			var coords = settings.keyCodeToCoords[e.keyCode];
 			drawHex(coords, centsToColor(hexCoordsToCents(coords), false));
-			var hexIndex = settings.activeHexObjects.findIndex(function(hex) {
+			var hexIndex: number = settings.activeHexObjects.findIndex(function(hex) {
 				return coords.equals(hex.coords);
 			});
 			if (hexIndex != -1) {
@@ -709,12 +709,12 @@ function onKeyUp(e) {
 	//Hatsevich:
 	else if (!settings.isMouseDown && !settings.isTouchDown
 			&& (e.code in codeToCoords)) {
-		var keyIndex = settings.pressedKeys.indexOf(e.code);
+		var keyIndex: number = settings.pressedKeys.indexOf(e.code);
 		if (keyIndex != -1) {
 			settings.pressedKeys.splice(keyIndex, 1);
 			var coords = codeToCoords[e.code];
 			drawHex(coords, centsToColor(hexCoordsToCents(coords), false));
-			var hexIndex = settings.activeHexObjects.findIndex(function(hex) {
+			var hexIndex: number = settings.activeHexObjects.findIndex(function(hex) {
 				return coords.equals(hex.coords);
 			});
 			if (hexIndex != -1) {
@@ -732,7 +732,7 @@ function mouseActive(e) {
 	
 	if (settings.activeHexObjects.length == 0) {
 		settings.activeHexObjects[0] = new ActiveHex(coords);
-		var cents = hexCoordsToCents(coords);
+		var cents: number = hexCoordsToCents(coords);
 		settings.activeHexObjects[0].noteOn(cents);
 		drawHex(coords, centsToColor(cents, true));
 	} else {
@@ -742,7 +742,7 @@ function mouseActive(e) {
 				centsToColor(hexCoordsToCents(settings.activeHexObjects[0].coords, false)));
 			
 			settings.activeHexObjects[0] = new ActiveHex(coords);
-			var cents = hexCoordsToCents(coords);
+			var cents: number = hexCoordsToCents(coords);
 			settings.activeHexObjects[0].noteOn(cents);
 			drawHex(coords, centsToColor(cents, true));
 		}
@@ -751,14 +751,14 @@ function mouseActive(e) {
 
 function getPointerPosition(e) {
 	var parentPosition = getPosition(e.currentTarget);
-	var xPosition = e.clientX - parentPosition.x;
-	var yPosition = e.clientY - parentPosition.y;
+	var xPosition: number = e.clientX - parentPosition.x;
+	var yPosition: number = e.clientY - parentPosition.y;
 	return new Point(xPosition, yPosition);
 }
 
 function getPosition(element) {
-	var xPosition = 0;
-	var yPosition = 0;
+	var xPosition: number = 0;
+	var yPosition: number = 0;
 	
 	while (element) {
 		xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
@@ -795,7 +795,7 @@ function handleTouch(e) {
 		}
 		if (!found) {
 			var newHex = new ActiveHex(coords);
-			var cents = hexCoordsToCents(coords);
+			var cents: number = hexCoordsToCents(coords);
 			newHex.noteOn(cents);
 			var c = centsToColor(cents, true);
 			drawHex(coords, c);
@@ -815,7 +815,7 @@ function handleTouch(e) {
 }
 
 function drawGrid() {
-	var max = settings.centerpoint.x > settings.centerpoint.y ?
+	var max: number = settings.centerpoint.x > settings.centerpoint.y ?
 		settings.centerpoint.x / settings.hexSize :
 		settings.centerpoint.y / settings.hexSize;
 	max = Math.floor(max);
@@ -829,8 +829,8 @@ function drawGrid() {
 }
 
 function hexCoordsToScreen(hex) { /* Point */
-	var screenX = settings.centerpoint.x + hex.x * settings.hexWidth + hex.y * settings.hexWidth / 2;
-	var screenY = settings.centerpoint.y + hex.y * settings.hexVert;
+	var screenX: number = settings.centerpoint.x + hex.x * settings.hexWidth + hex.y * settings.hexWidth / 2;
+	var screenY: number = settings.centerpoint.y + hex.y * settings.hexVert;
 	return new Point(screenX, screenY);
 }
 
@@ -842,7 +842,7 @@ function drawHex(p, c) { /* Point, color */
 	var x = [];
 	var y = [];
 	for (var i = 0; i < 6; i++) {
-		var angle = 2 * Math.PI / 6 * (i + 0.5);
+		var angle: number = 2 * Math.PI / 6 * (i + 0.5);
 		x[i] = hexCenter.x + settings.hexSize * Math.cos(angle);
 		y[i] = hexCenter.y + settings.hexSize * Math.sin(angle);
 	}
@@ -872,7 +872,7 @@ function drawHex(p, c) { /* Point, color */
 	var x2 = [];
 	var y2 = [];
 	for (var i = 0; i < 6; i++) {
-		var angle = 2 * Math.PI / 6 * (i + 0.5);
+		var angle: number = 2 * Math.PI / 6 * (i + 0.5);
 		x2[i] = hexCenter.x + (parseFloat(settings.hexSize) + 3) * Math.cos(angle);
 		y2[i] = hexCenter.y + (parseFloat(settings.hexSize) + 3) * Math.sin(angle);
 	}
@@ -918,10 +918,10 @@ function drawHex(p, c) { /* Point, color */
 	settings.context.textAlign = "center";
 	settings.context.textBaseline = "middle";
 	
-	var note = p.x * settings.rSteps + p.y * settings.urSteps;
-	var equivSteps = settings["enum"] ? parseInt(settings.equivSteps) : settings.scale.length;
-	var equivMultiple = Math.floor(note / equivSteps);
-	var reducedNote = note % equivSteps;
+	var note: number = p.x * settings.rSteps + p.y * settings.urSteps;
+	var equivSteps: number = settings["enum"] ? parseInt(settings.equivSteps) : settings.scale.length;
+	var equivMultiple: number = Math.floor(note / equivSteps);
+	var reducedNote: number = note % equivSteps;
 	if (reducedNote < 0)
 		reducedNote = equivSteps + reducedNote;
 	
@@ -929,14 +929,14 @@ function drawHex(p, c) { /* Point, color */
 		var name = settings["enum"] ? "" + reducedNote : settings.names[reducedNote];
 		if (name) {
 			settings.context.save();
-			var scaleFactor = name.length > 3 ? 3 / name.length : 1;
+			var scaleFactor: number = name.length > 3 ? 3 / name.length : 1;
 			scaleFactor *= settings.hexSize / 50;
 			settings.context.scale(scaleFactor, scaleFactor);
 			settings.context.fillText(name, 0, 0);
 			settings.context.restore();
 		}
 		
-		var scaleFactor = settings.hexSize / 50;
+		var scaleFactor: number = settings.hexSize / 50;
 		settings.context.scale(scaleFactor, scaleFactor);
 		settings.context.translate(10, -25);
 		settings.context.fillStyle = "white";
@@ -949,7 +949,7 @@ function drawHex(p, c) { /* Point, color */
 	settings.context.restore();
 }
 
-function centsToColor(cents, pressed: boolean) {
+function centsToColor(cents: number, pressed: boolean) {
 	var returnColor;
 	if (!settings.spectrum_colors) {
 		if (typeof(settings.keycolors[global_pressed_interval]) === "undefined")
@@ -979,11 +979,11 @@ function centsToColor(cents, pressed: boolean) {
 	var fcolor = hex2rgb("#" + settings.fundamental_color);
 	fcolor = rgb2hsv(fcolor[0], fcolor[1], fcolor[2]);
 	
-	var h = fcolor.h / 360;
-	var s = fcolor.s / 100;
-	var v = fcolor.v / 100;
+	var h: number = fcolor.h / 360;
+	var s: number = fcolor.s / 100;
+	var v: number = fcolor.v / 100;
 	//var h = 145 / 360; // green
-	var reduced = (cents / 1200) % 1;
+	var reduced: number = (cents / 1200) % 1;
 	if (reduced < 0)
 		reduced += 1;
 	h = (reduced + h) % 1;
@@ -998,32 +998,32 @@ function centsToColor(cents, pressed: boolean) {
 	return returnColor;
 }
 
-function roundTowardZero(val) {
+function roundTowardZero(val: number): number {
 	if (val < 0)
 		return Math.ceil(val);
 	return Math.floor(val);
 }
 
-function hexCoordsToCents(coords) {
-	var distance = coords.x * settings.rSteps + coords.y * settings.urSteps;
-	var octs = roundTowardZero(distance / settings.scale.length);
+function hexCoordsToCents(coords): number {
+	var distance: number = coords.x * settings.rSteps + coords.y * settings.urSteps;
+	var octs: number = roundTowardZero(distance / settings.scale.length);
 	var reducedSteps = distance % settings.scale.length;
 	if (reducedSteps < 0) {
 		reducedSteps += settings.scale.length;
 		octs -= 1;
 	}
-	var cents = octs * settings.equivInterval + settings.scale[reducedSteps];
+	var cents: number = octs * settings.equivInterval + settings.scale[reducedSteps];
 	global_pressed_interval = reducedSteps;
 	return cents;
 }
 
 function getHexCoordsAt(coords) {
 	coords = applyMatrixToPoint(settings.rotationMatrix, coords);
-	var x = coords.x - settings.centerpoint.x;
-	var y = coords.y - settings.centerpoint.y;
+	var x: number = coords.x - settings.centerpoint.x;
+	var y: number = coords.y - settings.centerpoint.y;
 	
-	var q = (x * Math.sqrt(3) / 3 - y / 3) / settings.hexSize;
-	var r = y * 2 / 3 / settings.hexSize;
+	var q: number = (x * Math.sqrt(3) / 3 - y / 3) / settings.hexSize;
+	var r: number = y * 2 / 3 / settings.hexSize;
 	
 	q = Math.round(q);
 	r = Math.round(r);
@@ -1032,13 +1032,13 @@ function getHexCoordsAt(coords) {
 	
 	// This gets an approximation; now check neighbours for minimum distance
 	
-	var minimum = 100000;
+	var minimum: number = 100000;
 	var closestHex = new Point(q, r);
 	for (var qOffset = -1; qOffset < 2; qOffset++) {
 		for (var rOffset = -1; rOffset < 2; rOffset++) {
 			var neighbour = new Point(q + qOffset, r + rOffset);
 			var diff = hexCoordsToScreen(neighbour).minus(coords);
-			var distance = diff.x * diff.x + diff.y * diff.y;
+			var distance: number = diff.x * diff.x + diff.y * diff.y;
 			if (distance < minimum) {
 				minimum = distance;
 				closestHex = neighbour;
@@ -1049,12 +1049,12 @@ function getHexCoordsAt(coords) {
 	return closestHex;
 }
 
-function rgb(r, g, b) {
+function rgb(r: number, g: number, b: number) {
 	return "rgb(" + r + "," + g + "," + b + ")";
 }
 
-function HSVtoRGB(h, s, v) {
-	var r, g, b, i, f, p, q, t;
+function HSVtoRGB(h: number, s: number, v: number) {
+	var r: number, g: number, b: number, i: number, f: number, p: number, q: number, t: number;
 	i = Math.floor(h * 6);
 	f = h * 6 - i;
 	p = v * (1 - s);
@@ -1083,8 +1083,8 @@ function HSVtoRGB(h, s, v) {
 	return rgb(Math.floor(r * 255), Math.floor(g * 255), Math.floor(b * 255));
 }
 
-function HSVtoRGB2(h, s, v) {
-	var r, g, b, i, f, p, q, t;
+function HSVtoRGB2(h: number, s: number, v: number) {
+	var r: number, g: number, b: number, i: number, f: number, p: number, q: number, t: number;
 	i = Math.floor(h * 6);
 	f = h * 6 - i;
 	p = v * (1 - s);
@@ -1124,12 +1124,12 @@ function ActiveHex(coords) {
 	this.freq = 440;
 }
 
-ActiveHex.prototype.noteOn = function(cents) {
-	var freq = settings.fundamental * Math.pow(2, cents / 1200);
+ActiveHex.prototype.noteOn = function(cents: number) {
+	var freq: number = settings.fundamental * Math.pow(2, cents / 1200);
 	var source = settings.audioContext.createBufferSource(); // creates a sound source
 	// Choose sample
-	var sampleFreq = 110;
-	var sampleNumber = 0;
+	var sampleFreq: number = 110;
+	var sampleNumber: number = 0;
 	if (freq > 155) {
 		if (freq > 311) {
 			if (freq > 622) {
@@ -1167,7 +1167,7 @@ ActiveHex.prototype.noteOff = function() {
 	if (settings.sustain)
 		settings.sustainedNotes.push(this);
 	else {
-		var fadeout = settings.audioContext.currentTime + settings.sampleFadeout;
+		var fadeout: number = settings.audioContext.currentTime + settings.sampleFadeout;
 		if (this.gainNode) {
 			this.gainNode.gain.setTargetAtTime(0, settings.audioContext.currentTime,
 				settings.sampleFadeout);
@@ -1192,7 +1192,7 @@ function init() {
 	}
 }
 
-function loadSample(name, iteration) {
+function loadSample(name, iteration: number) {
 	// It seems audioContext doesn't cope with simultaneous decodeAudioData calls ):
 	
 	var sampleFreqs = ["110", "220", "440", "880"];
@@ -1220,7 +1220,7 @@ function onLoadError(e) {
 }
 
 
-function tempAlert(msg, duration) {
+function tempAlert(msg, duration: number) {
 	var el = document.createElement("div");
 	el.setAttribute("style", "position:absolute;top:40%;left:20%;background-color:white; font-size:25px;");
 	el.innerHTML = msg;
@@ -1398,15 +1398,15 @@ function hex2rgb(col) {
 	return [r, g, b];
 }
 
-function rgb2hsv(r1, g1, b1) {
-	var rr, gg, bb,
-		r = arguments[0] / 255,
-		g = arguments[1] / 255,
-		b = arguments[2] / 255,
-		h, s,
-		v = Math.max(r, g, b),
-		diff = v - Math.min(r, g, b),
-		diffc = function(c) {
+function rgb2hsv(r1: number, g1: number, b1: number) {
+	var rr: number, gg: number, bb: number,
+		r: number = arguments[0] / 255,
+		g: number = arguments[1] / 255,
+		b: number = arguments[2] / 255,
+		h: number, s: number,
+		v: number = Math.max(r, g, b),
+		diff: number = v - Math.min(r, g, b),
+		diffc = function(c: number): number {
 			return (v - c) / 6 / diff + 1 / 2;
 		};
 	
@@ -1438,19 +1438,19 @@ function rgb2hsv(r1, g1, b1) {
 
 function getContrastYIQ(hexcolor) {
 	hexcolor = hexcolor.replace("#", "");
-	var r = parseInt(hexcolor.substr(0, 2), 16);
-	var g = parseInt(hexcolor.substr(2, 2), 16);
-	var b = parseInt(hexcolor.substr(4, 2), 16);
-	var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+	var r: number = parseInt(hexcolor.substr(0, 2), 16);
+	var g: number = parseInt(hexcolor.substr(2, 2), 16);
+	var b: number = parseInt(hexcolor.substr(4, 2), 16);
+	var yiq: number = ((r * 299) + (g * 587) + (b * 114)) / 1000;
 	return yiq >= 128 ? "black" : "white";
 }
 
-function rgbToHex(r, g, b) {
+function rgbToHex(r: number, g: number, b: number) {
 	return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
 
-function checkPreset(init) {
+function checkPreset(init: number) {
 	var mselect = document.getElementById("quicklinks");
 	var url_str = window.location.href;
 	
