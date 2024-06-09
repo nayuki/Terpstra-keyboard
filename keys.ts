@@ -155,7 +155,7 @@ const codeToCoords_dell = {
 	13: new Point(7, -1), // enter
 };
 
-(function dell() {
+(function dell(): void {
 	var lines: Array<Array<string>> = [];
 	lines[0] = ["Escape", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8"];
 	lines[5] = ["F9", "F10", "F11", "F12", "принтскрин", "Insert", "Delete"];
@@ -225,7 +225,7 @@ hideRevealNames();
 hideRevealColors();
 hideRevealEnum();
 
-function hideRevealNames() {
+function hideRevealNames(): void {
 	if (getInputById("enum").checked) {
 		getHtmlById("equivSteps").style.display = "block";
 		getHtmlById("names").style.display = "none";
@@ -240,7 +240,7 @@ function hideRevealNames() {
 	changeURL();
 }
 
-function hideRevealColors() {
+function hideRevealColors(): void {
 	if (getInputById("spectrum_colors").checked) {
 		getHtmlById("fundamental_color").style.display = "block";
 		getHtmlById("fundamental_colorLabel").style.display = "block";
@@ -255,7 +255,7 @@ function hideRevealColors() {
 	changeURL();
 }
 
-function hideRevealEnum() {
+function hideRevealEnum(): void {
 	if (getInputById("no_labels").checked) {
 		getInputById("enum").disabled = true;
 		getHtmlById("equivSteps").style.display = "none";
@@ -276,7 +276,7 @@ function hideRevealEnum() {
 }
 
 
-function changeURL() {
+function changeURL(): void {
 	var url: string = window.location.pathname + "?";
 	// add fundamental, right, upright, size
 	
@@ -321,7 +321,7 @@ function changeURL() {
 
 var settings = {};
 
-function parseScale() {
+function parseScale(): void {
 	settings.scale = [];
 	var scaleLines: Array<string> = getElemById("scale", HTMLTextAreaElement).value.split("\n");
 	scaleLines.forEach(function(line) {
@@ -342,7 +342,7 @@ function parseScale() {
 	settings.scale.unshift(0);
 }
 
-function parseScaleColors() {
+function parseScaleColors(): void {
 	settings.keycolors = [];
 	var colorsArray: Array<string> = getElemById("note_colors", HTMLTextAreaElement).value.split("\n");
 	colorsArray.forEach(function(line) {
@@ -368,7 +368,7 @@ function applyMatrixToPoint(m: Array<number>, p) { /*Array, Point*/
 	);
 }
 
-function resizeHandler() {
+function resizeHandler(): void {
 	// Resize Inner and outer coordinates of canvas to preserve aspect ratio
 	
 	var newWidth: number = window.innerWidth;
@@ -407,7 +407,7 @@ function resizeHandler() {
 
 let is_key_event_added;
 
-function back() {
+function back(): void {
 	// Remove key listener
 	window.removeEventListener("keydown", onKeyDown);
 	window.removeEventListener("keyup", onKeyUp);
@@ -652,7 +652,7 @@ function goKeyboard() {
 	return false;
 }
 
-function onKeyDown(e) {
+function onKeyDown(e): void {
 	e.preventDefault();//
 	
 	if (e.keyCode == 32) // Spacebar
@@ -683,7 +683,7 @@ function onKeyDown(e) {
 	}
 }
 
-function onKeyUp(e) {
+function onKeyUp(e): void {
 	if (e.keyCode == 32) { // Spacebar
 		settings.sustain = false;
 		for (var note = 0; note < settings.sustainedNotes.length; note++)
@@ -725,7 +725,7 @@ function onKeyUp(e) {
 	}
 }
 
-function mouseActive(e) {
+function mouseActive(e): void {
 	var coords = getPointerPosition(e);
 	
 	coords = getHexCoordsAt(coords);
@@ -771,7 +771,7 @@ function getPosition(element) {
 	};
 }
 
-function handleTouch(e) {
+function handleTouch(e): void {
 	e.preventDefault();
 	if (settings.pressedKeys.length != 0 || settings.isMouseDown) {
 		settings.isTouchDown = false;
@@ -814,7 +814,7 @@ function handleTouch(e) {
 	}
 }
 
-function drawGrid() {
+function drawGrid(): void {
 	var max: number = settings.centerpoint.x > settings.centerpoint.y ?
 		settings.centerpoint.x / settings.hexSize :
 		settings.centerpoint.y / settings.hexSize;
@@ -834,7 +834,7 @@ function hexCoordsToScreen(hex) { /* Point */
 	return new Point(screenX, screenY);
 }
 
-function drawHex(p, c: string) { /* Point, color */
+function drawHex(p, c: string): void { /* Point, color */
 	var hexCenter = hexCoordsToScreen(p);
 	
 	// Calculate hex vertices
@@ -1124,7 +1124,7 @@ function ActiveHex(coords) {
 	this.freq = 440;
 }
 
-ActiveHex.prototype.noteOn = function(cents: number) {
+ActiveHex.prototype.noteOn = function(cents: number): void {
 	var freq: number = settings.fundamental * Math.pow(2, cents / 1200);
 	var source = settings.audioContext.createBufferSource(); // creates a sound source
 	// Choose sample
@@ -1163,7 +1163,7 @@ ActiveHex.prototype.noteOn = function(cents: number) {
 	this.gainNode = gainNode;
 };
 
-ActiveHex.prototype.noteOff = function() {
+ActiveHex.prototype.noteOff = function(): void {
 	if (settings.sustain)
 		settings.sustainedNotes.push(this);
 	else {
@@ -1182,7 +1182,7 @@ ActiveHex.prototype.noteOff = function() {
 
 window.addEventListener("load", init, false);
 
-function init() {
+function init(): void {
 	try {
 		// Fix up for prefixing
 		window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -1192,7 +1192,7 @@ function init() {
 	}
 }
 
-function loadSample(name: string, iteration: number) {
+function loadSample(name: string, iteration: number): void {
 	// It seems audioContext doesn't cope with simultaneous decodeAudioData calls ):
 	
 	var sampleFreqs: Array<string> = ["110", "220", "440", "880"];
@@ -1215,12 +1215,12 @@ function loadSample(name: string, iteration: number) {
 	//}
 }
 
-function onLoadError(e) {
+function onLoadError(e): void {
 	alert("Couldn't load sample");
 }
 
 
-function tempAlert(msg: string, duration: number) {
+function tempAlert(msg: string, duration: number): void {
 	var el = document.createElement("div");
 	el.setAttribute("style", "position:absolute;top:40%;left:20%;background-color:white; font-size:25px;");
 	el.innerHTML = msg;
@@ -1450,7 +1450,7 @@ function rgbToHex(r: number, g: number, b: number): string {
 }
 
 
-function checkPreset(init: number) {
+function checkPreset(init: number): void {
 	var mselect = getElemById("quicklinks", HTMLSelectElement);
 	var url_str: string = window.location.href;
 	
@@ -1468,7 +1468,7 @@ function checkPreset(init: number) {
 
 let ms: HTMLSelectElement|null;
 
-function noPreset() {
+function noPreset(): void {
 	ms = getElemById("quicklinks", HTMLSelectElement);
 	ms.value = ms.options[0].value;
 }
