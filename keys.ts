@@ -16,7 +16,7 @@ window.addEventListener("keydown", e => {
 });
 
 
-keyCodeToCoords_mac = {
+const keyCodeToCoords_mac = {
 	27: new Point(-5, -3), // esc
 	112: new Point(-4, -3), // f1
 	113: new Point(-3, -3), // f2
@@ -89,7 +89,7 @@ keyCodeToCoords_mac = {
 	//16: new Point(5, 1), // shift
 };
 
-codeToCoords_mac = {
+const codeToCoords_mac = {
 	"Backslash": new Point(6, 0), // \
 	"ShiftRight": new Point(5, 1),
 	"IntlBackslash": new Point(-6, 1),
@@ -97,10 +97,10 @@ codeToCoords_mac = {
 	"Backquote": new Point(-6, -2),
 	"BracketRight": new Point(6, -1), // ]
 };
-codeToCoords = {};
-keyCodeToCoords = {};
+let codeToCoords = {};
+const keyCodeToCoords = {};
 
-codeToCoords_dell = {
+const codeToCoords_dell = {
 	"Backquote": new Point(-6, -2), // `
 	"Digit1": new Point(-5, -2), // 1
 	"Digit2": new Point(-4, -2), // 2
@@ -401,6 +401,8 @@ function resizeHandler() {
 	
 	drawGrid();
 }
+
+let is_key_event_added;
 
 function back() {
 	// Remove key listener
@@ -1459,6 +1461,9 @@ function checkPreset(init) {
 		}
 	}
 }
+
+
+let ms: HTMLElement|null;
 
 function noPreset() {
 	ms = document.getElementById("quicklinks");
