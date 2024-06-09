@@ -772,20 +772,20 @@ function onKeyUp(e) {
 	//Hatsevich:
 	else if (!settings.isMouseDown && !settings.isTouchDown
 				&& (e.code in codeToCoords)) {
-			var keyIndex = settings.pressedKeys.indexOf(e.code);
-			if (keyIndex != -1) {
-				settings.pressedKeys.splice(keyIndex, 1);
-				var coords = codeToCoords[e.code];
-				drawHex(coords, centsToColor(hexCoordsToCents(coords), false));
-				var hexIndex = settings.activeHexObjects.findIndex(function(hex) {
-					return coords.equals(hex.coords);
-				});
-				if (hexIndex != -1) {
-					settings.activeHexObjects[hexIndex].noteOff();
-					settings.activeHexObjects.splice(hexIndex, 1);
-				}
+		var keyIndex = settings.pressedKeys.indexOf(e.code);
+		if (keyIndex != -1) {
+			settings.pressedKeys.splice(keyIndex, 1);
+			var coords = codeToCoords[e.code];
+			drawHex(coords, centsToColor(hexCoordsToCents(coords), false));
+			var hexIndex = settings.activeHexObjects.findIndex(function(hex) {
+				return coords.equals(hex.coords);
+			});
+			if (hexIndex != -1) {
+				settings.activeHexObjects[hexIndex].noteOff();
+				settings.activeHexObjects.splice(hexIndex, 1);
 			}
 		}
+	}
 	
 }
 
