@@ -18,26 +18,26 @@ if (!window.jscolor) { window.jscolor = (function () {
 
 
 var jsc = {
-
-
+	
+	
 	register : function () {
 		jsc.attachDOMReadyEvent(jsc.init);
 		jsc.attachEvent(document, 'mousedown', jsc.onDocumentMouseDown);
 		jsc.attachEvent(document, 'touchstart', jsc.onDocumentTouchStart);
 		jsc.attachEvent(window, 'resize', jsc.onWindowResize);
 	},
-
-
+	
+	
 	init : function () {
 		if (jsc.jscolor.lookupClass) {
 			jsc.jscolor.installByClassName(jsc.jscolor.lookupClass);
 		}
 	},
-
-
+	
+	
 	tryInstallOnElements : function (elms, className) {
 		var matchClass = new RegExp('(^|\\s)(' + className + ')(\\s*(\\{[^}]*\\})|\\s|$)', 'i');
-
+		
 		for (var i = 0; i < elms.length; i += 1) {
 			if (elms[i].type !== undefined && elms[i].type.toLowerCase() == 'color') {
 				if (jsc.isColorAttrSupported) {
@@ -49,14 +49,14 @@ var jsc = {
 			if (!elms[i].jscolor && elms[i].className && (m = elms[i].className.match(matchClass))) {
 				var targetElm = elms[i];
 				var optsStr = null;
-
+				
 				var dataOptions = jsc.getDataAttr(targetElm, 'jscolor');
 				if (dataOptions !== null) {
 					optsStr = dataOptions;
 				} else if (m[4]) {
 					optsStr = m[4];
 				}
-
+				
 				var opts = {};
 				if (optsStr) {
 					try {
@@ -69,8 +69,8 @@ var jsc = {
 			}
 		}
 	},
-
-
+	
+	
 	isColorAttrSupported : (function () {
 		var elm = document.createElement('input');
 		if (elm.setAttribute) {
@@ -81,24 +81,24 @@ var jsc = {
 		}
 		return false;
 	})(),
-
-
+	
+	
 	isCanvasSupported : (function () {
 		var elm = document.createElement('canvas');
 		return !!(elm.getContext && elm.getContext('2d'));
 	})(),
-
-
+	
+	
 	fetchElement : function (mixed) {
 		return typeof mixed === 'string' ? document.getElementById(mixed) : mixed;
 	},
-
-
+	
+	
 	isElementType : function (elm, type) {
 		return elm.nodeName.toLowerCase() === type.toLowerCase();
 	},
-
-
+	
+	
 	getDataAttr : function (el, name) {
 		var attrName = 'data-' + name;
 		var attrValue = el.getAttribute(attrName);
@@ -107,8 +107,8 @@ var jsc = {
 		}
 		return null;
 	},
-
-
+	
+	
 	attachEvent : function (el, evnt, func) {
 		if (el.addEventListener) {
 			el.addEventListener(evnt, func, false);
@@ -116,8 +116,8 @@ var jsc = {
 			el.attachEvent('on' + evnt, func);
 		}
 	},
-
-
+	
+	
 	detachEvent : function (el, evnt, func) {
 		if (el.removeEventListener) {
 			el.removeEventListener(evnt, func, false);
@@ -125,11 +125,11 @@ var jsc = {
 			el.detachEvent('on' + evnt, func);
 		}
 	},
-
-
+	
+	
 	_attachedGroupEvents : {},
-
-
+	
+	
 	attachGroupEvent : function (groupName, el, evnt, func) {
 		if (!jsc._attachedGroupEvents.hasOwnProperty(groupName)) {
 			jsc._attachedGroupEvents[groupName] = [];
@@ -137,8 +137,8 @@ var jsc = {
 		jsc._attachedGroupEvents[groupName].push([el, evnt, func]);
 		jsc.attachEvent(el, evnt, func);
 	},
-
-
+	
+	
 	detachGroupEvents : function (groupName) {
 		if (jsc._attachedGroupEvents.hasOwnProperty(groupName)) {
 			for (var i = 0; i < jsc._attachedGroupEvents[groupName].length; i += 1) {
@@ -148,8 +148,8 @@ var jsc = {
 			delete jsc._attachedGroupEvents[groupName];
 		}
 	},
-
-
+	
+	
 	attachDOMReadyEvent : function (func) {
 		var fired = false;
 		var fireOnce = function () {
@@ -158,18 +158,18 @@ var jsc = {
 				func();
 			}
 		};
-
+		
 		if (document.readyState === 'complete') {
 			setTimeout(fireOnce, 1); // async
 			return;
 		}
-
+		
 		if (document.addEventListener) {
 			document.addEventListener('DOMContentLoaded', fireOnce, false);
-
+			
 			// Fallback
 			window.addEventListener('load', fireOnce, false);
-
+			
 		} else if (document.attachEvent) {
 			// IE
 			document.attachEvent('onreadystatechange', function () {
@@ -178,10 +178,10 @@ var jsc = {
 					fireOnce();
 				}
 			})
-
+			
 			// Fallback
 			window.attachEvent('onload', fireOnce);
-
+			
 			// IE7/8
 			if (document.documentElement.doScroll && window == window.top) {
 				var tryScroll = function () {
@@ -197,21 +197,21 @@ var jsc = {
 			}
 		}
 	},
-
-
+	
+	
 	warn : function (msg) {
 		if (window.console && window.console.warn) {
 			window.console.warn(msg);
 		}
 	},
-
-
+	
+	
 	preventDefault : function (e) {
 		if (e.preventDefault) { e.preventDefault(); }
 		e.returnValue = false;
 	},
-
-
+	
+	
 	captureTarget : function (target) {
 		// IE
 		if (target.setCapture) {
@@ -219,8 +219,8 @@ var jsc = {
 			jsc._capturedTarget.setCapture();
 		}
 	},
-
-
+	
+	
 	releaseTarget : function () {
 		// IE
 		if (jsc._capturedTarget) {
@@ -228,8 +228,8 @@ var jsc = {
 			jsc._capturedTarget = null;
 		}
 	},
-
-
+	
+	
 	fireEvent : function (el, evnt) {
 		if (!el) {
 			return;
@@ -245,13 +245,13 @@ var jsc = {
 			el['on' + evnt]();
 		}
 	},
-
-
+	
+	
 	classNameToList : function (className) {
 		return className.replace(/^\s+|\s+$/g, '').split(/\s+/);
 	},
-
-
+	
+	
 	// The className parameter (str) can only contain a single class name
 	hasClass : function (elm, className) {
 		if (!className) {
@@ -259,8 +259,8 @@ var jsc = {
 		}
 		return -1 != (' ' + elm.className.replace(/\s+/g, ' ') + ' ').indexOf(' ' + className + ' ');
 	},
-
-
+	
+	
 	// The className parameter (str) can contain multiple class names separated by whitespace
 	setClass : function (elm, className) {
 		var classList = jsc.classNameToList(className);
@@ -270,8 +270,8 @@ var jsc = {
 			}
 		}
 	},
-
-
+	
+	
 	// The className parameter (str) can contain multiple class names separated by whitespace
 	unsetClass : function (elm, className) {
 		var classList = jsc.classNameToList(className);
@@ -285,13 +285,13 @@ var jsc = {
 			elm.className = elm.className.replace(repl, '$1');
 		}
 	},
-
-
+	
+	
 	getStyle : function (elm) {
 		return window.getComputedStyle ? window.getComputedStyle(elm) : elm.currentStyle;
 	},
-
-
+	
+	
 	setStyle : (function () {
 		var helper = document.createElement('div');
 		var getSupportedProp = function (names) {
@@ -318,18 +318,18 @@ var jsc = {
 			}
 		};
 	})(),
-
-
+	
+	
 	setBorderRadius : function (elm, value) {
 		jsc.setStyle(elm, 'borderRadius', value || '0');
 	},
-
-
+	
+	
 	setBoxShadow : function (elm, value) {
 		jsc.setStyle(elm, 'boxShadow', value || 'none');
 	},
-
-
+	
+	
 	getElementPos : function (e, relativeToViewport) {
 		var x=0, y=0;
 		var rect = e.getBoundingClientRect();
@@ -342,13 +342,13 @@ var jsc = {
 		}
 		return [x, y];
 	},
-
-
+	
+	
 	getElementSize : function (e) {
 		return [e.offsetWidth, e.offsetHeight];
 	},
-
-
+	
+	
 	// get pointer's X/Y coordinates relative to viewport
 	getAbsPointerPos : function (e) {
 		if (!e) { e = window.event; }
@@ -363,16 +363,16 @@ var jsc = {
 		}
 		return { x: x, y: y };
 	},
-
-
+	
+	
 	// get pointer's X/Y coordinates relative to target element
 	getRelPointerPos : function (e) {
 		if (!e) { e = window.event; }
 		var target = e.target || e.srcElement;
 		var targetRect = target.getBoundingClientRect();
-
+		
 		var x = 0, y = 0;
-
+		
 		var clientX = 0, clientY = 0;
 		if (typeof e.changedTouches !== 'undefined' && e.changedTouches.length) {
 			// touch devices
@@ -382,13 +382,13 @@ var jsc = {
 			clientX = e.clientX;
 			clientY = e.clientY;
 		}
-
+		
 		x = clientX - targetRect.left;
 		y = clientY - targetRect.top;
 		return { x: x, y: y };
 	},
-
-
+	
+	
 	getViewPos : function () {
 		var doc = document.documentElement;
 		return [
@@ -396,8 +396,8 @@ var jsc = {
 			(window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0)
 		];
 	},
-
-
+	
+	
 	getViewSize : function () {
 		var doc = document.documentElement;
 		return [
@@ -405,15 +405,15 @@ var jsc = {
 			(window.innerHeight || doc.clientHeight),
 		];
 	},
-
-
+	
+	
 	redrawPosition : function () {
-
+		
 		if (jsc.picker && jsc.picker.owner) {
 			var thisObj = jsc.picker.owner;
-
+			
 			var tp, vp;
-
+			
 			if (thisObj.fixed) {
 				// Fixed elements are positioned relative to viewport,
 				// therefore we can ignore the scroll offset
@@ -423,7 +423,7 @@ var jsc = {
 				tp = jsc.getElementPos(thisObj.targetElement); // target pos
 				vp = jsc.getViewPos(); // view pos
 			}
-
+			
 			var ts = jsc.getElementSize(thisObj.targetElement); // target size
 			var vs = jsc.getViewSize(); // view size
 			var ps = jsc.getPickerOuterDims(thisObj); // picker size
@@ -435,7 +435,7 @@ var jsc = {
 				default:     a=0; b=1; c=1; break;
 			}
 			var l = (ts[b]+ps[b])/2;
-
+			
 			// compute picker position
 			if (!thisObj.smartPosition) {
 				var pp = [
@@ -452,34 +452,34 @@ var jsc = {
 						(tp[b]+ts[b]-l+l*c >= 0 ? tp[b]+ts[b]-l+l*c : tp[b]+ts[b]-l-l*c)
 				];
 			}
-
+			
 			var x = pp[a];
 			var y = pp[b];
 			var positionValue = thisObj.fixed ? 'fixed' : 'absolute';
 			var contractShadow =
 				(pp[0] + ps[0] > tp[0] || pp[0] < tp[0] + ts[0]) &&
 				(pp[1] + ps[1] < tp[1] + ts[1]);
-
+			
 			jsc._drawPosition(thisObj, x, y, positionValue, contractShadow);
 		}
 	},
-
-
+	
+	
 	_drawPosition : function (thisObj, x, y, positionValue, contractShadow) {
 		var vShadow = contractShadow ? 0 : thisObj.shadowBlur; // px
-
+		
 		jsc.picker.wrap.style.position = positionValue;
 		jsc.picker.wrap.style.left = x + 'px';
 		jsc.picker.wrap.style.top = y + 'px';
-
+		
 		jsc.setBoxShadow(
 			jsc.picker.boxS,
 			thisObj.shadow ?
 				new jsc.BoxShadow(0, vShadow, thisObj.shadowBlur, 0, thisObj.shadowColor) :
 				null);
 	},
-
-
+	
+	
 	getPickerDims : function (thisObj) {
 		var displaySlider = !!jsc.getSliderComponent(thisObj);
 		var dims = [
@@ -490,8 +490,8 @@ var jsc = {
 		];
 		return dims;
 	},
-
-
+	
+	
 	getPickerOuterDims : function (thisObj) {
 		var dims = jsc.getPickerDims(thisObj);
 		return [
@@ -499,21 +499,21 @@ var jsc = {
 			dims[1] + 2 * thisObj.borderWidth
 		];
 	},
-
-
+	
+	
 	getPadToSliderPadding : function (thisObj) {
 		return Math.max(thisObj.padding, 1.5 * (2 * thisObj.pointerBorderWidth + thisObj.pointerThickness));
 	},
-
-
+	
+	
 	getPadYComponent : function (thisObj) {
 		switch (thisObj.mode.charAt(1).toLowerCase()) {
 			case 'v': return 'v'; break;
 		}
 		return 's';
 	},
-
-
+	
+	
 	getSliderComponent : function (thisObj) {
 		if (thisObj.mode.length > 2) {
 			switch (thisObj.mode.charAt(2).toLowerCase()) {
@@ -523,12 +523,12 @@ var jsc = {
 		}
 		return null;
 	},
-
-
+	
+	
 	onDocumentMouseDown : function (e) {
 		if (!e) { e = window.event; }
 		var target = e.target || e.srcElement;
-
+		
 		if (target._jscLinkedInstance) {
 			if (target._jscLinkedInstance.showOnClick) {
 				target._jscLinkedInstance.show();
@@ -542,12 +542,12 @@ var jsc = {
 			}
 		}
 	},
-
-
+	
+	
 	onDocumentTouchStart : function (e) {
 		if (!e) { e = window.event; }
 		var target = e.target || e.srcElement;
-
+		
 		if (target._jscLinkedInstance) {
 			if (target._jscLinkedInstance.showOnClick) {
 				target._jscLinkedInstance.show();
@@ -560,21 +560,21 @@ var jsc = {
 			}
 		}
 	},
-
-
+	
+	
 	onWindowResize : function (e) {
 		jsc.redrawPosition();
 	},
-
-
+	
+	
 	onParentScroll : function (e) {
 		// hide the picker when one of the parent elements is scrolled
 		if (jsc.picker && jsc.picker.owner) {
 			jsc.picker.owner.hide();
 		}
 	},
-
-
+	
+	
 	_pointerMoveEvent : {
 		mouse: 'mousemove',
 		touch: 'touchmove'
@@ -583,40 +583,40 @@ var jsc = {
 		mouse: 'mouseup',
 		touch: 'touchend'
 	},
-
-
+	
+	
 	_pointerOrigin : null,
 	_capturedTarget : null,
-
-
+	
+	
 	onControlPointerStart : function (e, target, controlName, pointerType) {
 		var thisObj = target._jscInstance;
-
+		
 		jsc.preventDefault(e);
 		jsc.captureTarget(target);
-
+		
 		var registerDragEvents = function (doc, offset) {
 			jsc.attachGroupEvent('drag', doc, jsc._pointerMoveEvent[pointerType],
 				jsc.onDocumentPointerMove(e, target, controlName, pointerType, offset));
 			jsc.attachGroupEvent('drag', doc, jsc._pointerEndEvent[pointerType],
 				jsc.onDocumentPointerEnd(e, target, controlName, pointerType));
 		};
-
+		
 		registerDragEvents(document, [0, 0]);
-
+		
 		if (window.parent && window.frameElement) {
 			var rect = window.frameElement.getBoundingClientRect();
 			var ofs = [-rect.left, -rect.top];
 			registerDragEvents(window.parent.window.document, ofs);
 		}
-
+		
 		var abs = jsc.getAbsPointerPos(e);
 		var rel = jsc.getRelPointerPos(e);
 		jsc._pointerOrigin = {
 			x: abs.x - rel.x,
 			y: abs.y - rel.y
 		};
-
+		
 		switch (controlName) {
 		case 'pad':
 			// if the slider is at the bottom, move it up
@@ -626,16 +626,16 @@ var jsc = {
 			}
 			jsc.setPad(thisObj, e, 0, 0);
 			break;
-
+		
 		case 'sld':
 			jsc.setSld(thisObj, e, 0);
 			break;
 		}
-
+		
 		jsc.dispatchFineChange(thisObj);
 	},
-
-
+	
+	
 	onDocumentPointerMove : function (e, target, controlName, pointerType, offset) {
 		return function (e) {
 			var thisObj = target._jscInstance;
@@ -645,7 +645,7 @@ var jsc = {
 				jsc.setPad(thisObj, e, offset[0], offset[1]);
 				jsc.dispatchFineChange(thisObj);
 				break;
-
+			
 			case 'sld':
 				if (!e) { e = window.event; }
 				jsc.setSld(thisObj, e, offset[1]);
@@ -654,8 +654,8 @@ var jsc = {
 			}
 		}
 	},
-
-
+	
+	
 	onDocumentPointerEnd : function (e, target, controlName, pointerType) {
 		return function (e) {
 			var thisObj = target._jscInstance;
@@ -667,8 +667,8 @@ var jsc = {
 			jsc.dispatchChange(thisObj);
 		};
 	},
-
-
+	
+	
 	dispatchChange : function (thisObj) {
 		if (thisObj.valueElement) {
 			if (jsc.isElementType(thisObj.valueElement, 'input')) {
@@ -676,8 +676,8 @@ var jsc = {
 			}
 		}
 	},
-
-
+	
+	
 	dispatchFineChange : function (thisObj) {
 		if (thisObj.onFineChange) {
 			var callback;
@@ -689,41 +689,41 @@ var jsc = {
 			callback.call(thisObj);
 		}
 	},
-
-
+	
+	
 	setPad : function (thisObj, e, ofsX, ofsY) {
 		var pointerAbs = jsc.getAbsPointerPos(e);
 		var x = ofsX + pointerAbs.x - jsc._pointerOrigin.x - thisObj.padding - thisObj.insetWidth;
 		var y = ofsY + pointerAbs.y - jsc._pointerOrigin.y - thisObj.padding - thisObj.insetWidth;
-
+		
 		var xVal = x * (360 / (thisObj.width - 1));
 		var yVal = 100 - (y * (100 / (thisObj.height - 1)));
-
+		
 		switch (jsc.getPadYComponent(thisObj)) {
 		case 's': thisObj.fromHSV(xVal, yVal, null, jsc.leaveSld); break;
 		case 'v': thisObj.fromHSV(xVal, null, yVal, jsc.leaveSld); break;
 		}
 	},
-
-
+	
+	
 	setSld : function (thisObj, e, ofsY) {
 		var pointerAbs = jsc.getAbsPointerPos(e);
 		var y = ofsY + pointerAbs.y - jsc._pointerOrigin.y - thisObj.padding - thisObj.insetWidth;
-
+		
 		var yVal = 100 - (y * (100 / (thisObj.height - 1)));
-
+		
 		switch (jsc.getSliderComponent(thisObj)) {
 		case 's': thisObj.fromHSV(null, yVal, null, jsc.leavePad); break;
 		case 'v': thisObj.fromHSV(null, null, yVal, jsc.leavePad); break;
 		}
 	},
-
-
+	
+	
 	_vmlNS : 'jsc_vml_',
 	_vmlCSS : 'jsc_vml_css_',
 	_vmlReady : false,
-
-
+	
+	
 	initVML : function () {
 		if (!jsc._vmlReady) {
 			// init VML namespace
@@ -742,27 +742,27 @@ var jsc = {
 			jsc._vmlReady = true;
 		}
 	},
-
-
+	
+	
 	createPalette : function () {
-
+		
 		var paletteObj = {
 			elm: null,
 			draw: null
 		};
-
+		
 		if (jsc.isCanvasSupported) {
 			// Canvas implementation for modern browsers
-
+			
 			var canvas = document.createElement('canvas');
 			var ctx = canvas.getContext('2d');
-
+			
 			var drawFunc = function (width, height, type) {
 				canvas.width = width;
 				canvas.height = height;
-
+				
 				ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+				
 				var hGrad = ctx.createLinearGradient(0, 0, canvas.width, 0);
 				hGrad.addColorStop(0 / 6, '#F00');
 				hGrad.addColorStop(1 / 6, '#FF0');
@@ -771,10 +771,10 @@ var jsc = {
 				hGrad.addColorStop(4 / 6, '#00F');
 				hGrad.addColorStop(5 / 6, '#F0F');
 				hGrad.addColorStop(6 / 6, '#F00');
-
+				
 				ctx.fillStyle = hGrad;
 				ctx.fillRect(0, 0, canvas.width, canvas.height);
-
+				
 				var vGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
 				switch (type.toLowerCase()) {
 				case 's':
@@ -789,25 +789,25 @@ var jsc = {
 				ctx.fillStyle = vGrad;
 				ctx.fillRect(0, 0, canvas.width, canvas.height);
 			};
-
+			
 			paletteObj.elm = canvas;
 			paletteObj.draw = drawFunc;
-
+			
 		} else {
 			// VML fallback for IE 7 and 8
-
+			
 			jsc.initVML();
-
+			
 			var vmlContainer = document.createElement('div');
 			vmlContainer.style.position = 'relative';
 			vmlContainer.style.overflow = 'hidden';
-
+			
 			var hGrad = document.createElement(jsc._vmlNS + ':fill');
 			hGrad.type = 'gradient';
 			hGrad.method = 'linear';
 			hGrad.angle = '90';
 			hGrad.colors = '16.67% #F0F, 33.33% #00F, 50% #0FF, 66.67% #0F0, 83.33% #FF0'
-
+			
 			var hRect = document.createElement(jsc._vmlNS + ':rect');
 			hRect.style.position = 'absolute';
 			hRect.style.left = -1 + 'px';
@@ -815,13 +815,13 @@ var jsc = {
 			hRect.stroked = false;
 			hRect.appendChild(hGrad);
 			vmlContainer.appendChild(hRect);
-
+			
 			var vGrad = document.createElement(jsc._vmlNS + ':fill');
 			vGrad.type = 'gradient';
 			vGrad.method = 'linear';
 			vGrad.angle = '180';
 			vGrad.opacity = '0';
-
+			
 			var vRect = document.createElement(jsc._vmlNS + ':rect');
 			vRect.style.position = 'absolute';
 			vRect.style.left = -1 + 'px';
@@ -829,23 +829,23 @@ var jsc = {
 			vRect.stroked = false;
 			vRect.appendChild(vGrad);
 			vmlContainer.appendChild(vRect);
-
+			
 			var drawFunc = function (width, height, type) {
 				vmlContainer.style.width = width + 'px';
 				vmlContainer.style.height = height + 'px';
-
+				
 				hRect.style.width =
 				vRect.style.width =
 					(width + 1) + 'px';
 				hRect.style.height =
 				vRect.style.height =
 					(height + 1) + 'px';
-
+				
 				// Colors must be specified during every redraw, otherwise IE won't display
 				// a full gradient during a subsequential redraw
 				hGrad.color = '#F00';
 				hGrad.color2 = '#F00';
-
+				
 				switch (type.toLowerCase()) {
 				case 's':
 					vGrad.color = vGrad.color2 = '#FFF';
@@ -859,55 +859,55 @@ var jsc = {
 			paletteObj.elm = vmlContainer;
 			paletteObj.draw = drawFunc;
 		}
-
+		
 		return paletteObj;
 	},
-
-
+	
+	
 	createSliderGradient : function () {
-
+		
 		var sliderObj = {
 			elm: null,
 			draw: null
 		};
-
+		
 		if (jsc.isCanvasSupported) {
 			// Canvas implementation for modern browsers
-
+			
 			var canvas = document.createElement('canvas');
 			var ctx = canvas.getContext('2d');
-
+			
 			var drawFunc = function (width, height, color1, color2) {
 				canvas.width = width;
 				canvas.height = height;
-
+				
 				ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+				
 				var grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
 				grad.addColorStop(0, color1);
 				grad.addColorStop(1, color2);
-
+				
 				ctx.fillStyle = grad;
 				ctx.fillRect(0, 0, canvas.width, canvas.height);
 			};
-
+			
 			sliderObj.elm = canvas;
 			sliderObj.draw = drawFunc;
-
+			
 		} else {
 			// VML fallback for IE 7 and 8
-
+			
 			jsc.initVML();
-
+			
 			var vmlContainer = document.createElement('div');
 			vmlContainer.style.position = 'relative';
 			vmlContainer.style.overflow = 'hidden';
-
+			
 			var grad = document.createElement(jsc._vmlNS + ':fill');
 			grad.type = 'gradient';
 			grad.method = 'linear';
 			grad.angle = '180';
-
+			
 			var rect = document.createElement(jsc._vmlNS + ':rect');
 			rect.style.position = 'absolute';
 			rect.style.left = -1 + 'px';
@@ -915,14 +915,14 @@ var jsc = {
 			rect.stroked = false;
 			rect.appendChild(grad);
 			vmlContainer.appendChild(rect);
-
+			
 			var drawFunc = function (width, height, color1, color2) {
 				vmlContainer.style.width = width + 'px';
 				vmlContainer.style.height = height + 'px';
-
+				
 				rect.style.width = (width + 1) + 'px';
 				rect.style.height = (height + 1) + 'px';
-
+				
 				grad.color = color1;
 				grad.color2 = color2;
 			};
@@ -930,17 +930,17 @@ var jsc = {
 			sliderObj.elm = vmlContainer;
 			sliderObj.draw = drawFunc;
 		}
-
+		
 		return sliderObj;
 	},
-
-
+	
+	
 	leaveValue : 1<<0,
 	leaveStyle : 1<<1,
 	leavePad : 1<<2,
 	leaveSld : 1<<3,
-
-
+	
+	
 	BoxShadow : (function () {
 		var BoxShadow = function (hShadow, vShadow, blur, spread, color, inset) {
 			this.hShadow = hShadow;
@@ -950,7 +950,7 @@ var jsc = {
 			this.color = color;
 			this.inset = !!inset;
 		};
-
+		
 		BoxShadow.prototype.toString = function () {
 			var vals = [
 				Math.round(this.hShadow) + 'px',
@@ -964,18 +964,18 @@ var jsc = {
 			}
 			return vals.join(' ');
 		};
-
+		
 		return BoxShadow;
 	})(),
-
-
+	
+	
 	//
 	// Usage:
 	// var myColor = new jscolor(<targetElement> [, <options>])
 	//
-
+	
 	jscolor : function (targetElement, options) {
-
+		
 		// General options
 		//
 		this.value = null; // initial HEX color. To change it later, use methods fromString(), fromHSV() and fromRGB()
@@ -991,12 +991,12 @@ var jsc = {
 		this.maxS = 100; // max allowed saturation (0 - 100)
 		this.minV = 0; // min allowed value (brightness) (0 - 100)
 		this.maxV = 100; // max allowed value (brightness) (0 - 100)
-
+		
 		// Accessing the picked color
 		//
 		this.hsv = [0, 0, 100]; // read-only  [0-360, 0-100, 0-100]
 		this.rgb = [255, 255, 255]; // read-only  [0-255, 0-255, 0-255]
-
+		
 		// Color Picker options
 		//
 		this.width = 181; // width of color palette (in px)
@@ -1027,34 +1027,34 @@ var jsc = {
 		this.pointerThickness = 2; // px
 		this.zIndex = 1000;
 		this.container = null; // where to append the color picker (BODY element by default)
-
-
+		
+		
 		for (var opt in options) {
 			if (options.hasOwnProperty(opt)) {
 				this[opt] = options[opt];
 			}
 		}
-
-
+		
+		
 		this.hide = function () {
 			if (isPickerOwner()) {
 				detachPicker();
 			}
 		};
-
-
+		
+		
 		this.show = function () {
 			drawPicker();
 		};
-
-
+		
+		
 		this.redraw = function () {
 			if (isPickerOwner()) {
 				drawPicker();
 			}
 		};
-
-
+		
+		
 		this.importColor = function () {
 			if (!this.valueElement) {
 				this.exportColor();
@@ -1077,7 +1077,7 @@ var jsc = {
 							this.styleElement.style.color = this.styleElement._jscOrigStyle.color;
 						}
 						this.exportColor(jsc.leaveValue | jsc.leaveStyle);
-
+						
 					} else if (this.fromString(this.valueElement.value)) {
 						// managed to import color successfully from the value -> OK, don't do anything
 					} else {
@@ -1089,14 +1089,14 @@ var jsc = {
 				}
 			}
 		};
-
-
+		
+		
 		this.exportColor = function (flags) {
 			if (!(flags & jsc.leaveValue) && this.valueElement) {
 				var value = this.toString();
 				if (this.uppercase) { value = value.toUpperCase(); }
 				if (this.hash) { value = '#' + value; }
-
+				
 				if (jsc.isElementType(this.valueElement, 'input')) {
 					this.valueElement.value = value;
 				} else {
@@ -1117,8 +1117,8 @@ var jsc = {
 				redrawSld();
 			}
 		};
-
-
+		
+		
 		// h: 0-360
 		// s: 0-100
 		// v: 0-100
@@ -1136,17 +1136,17 @@ var jsc = {
 				if (isNaN(v)) { return false; }
 				v = Math.max(0, Math.min(100, this.maxV, v), this.minV);
 			}
-
+			
 			this.rgb = HSV_RGB(
 				h===null ? this.hsv[0] : (this.hsv[0]=h),
 				s===null ? this.hsv[1] : (this.hsv[1]=s),
 				v===null ? this.hsv[2] : (this.hsv[2]=v)
 			);
-
+			
 			this.exportColor(flags);
 		};
-
-
+		
+		
 		// r: 0-255
 		// g: 0-255
 		// b: 0-255
@@ -1164,7 +1164,7 @@ var jsc = {
 				if (isNaN(b)) { return false; }
 				b = Math.max(0, Math.min(255, b));
 			}
-
+			
 			var hsv = RGB_HSV(
 				r===null ? this.rgb[0] : r,
 				g===null ? this.rgb[1] : g,
@@ -1177,23 +1177,23 @@ var jsc = {
 				this.hsv[1] = hsv[1]===null ? null : Math.max(0, this.minS, Math.min(100, this.maxS, hsv[1]));
 			}
 			this.hsv[2] = hsv[2]===null ? null : Math.max(0, this.minV, Math.min(100, this.maxV, hsv[2]));
-
+			
 			// update RGB according to final HSV, as some values might be trimmed
 			var rgb = HSV_RGB(this.hsv[0], this.hsv[1], this.hsv[2]);
 			this.rgb[0] = rgb[0];
 			this.rgb[1] = rgb[1];
 			this.rgb[2] = rgb[2];
-
+			
 			this.exportColor(flags);
 		};
-
-
+		
+		
 		this.fromString = function (str, flags) {
 			var m;
 			if (m = str.match(/^\W*([0-9A-F]{3}([0-9A-F]{3})?)\W*$/i)) {
 				// HEX notation
 				//
-
+				
 				if (m[1].length === 6) {
 					// 6-char notation
 					this.fromRGB(
@@ -1212,7 +1212,7 @@ var jsc = {
 					);
 				}
 				return true;
-
+				
 			} else if (m = str.match(/^\W*rgba?\(([^)]*)\)\W*$/i)) {
 				var params = m[1].split(',');
 				var re = /^\s*(\d*)(\.\d+)?\s*$/;
@@ -1232,8 +1232,8 @@ var jsc = {
 			}
 			return false;
 		};
-
-
+		
+		
 		this.toString = function () {
 			return (
 				(0x100 | Math.round(this.rgb[0])).toString(16).substr(1) +
@@ -1241,13 +1241,13 @@ var jsc = {
 				(0x100 | Math.round(this.rgb[2])).toString(16).substr(1)
 			);
 		};
-
-
+		
+		
 		this.toHEXString = function () {
 			return '#' + this.toString().toUpperCase();
 		};
-
-
+		
+		
 		this.toRGBString = function () {
 			return ('rgb(' +
 				Math.round(this.rgb[0]) + ',' +
@@ -1255,8 +1255,8 @@ var jsc = {
 				Math.round(this.rgb[2]) + ')'
 			);
 		};
-
-
+		
+		
 		this.isLight = function () {
 			return (
 				0.213 * this.rgb[0] +
@@ -1265,12 +1265,12 @@ var jsc = {
 				255 / 2
 			);
 		};
-
-
+		
+		
 		this._processParentElementsInDOM = function () {
 			if (this._linkedElementsProcessed) { return; }
 			this._linkedElementsProcessed = true;
-
+			
 			var elm = this.targetElement;
 			do {
 				// If the target element or one of its parent nodes has fixed position,
@@ -1282,7 +1282,7 @@ var jsc = {
 				if (currStyle && currStyle.position.toLowerCase() === 'fixed') {
 					this.fixed = true;
 				}
-
+				
 				if (elm !== this.targetElement) {
 					// Ensure to attach onParentScroll only once to each parent element
 					// (multiple targetElements can share the same parent nodes)
@@ -1296,8 +1296,8 @@ var jsc = {
 				}
 			} while ((elm = elm.parentNode) && !jsc.isElementType(elm, 'body'));
 		};
-
-
+		
+		
 		// r: 0-255
 		// g: 0-255
 		// b: 0-255
@@ -1319,8 +1319,8 @@ var jsc = {
 				100 * v
 			];
 		}
-
-
+		
+		
 		// h: 0-360
 		// s: 0-100
 		// v: 0-100
@@ -1329,14 +1329,14 @@ var jsc = {
 		//
 		function HSV_RGB (h, s, v) {
 			var u = 255 * (v / 100);
-
+			
 			if (h === null) {
 				return [ u, u, u ];
 			}
-
+			
 			h /= 60;
 			s /= 100;
-
+			
 			var i = Math.floor(h);
 			var f = i%2 ? h-i : 1-(h-i);
 			var m = u * (1 - s);
@@ -1351,22 +1351,22 @@ var jsc = {
 				case 5: return [u,m,n];
 			}
 		}
-
-
+		
+		
 		function detachPicker () {
 			jsc.unsetClass(THIS.targetElement, THIS.activeClass);
 			jsc.picker.wrap.parentNode.removeChild(jsc.picker.wrap);
 			delete jsc.picker.owner;
 		}
-
-
+		
+		
 		function drawPicker () {
-
+			
 			// At this point, when drawing the picker, we know what the parent elements are
 			// and we can do all related DOM operations, such as registering events on them
 			// or checking their positioning
 			THIS._processParentElementsInDOM();
-
+			
 			if (!jsc.picker) {
 				jsc.picker = {
 					owner: null,
@@ -1394,7 +1394,7 @@ var jsc = {
 					btn : document.createElement('div'),
 					btnT : document.createElement('span') // text
 				};
-
+				
 				jsc.picker.pad.appendChild(jsc.picker.padPal.elm);
 				jsc.picker.padB.appendChild(jsc.picker.pad);
 				jsc.picker.cross.appendChild(jsc.picker.crossBY);
@@ -1404,7 +1404,7 @@ var jsc = {
 				jsc.picker.padB.appendChild(jsc.picker.cross);
 				jsc.picker.box.appendChild(jsc.picker.padB);
 				jsc.picker.box.appendChild(jsc.picker.padM);
-
+				
 				jsc.picker.sld.appendChild(jsc.picker.sldGrad.elm);
 				jsc.picker.sldB.appendChild(jsc.picker.sld);
 				jsc.picker.sldB.appendChild(jsc.picker.sldPtrOB);
@@ -1413,17 +1413,17 @@ var jsc = {
 				jsc.picker.sldPtrIB.appendChild(jsc.picker.sldPtrS);
 				jsc.picker.box.appendChild(jsc.picker.sldB);
 				jsc.picker.box.appendChild(jsc.picker.sldM);
-
+				
 				jsc.picker.btn.appendChild(jsc.picker.btnT);
 				jsc.picker.box.appendChild(jsc.picker.btn);
-
+				
 				jsc.picker.boxB.appendChild(jsc.picker.box);
 				jsc.picker.wrap.appendChild(jsc.picker.boxS);
 				jsc.picker.wrap.appendChild(jsc.picker.boxB);
 			}
-
+			
 			var p = jsc.picker;
-
+			
 			var displaySlider = !!jsc.getSliderComponent(THIS);
 			var dims = jsc.getPickerDims(THIS);
 			var crossOuterSize = (2 * THIS.pointerBorderWidth + THIS.pointerThickness + 2 * THIS.crossSize);
@@ -1432,31 +1432,31 @@ var jsc = {
 				THIS.borderRadius,
 				Math.round(THIS.padding * Math.PI)); // px
 			var padCursor = 'crosshair';
-
+			
 			// wrap
 			p.wrap.style.clear = 'both';
 			p.wrap.style.width = (dims[0] + 2 * THIS.borderWidth) + 'px';
 			p.wrap.style.height = (dims[1] + 2 * THIS.borderWidth) + 'px';
 			p.wrap.style.zIndex = THIS.zIndex;
-
+			
 			// picker
 			p.box.style.width = dims[0] + 'px';
 			p.box.style.height = dims[1] + 'px';
-
+			
 			p.boxS.style.position = 'absolute';
 			p.boxS.style.left = '0';
 			p.boxS.style.top = '0';
 			p.boxS.style.width = '100%';
 			p.boxS.style.height = '100%';
 			jsc.setBorderRadius(p.boxS, borderRadius + 'px');
-
+			
 			// picker border
 			p.boxB.style.position = 'relative';
 			p.boxB.style.border = THIS.borderWidth + 'px solid';
 			p.boxB.style.borderColor = THIS.borderColor;
 			p.boxB.style.background = THIS.backgroundColor;
 			jsc.setBorderRadius(p.boxB, borderRadius + 'px');
-
+			
 			// IE hack:
 			// If the element is transparent, IE will trigger the event on the elements under it,
 			// e.g. on Canvas or on elements with border
@@ -1465,22 +1465,22 @@ var jsc = {
 				'#FFF';
 			jsc.setStyle(p.padM, 'opacity', '0');
 			jsc.setStyle(p.sldM, 'opacity', '0');
-
+			
 			// pad
 			p.pad.style.position = 'relative';
 			p.pad.style.width = THIS.width + 'px';
 			p.pad.style.height = THIS.height + 'px';
-
+			
 			// pad palettes (HSV and HVS)
 			p.padPal.draw(THIS.width, THIS.height, jsc.getPadYComponent(THIS));
-
+			
 			// pad border
 			p.padB.style.position = 'absolute';
 			p.padB.style.left = THIS.padding + 'px';
 			p.padB.style.top = THIS.padding + 'px';
 			p.padB.style.border = THIS.insetWidth + 'px solid';
 			p.padB.style.borderColor = THIS.insetColor;
-
+			
 			// pad mouse area
 			p.padM._jscInstance = THIS;
 			p.padM._jscControlName = 'pad';
@@ -1490,7 +1490,7 @@ var jsc = {
 			p.padM.style.width = (THIS.padding + 2 * THIS.insetWidth + THIS.width + padToSliderPadding / 2) + 'px';
 			p.padM.style.height = dims[1] + 'px';
 			p.padM.style.cursor = padCursor;
-
+			
 			// pad cross
 			p.cross.style.position = 'absolute';
 			p.cross.style.left =
@@ -1499,7 +1499,7 @@ var jsc = {
 			p.cross.style.width =
 			p.cross.style.height =
 				crossOuterSize + 'px';
-
+			
 			// pad cross border Y and X
 			p.crossBY.style.position =
 			p.crossBX.style.position =
@@ -1519,7 +1519,7 @@ var jsc = {
 			p.crossBY.style.top =
 			p.crossBX.style.left =
 				'0';
-
+			
 			// pad cross line Y and X
 			p.crossLY.style.position =
 			p.crossLX.style.position =
@@ -1539,15 +1539,15 @@ var jsc = {
 			p.crossLY.style.top =
 			p.crossLX.style.left =
 				THIS.pointerBorderWidth + 'px';
-
+			
 			// slider
 			p.sld.style.overflow = 'hidden';
 			p.sld.style.width = THIS.sliderSize + 'px';
 			p.sld.style.height = THIS.height + 'px';
-
+			
 			// slider gradient
 			p.sldGrad.draw(THIS.sliderSize, THIS.height, '#000', '#000');
-
+			
 			// slider border
 			p.sldB.style.display = displaySlider ? 'block' : 'none';
 			p.sldB.style.position = 'absolute';
@@ -1555,7 +1555,7 @@ var jsc = {
 			p.sldB.style.top = THIS.padding + 'px';
 			p.sldB.style.border = THIS.insetWidth + 'px solid';
 			p.sldB.style.borderColor = THIS.insetColor;
-
+			
 			// slider mouse area
 			p.sldM._jscInstance = THIS;
 			p.sldM._jscControlName = 'sld';
@@ -1566,24 +1566,24 @@ var jsc = {
 			p.sldM.style.width = (THIS.sliderSize + padToSliderPadding / 2 + THIS.padding + 2 * THIS.insetWidth) + 'px';
 			p.sldM.style.height = dims[1] + 'px';
 			p.sldM.style.cursor = 'default';
-
+			
 			// slider pointer inner and outer border
 			p.sldPtrIB.style.border =
 			p.sldPtrOB.style.border =
 				THIS.pointerBorderWidth + 'px solid ' + THIS.pointerBorderColor;
-
+			
 			// slider pointer outer border
 			p.sldPtrOB.style.position = 'absolute';
 			p.sldPtrOB.style.left = -(2 * THIS.pointerBorderWidth + THIS.pointerThickness) + 'px';
 			p.sldPtrOB.style.top = '0';
-
+			
 			// slider pointer middle border
 			p.sldPtrMB.style.border = THIS.pointerThickness + 'px solid ' + THIS.pointerColor;
-
+			
 			// slider pointer spacer
 			p.sldPtrS.style.width = THIS.sliderSize + 'px';
 			p.sldPtrS.style.height = sliderPtrSpace + 'px';
-
+			
 			// the Close button
 			function setBtnBorder () {
 				var insetColors = THIS.insetColor.split(/\s+/);
@@ -1612,20 +1612,20 @@ var jsc = {
 			p.btnT.style.lineHeight = THIS.buttonHeight + 'px';
 			p.btnT.innerHTML = '';
 			p.btnT.appendChild(document.createTextNode(THIS.closeText));
-
+			
 			// place pointers
 			redrawPad();
 			redrawSld();
-
+			
 			// If we are changing the owner without first closing the picker,
 			// make sure to first deal with the old owner
 			if (jsc.picker.owner && jsc.picker.owner !== THIS) {
 				jsc.unsetClass(jsc.picker.owner.targetElement, THIS.activeClass);
 			}
-
+			
 			// Set the new picker owner
 			jsc.picker.owner = THIS;
-
+			
 			// The redrawPosition() method needs picker.owner to be set, that's why we call it here,
 			// after setting the owner
 			if (jsc.isElementType(container, 'body')) {
@@ -1633,15 +1633,15 @@ var jsc = {
 			} else {
 				jsc._drawPosition(THIS, 0, 0, 'relative', false);
 			}
-
+			
 			if (p.wrap.parentNode != container) {
 				container.appendChild(p.wrap);
 			}
-
+			
 			jsc.setClass(THIS.targetElement, THIS.activeClass);
 		}
-
-
+		
+		
 		function redrawPad () {
 			// redraw the pad pointer
 			switch (jsc.getPadYComponent(THIS)) {
@@ -1654,7 +1654,7 @@ var jsc = {
 			var ofs = -Math.floor(crossOuterSize / 2);
 			jsc.picker.cross.style.left = (x + ofs) + 'px';
 			jsc.picker.cross.style.top = (y + ofs) + 'px';
-
+			
 			// redraw the slider
 			switch (jsc.getSliderComponent(THIS)) {
 			case 's':
@@ -1681,8 +1681,8 @@ var jsc = {
 				break;
 			}
 		}
-
-
+		
+		
 		function redrawSld () {
 			var sldComponent = jsc.getSliderComponent(THIS);
 			if (sldComponent) {
@@ -1695,18 +1695,18 @@ var jsc = {
 				jsc.picker.sldPtrOB.style.top = (y - (2 * THIS.pointerBorderWidth + THIS.pointerThickness) - Math.floor(sliderPtrSpace / 2)) + 'px';
 			}
 		}
-
-
+		
+		
 		function isPickerOwner () {
 			return jsc.picker && jsc.picker.owner === THIS;
 		}
-
-
+		
+		
 		function blurValue () {
 			THIS.importColor();
 		}
-
-
+		
+		
 		// Find the target element
 		if (typeof targetElement === 'string') {
 			var id = targetElement;
@@ -1721,25 +1721,25 @@ var jsc = {
 		} else {
 			jsc.warn('Invalid target element: \'' + targetElement + '\'');
 		}
-
+		
 		if (this.targetElement._jscLinkedInstance) {
 			jsc.warn('Cannot link jscolor twice to the same element. Skipping.');
 			return;
 		}
 		this.targetElement._jscLinkedInstance = this;
-
+		
 		// Find the value element
 		this.valueElement = jsc.fetchElement(this.valueElement);
 		// Find the style element
 		this.styleElement = jsc.fetchElement(this.styleElement);
-
+		
 		var THIS = this;
 		var container =
 			this.container ?
 			jsc.fetchElement(this.container) :
 			document.getElementsByTagName('body')[0];
 		var sliderPtrSpace = 3; // px
-
+		
 		// For BUTTON elements it's important to stop them from sending the form when clicked
 		// (e.g. in Safari)
 		if (jsc.isElementType(this.targetElement, 'button')) {
@@ -1753,7 +1753,7 @@ var jsc = {
 				this.targetElement.onclick = function () { return false; };
 			}
 		}
-
+		
 		/*
 		var elm = this.targetElement;
 		do {
@@ -1766,7 +1766,7 @@ var jsc = {
 			if (currStyle && currStyle.position.toLowerCase() === 'fixed') {
 				this.fixed = true;
 			}
-
+			
 			if (elm !== this.targetElement) {
 				// attach onParentScroll so that we can recompute the picker position
 				// when one of the offsetParents is scrolled
@@ -1777,7 +1777,7 @@ var jsc = {
 			}
 		} while ((elm = elm.offsetParent) && !jsc.isElementType(elm, 'body'));
 		*/
-
+		
 		// valueElement
 		if (this.valueElement) {
 			if (jsc.isElementType(this.valueElement, 'input')) {
@@ -1791,7 +1791,7 @@ var jsc = {
 				this.valueElement.setAttribute('autocomplete', 'off');
 			}
 		}
-
+		
 		// styleElement
 		if (this.styleElement) {
 			this.styleElement._jscOrigStyle = {
@@ -1800,7 +1800,7 @@ var jsc = {
 				color : this.styleElement.style.color
 			};
 		}
-
+		
 		if (this.value) {
 			// Try to set the color from the .value option and if unsuccessful,
 			// export the current color
@@ -1809,7 +1809,7 @@ var jsc = {
 			this.importColor();
 		}
 	}
-
+	
 };
 
 
@@ -1829,7 +1829,7 @@ jsc.jscolor.lookupClass = 'jscolor';
 jsc.jscolor.installByClassName = function (className) {
 	var inputElms = document.getElementsByTagName('input');
 	var buttonElms = document.getElementsByTagName('button');
-
+	
 	jsc.tryInstallOnElements(inputElms, className);
 	jsc.tryInstallOnElements(buttonElms, className);
 };

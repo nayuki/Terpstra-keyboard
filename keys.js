@@ -32,7 +32,7 @@ keyCodeToCoords_mac={
 	122 : new Point(6, -3), // f11
 	123 : new Point(7, -3), // f12
 	
-
+	
 	//192 : new Point(-6, -2), // `
 	49 : new Point(-5, -2), // 1
 	50 : new Point(-4, -2), // 2
@@ -47,7 +47,7 @@ keyCodeToCoords_mac={
 	189 : new Point(5, -2), // -
 	187 : new Point(6, -2), // =
 	8 : new Point(7, -2), // backspace
-
+	
 	9 : new Point(-6, -1), // tab
 	81 : new Point(-5, -1), // Q
 	87 : new Point(-4, -1), // W
@@ -62,7 +62,7 @@ keyCodeToCoords_mac={
 	219 : new Point(5, -1), // [
 	//221 : new Point(6, -1), // ]
 	13 : new Point(7, -1), // enter
-
+	
 	//20 : new Point(-6, 0), // caps lock
 	65 : new Point(-5, 0), // A
 	83 : new Point(-4, 0), // S
@@ -76,7 +76,7 @@ keyCodeToCoords_mac={
 	186 : new Point(4, 0), // ;
 	222 : new Point(5, 0), // '
 	//220 : new Point(6, 0), // \
-
+	
 	90 : new Point(-5, 1), // Z
 	88 : new Point(-4, 1), // X
 	67 : new Point(-3, 1), // C
@@ -116,7 +116,7 @@ codeToCoords_dell={
 	'Minus' : new Point(5, -2), // -
 	'Equal' : new Point(6, -2), // =
 	'Backspace' : new Point(7, -2), // backspace
-
+	
 	Tab : new Point(-6, -1), // tab
 	KeyQ : new Point(-5, -1), // Q
 	87 : new Point(-4, -1), // W
@@ -131,10 +131,10 @@ codeToCoords_dell={
 	219 : new Point(5, -1), // [
 	//221 : new Point(6, -1), // ]
 	13 : new Point(7, -1), // enter
-
-
-
-
+	
+	
+	
+	
 };
 
 (function dell(){
@@ -145,7 +145,7 @@ codeToCoords_dell={
 	lines[2]= ["Tab", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "BracketLeft", "BracketRight", "Backslash"];
 	lines[3]=["CapsLock", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "Quote", "Enter"];
 	lines[4]=["ShiftLeft", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period", "Slash", "ShiftRight"];
-
+	
 	lines[0].forEach((code,i)=>{
 		codeToCoords[code] = new Point(-6+i, -3);
 	});
@@ -235,16 +235,16 @@ function hideRevealColors() {
 		document.getElementById("fundamental_colorLabel").style.display = 'block';
 		document.getElementById("note_colors").style.display = 'none';
 		document.getElementById("note_colorsLabel").style.display = 'none';
-
+		
 	} else {
 		document.getElementById("fundamental_color").style.display = 'none';
 		document.getElementById("fundamental_colorLabel").style.display = 'none';
 		document.getElementById("note_colors").style.display = 'block';
 		document.getElementById("note_colorsLabel").style.display = 'block';
 	}
-
+	
 	changeURL();
-
+	
 }
 
 function hideRevealEnum() {
@@ -291,7 +291,7 @@ Point.prototype.minus = function(p) {
 function changeURL() {
 	var url = window.location.pathname + "?";
 	// add fundamental, right, upright, size
-
+	
 	url += "fundamental=" + document.getElementById("fundamental").value +
 		"&right=" + document.getElementById("rSteps").value +
 		"&upright=" + document.getElementById("urSteps").value +
@@ -303,32 +303,32 @@ function changeURL() {
 		"&spectrum_colors=" + document.getElementById("spectrum_colors").checked +
 		"&fundamental_color=" + document.getElementById("fundamental_color").value +
 		"&no_labels=" + document.getElementById("no_labels").checked;
-
+	
 	url += "&scale=";
 	url += encodeURIComponent(document.getElementById('scale').value);
-
+	
 	url += "&names=";
 	url += encodeURIComponent(document.getElementById('names').value);
-
+	
 	url += "&note_colors=";
 	url += encodeURIComponent(document.getElementById('note_colors').value);
-
+	
 	// Find scl file description for the page title
-
+	
 	var scaleLines = document.getElementById('scale').value.split('\n');
 	var first = true;
 	var foundDescription = false;
 	var description = "Terpstra Keyboard WebApp";
-
+	
 	scaleLines.forEach(function(line) {
 		if (!(foundDescription) && !(line.match(/^\!/)) && line.match(/[a-zA-Z]+/)) {
 			foundDescription = true;
 			description = line;
 		}
 	});
-
+	
 	document.title = description;
-
+	
 	window.history.replaceState({}, '', url);
 }
 
@@ -365,14 +365,14 @@ function parseScaleColors() {
 
 function calculateRotationMatrix(rotation, center) {
 	var m = [];
-
+	
 	m[0] = Math.cos(rotation);
 	m[1] = Math.sin(rotation);
 	m[2] = -m[1];
 	m[3] = m[0];
 	m[4] = center.x - m[0] * center.x - m[2] * center.y;
 	m[5] = center.y - m[1] * center.x - m[3] * center.y;
-
+	
 	return m;
 }
 
@@ -385,39 +385,39 @@ function applyMatrixToPoint(m, p) { /*Array, Point*/
 
 function resizeHandler() {
 	// Resize Inner and outer coordinates of canvas to preserve aspect ratio
-
+	
 	var newWidth = window.innerWidth;
 	var newHeight = window.innerHeight;
-
+	
 	settings.canvas.style.height = newHeight + 'px';
 	settings.canvas.style.width = newWidth + 'px';
-
+	
 	settings.canvas.style.marginTop = (-newHeight / 2) + 'px';
 	settings.canvas.style.marginLeft = (-newWidth / 2) + 'px';
-
+	
 	settings.canvas.width = newWidth;
 	settings.canvas.height = newHeight;
-
+	
 	// Find new centerpoint
-
+	
 	var centerX = newWidth / 2;
 	var centerY = newHeight / 2;
 	settings.centerpoint = new Point(centerX, centerY);
-
+	
 	// Rotate about it
-
+	
 	if (settings.rotationMatrix) {
 		settings.context.restore();
 	}
 	settings.context.save();
-
+	
 	settings.rotationMatrix = calculateRotationMatrix(-settings.rotation, settings.centerpoint);
-
+	
 	var m = calculateRotationMatrix(settings.rotation, settings.centerpoint);
 	settings.context.setTransform(m[0], m[1], m[2], m[3], m[4], m[5]);
-
+	
 	// Redraw Grid
-
+	
 	drawGrid();
 }
 
@@ -441,18 +441,18 @@ function back() {
 }
 
 function goKeyboard() {
-
+	
 	changeURL();
-
+	
 	// Set up screen
-
+	
 	document.getElementById("landing-page").style.display = "none";
 	document.getElementById("keyboard").style.display = "block";
 	document.body.style.overflow = 'hidden';
 	document.getElementById("backButton").style.display = "block";
-
+	
 	// set up settings constants
-
+	
 	settings.fundamental = document.getElementById("fundamental").value;
 	settings.rSteps = document.getElementById("rSteps").value;
 	settings.urSteps = parseFloat(settings.rSteps) - parseFloat(document.getElementById("urSteps").value); // Adjust to different coordinate system
@@ -463,29 +463,29 @@ function goKeyboard() {
 	settings.names = document.getElementById('names').value.split('\n');
 	settings["enum"] = document.getElementById('enum').checked;
 	settings.equivSteps = parseInt(document.getElementById('equivSteps').value);
-
+	
 	settings.canvas = document.getElementById('keyboard');
 	settings.context = settings.canvas.getContext('2d');
-
+	
 	settings.hexHeight = settings.hexSize * 2;
 	settings.hexVert = settings.hexHeight * 3 / 4;
 	settings.hexWidth = Math.sqrt(3) / 2 * settings.hexHeight;
-
+	
 	settings.no_labels = document.getElementById('no_labels').checked;
 	settings.spectrum_colors = document.getElementById('spectrum_colors').checked;
 	settings.fundamental_color = document.getElementById('fundamental_color').value;
-
+	
 	// Set up resize handler
-
+	
 	window.addEventListener('resize', resizeHandler, false);
 	window.addEventListener('orientationchange', resizeHandler, false);
-
+	
 	//... and give it an initial call
-
+	
 	resizeHandler();
-
+	
 	// Set up synth
-
+	
 	settings.sampleBuffer = [undefined, undefined, undefined];
 	var instrumentOption = document.getElementById("instrument").selectedIndex;
 	var instruments = [{
@@ -552,21 +552,21 @@ function goKeyboard() {
 			fileName: "WMRIByzantineST",
 			fade: 0.1
 		}
-
+		
 	];
-
+	
 	//console.log(instruments[instrumentOption]);
-
+	
 	loadSample(instruments[instrumentOption].fileName, 0);
 	settings.sampleFadeout = instruments[instrumentOption].fade;
-
+	
 	// Set up keyboard, touch and mouse event handlers
-
+	
 	settings.sustain = false;
 	settings.sustainedNotes = [];
 	//settings.canvas.addEventListener("keydown", onKeyDown, false); // Firefox isn't firing :(
 	//settings.canvas.addEventListener("keyup", onKeyUp, false);
-
+	
 	if (typeof(is_key_event_added) == 'undefined') {
 		is_key_event_added = 1;
 		settings.pressedKeys = [];
@@ -583,7 +583,7 @@ function goKeyboard() {
 			48 : new Point(4, -2), // 0
 			189 : new Point(5, -2), // -
 			187 : new Point(6, -2), // =
-
+			
 			81 : new Point(-5, -1), // Q
 			87 : new Point(-4, -1), // W
 			69 : new Point(-3, -1), // E
@@ -596,7 +596,7 @@ function goKeyboard() {
 			80 : new Point(4, -1), // P
 			219 : new Point(5, -1), // [
 			221 : new Point(6, -1), // ]
-
+			
 			65 : new Point(-5, 0), // A
 			83 : new Point(-4, 0), // S
 			68 : new Point(-3, 0), // D
@@ -608,7 +608,7 @@ function goKeyboard() {
 			76 : new Point(3, 0), // L
 			186 : new Point(4, 0), // ;
 			222 : new Point(5, 0), // '
-
+			
 			90 : new Point(-5, 1), // Z
 			88 : new Point(-4, 1), // X
 			67 : new Point(-3, 1), // C
@@ -623,15 +623,15 @@ function goKeyboard() {
 		window.addEventListener("keydown", onKeyDown, false);
 		window.addEventListener("keyup", onKeyUp, false);
 	}
-
+	
 	//iPad Shake to toggle sustain
 	if (typeof window.DeviceMotionEvent != 'undefined') {
 		var lastShakeCheck = 0;
 		var lastShakeCount = 0;
-
+		
 		// Shake sensitivity (a lower number is more)
 		var sensitivity = 5;
-
+		
 		// Position variables
 		var x1 = 0,
 			y1 = 0,
@@ -639,25 +639,25 @@ function goKeyboard() {
 			x2 = 0,
 			y2 = 0,
 			z2 = 0;
-
+		
 		// Listen to motion events and update the position
 		window.addEventListener('devicemotion', function(e) {
 			x1 = e.accelerationIncludingGravity.x;
 			y1 = e.accelerationIncludingGravity.y;
 			z1 = e.accelerationIncludingGravity.z;
 		}, false);
-
+		
 		// Periodically check the position and fire
 		// if the change is greater than the sensitivity
 		setInterval(function() {
 			lastShakeCheck++;
 			var change = Math.abs(x1 - x2 + y1 - y2 + z1 - z2);
-
+			
 			if (change > sensitivity) {
-
+				
 				if (lastShakeCheck - lastShakeCount >= 3) {
 					lastShakeCount = lastShakeCheck;
-
+					
 					if (settings.sustain == true) {
 						settings.sustain = false;
 						for (var note = 0; note < settings.sustainedNotes.length; note++) {
@@ -671,22 +671,22 @@ function goKeyboard() {
 					}
 				}
 			}
-
+			
 			// Update new position
 			x2 = x1;
 			y2 = y1;
 			z2 = z1;
 		}, 300);
 	}
-
+	
 	//
-
+	
 	settings.activeHexObjects = [];
 	settings.isTouchDown = false;
 	settings.canvas.addEventListener("touchstart", handleTouch, false);
 	settings.canvas.addEventListener("touchend", handleTouch, false);
 	settings.canvas.addEventListener("touchmove", handleTouch, false);
-
+	
 	settings.isMouseDown = false;
 	settings.canvas.addEventListener("mousedown", function(e) {
 		if (settings.pressedKeys.length != 0 || settings.isTouchDown) {
@@ -696,7 +696,7 @@ function goKeyboard() {
 		settings.canvas.addEventListener("mousemove", mouseActive, false);
 		mouseActive(e);
 	}, false);
-
+	
 	settings.canvas.addEventListener("mouseup", function(e) {
 		settings.isMouseDown = false;
 		if (settings.pressedKeys.length != 0 || settings.isTouchDown) {
@@ -715,8 +715,8 @@ function goKeyboard() {
 
 function onKeyDown(e) {
 	e.preventDefault();//
-
-
+	
+	
 	if (e.keyCode == 32) { // Spacebar
 		settings.sustain = true;
 	} else if (!settings.isMouseDown && !settings.isTouchDown
@@ -730,7 +730,7 @@ function onKeyDown(e) {
 		drawHex(coords, centsToColor(cents, true));
 		hex.noteOn(cents);
 	}
-
+	
 	//Hatsevich:
 	else if(!settings.isMouseDown && !settings.isTouchDown
 		&& (e.code in codeToCoords)
@@ -768,7 +768,7 @@ function onKeyUp(e) {
 			}
 		}
 	}
-
+	
 	//Hatsevich:
 	else if (!settings.isMouseDown && !settings.isTouchDown
 				&& (e.code in codeToCoords)) {
@@ -786,14 +786,14 @@ function onKeyUp(e) {
 				}
 			}
 		}
-
+	
 }
 
 function mouseActive(e) {
 	var coords = getPointerPosition(e);
-
+	
 	coords = getHexCoordsAt(coords);
-
+	
 	if (settings.activeHexObjects.length == 0) {
 		settings.activeHexObjects[0] = new ActiveHex(coords);
 		var cents = hexCoordsToCents(coords);
@@ -804,7 +804,7 @@ function mouseActive(e) {
 			settings.activeHexObjects[0].noteOff();
 			drawHex(settings.activeHexObjects[0].coords,
 					centsToColor(hexCoordsToCents(settings.activeHexObjects[0].coords, false)));
-
+			
 			settings.activeHexObjects[0] = new ActiveHex(coords);
 			var cents = hexCoordsToCents(coords);
 			settings.activeHexObjects[0].noteOn(cents);
@@ -823,7 +823,7 @@ function getPointerPosition(e) {
 function getPosition(element) {
 	var xPosition = 0;
 	var yPosition = 0;
-
+	
 	while (element) {
 		xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
 		yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
@@ -842,16 +842,16 @@ function handleTouch(e) {
 		return;
 	}
 	settings.isTouchDown = e.targetTouches.length != 0;
-
+	
 	for (var i = 0; i < settings.activeHexObjects.length; i++) {
 		settings.activeHexObjects[i].release = true;
 	}
-
+	
 	for (var i = 0; i < e.targetTouches.length; i++) {
 		var coords = getHexCoordsAt(new Point(e.targetTouches[i].pageX - settings.canvas.offsetLeft,
 				e.targetTouches[i].pageY - settings.canvas.offsetTop));
 		var found = false;
-
+		
 		for (var j = 0; j < settings.activeHexObjects.length; j++) {
 			if (coords.equals(settings.activeHexObjects[j].coords)) {
 				settings.activeHexObjects[j].release = false;
@@ -867,7 +867,7 @@ function handleTouch(e) {
 			settings.activeHexObjects.push(newHex);
 		}
 	}
-
+	
 	for (var i = settings.activeHexObjects.length - 1; i >= 0; i--) {
 		if (settings.activeHexObjects[i].release) {
 			settings.activeHexObjects[i].noteOff();
@@ -900,11 +900,11 @@ function hexCoordsToScreen(hex) { /* Point */
 }
 
 function drawHex(p, c) { /* Point, color */
-
+	
 	var hexCenter = hexCoordsToScreen(p);
-
+	
 	// Calculate hex vertices
-
+	
 	var x = [];
 	var y = [];
 	for (var i = 0; i < 6; i++) {
@@ -912,9 +912,9 @@ function drawHex(p, c) { /* Point, color */
 		x[i] = hexCenter.x + settings.hexSize * Math.cos(angle);
 		y[i] = hexCenter.y + settings.hexSize * Math.sin(angle);
 	}
-
+	
 	// Draw filled hex
-
+	
 	settings.context.beginPath();
 	settings.context.moveTo(x[0], y[0]);
 	for (var i = 1; i < 6; i++) {
@@ -923,9 +923,9 @@ function drawHex(p, c) { /* Point, color */
 	settings.context.closePath();
 	settings.context.fillStyle = c;
 	settings.context.fill();
-
+	
 	// Save context and create a hex shaped clip
-
+	
 	settings.context.save();
 	settings.context.beginPath();
 	settings.context.moveTo(x[0], y[0]);
@@ -934,9 +934,9 @@ function drawHex(p, c) { /* Point, color */
 	}
 	settings.context.closePath();
 	settings.context.clip();
-
+	
 	// Calculate hex vertices outside clipped path
-
+	
 	var x2 = [];
 	var y2 = [];
 	for (var i = 0; i < 6; i++) {
@@ -944,9 +944,9 @@ function drawHex(p, c) { /* Point, color */
 		x2[i] = hexCenter.x + (parseFloat(settings.hexSize) + 3) * Math.cos(angle);
 		y2[i] = hexCenter.y + (parseFloat(settings.hexSize) + 3) * Math.sin(angle);
 	}
-
+	
 	// Draw shadowed stroke outside clip to create pseudo-3d effect
-
+	
 	settings.context.beginPath();
 	settings.context.moveTo(x2[0], y2[0]);
 	for (var i = 1; i < 6; i++) {
@@ -961,9 +961,9 @@ function drawHex(p, c) { /* Point, color */
 	settings.context.shadowOffsetY = 0;
 	settings.context.stroke();
 	settings.context.restore();
-
+	
 	// Add a clean stroke around hex
-
+	
 	settings.context.beginPath();
 	settings.context.moveTo(x[0], y[0]);
 	for (var i = 1; i < 6; i++) {
@@ -974,20 +974,20 @@ function drawHex(p, c) { /* Point, color */
 	settings.context.lineJoin = 'round';
 	settings.context.strokeStyle = 'black';
 	settings.context.stroke();
-
+	
 	// Add note name and equivalence interval multiple
-
+	
 	settings.context.save();
 	settings.context.translate(hexCenter.x, hexCenter.y);
 	settings.context.rotate(-settings.rotation);
 	// hexcoords = p and screenCoords = hexCenter
-
+	
 	//settings.context.fillStyle = "black"; //bdl_04062016
 	settings.context.fillStyle = getContrastYIQ(current_text_color);
 	settings.context.font = "22pt Arial";
 	settings.context.textAlign = "center";
 	settings.context.textBaseline = "middle";
-
+	
 	var note = p.x * settings.rSteps + p.y * settings.urSteps;
 	var equivSteps = settings["enum"] ? parseInt(settings.equivSteps) : settings.scale.length;
 	var equivMultiple = Math.floor(note / equivSteps);
@@ -995,7 +995,7 @@ function drawHex(p, c) { /* Point, color */
 	if (reducedNote < 0) {
 		reducedNote = equivSteps + reducedNote;
 	}
-
+	
 	if (!settings.no_labels) {
 		var name = settings["enum"] ? "" + reducedNote : settings.names[reducedNote];
 		if (name) {
@@ -1006,7 +1006,7 @@ function drawHex(p, c) { /* Point, color */
 			settings.context.fillText(name, 0, 0);
 			settings.context.restore();
 		}
-
+		
 		var scaleFactor = settings.hexSize / 50;
 		settings.context.scale(scaleFactor, scaleFactor);
 		settings.context.translate(10, -25);
@@ -1016,7 +1016,7 @@ function drawHex(p, c) { /* Point, color */
 		settings.context.textBaseline = "middle";
 		settings.context.fillText(equivMultiple, 0, 0);
 	}
-
+	
 	settings.context.restore();
 }
 
@@ -1028,30 +1028,30 @@ function centsToColor(cents, pressed) {
 		} else {
 			returnColor = settings.keycolors[global_pressed_interval];
 		}
-
+		
 		var oldColor = returnColor;
-
+		
 		//convert color name to hex
 		returnColor = nameToHex(returnColor);
-
+		
 		current_text_color = returnColor;
-
+		
 		//convert the hex to rgb
 		returnColor = hex2rgb(returnColor);
-
+		
 		//darken for pressed key
 		if (pressed) {
 			returnColor[0] -= 90;
 			returnColor[1] -= 90;
 		}
-
+		
 		return rgb(returnColor[0], returnColor[1], returnColor[2]);
-
+		
 	}
-
+	
 	var fcolor = hex2rgb("#" + settings.fundamental_color);
 	fcolor = rgb2hsv(fcolor[0], fcolor[1], fcolor[2]);
-
+	
 	var h = fcolor.h / 360;
 	var s = fcolor.s / 100;
 	var v = fcolor.v / 100;
@@ -1059,11 +1059,11 @@ function centsToColor(cents, pressed) {
 	var reduced = (cents / 1200) % 1;
 	if (reduced < 0) reduced += 1;
 	h = (reduced + h) % 1;
-
+	
 	v = (pressed) ? v - (v / 2) : v;
-
+	
 	returnColor = HSVtoRGB(h, s, v);
-
+	
 	//setup text color
 	var tcolor = HSVtoRGB2(h, s, v);
 	current_text_color = rgbToHex(tcolor.red, tcolor.green, tcolor.blue);
@@ -1094,17 +1094,17 @@ function getHexCoordsAt(coords) {
 	coords = applyMatrixToPoint(settings.rotationMatrix, coords);
 	var x = coords.x - settings.centerpoint.x;
 	var y = coords.y - settings.centerpoint.y;
-
+	
 	var q = (x * Math.sqrt(3) / 3 - y / 3) / settings.hexSize;
 	var r = y * 2 / 3 / settings.hexSize;
-
+	
 	q = Math.round(q);
 	r = Math.round(r);
-
+	
 	var guess = hexCoordsToScreen(new Point(q, r));
-
+	
 	// This gets an approximation; now check neighbours for minimum distance
-
+	
 	var minimum = 100000;
 	var closestHex = new Point(q, r);
 	for (var qOffset = -1; qOffset < 2; qOffset++) {
@@ -1118,7 +1118,7 @@ function getHexCoordsAt(coords) {
 			}
 		}
 	}
-
+	
 	return (closestHex);
 }
 
@@ -1183,7 +1183,7 @@ function HSVtoRGB2(h, s, v) {
 			r = v; g = p; b = q;
 			break;
 	}
-
+	
 	return {
 		red: Math.floor(r * 255),
 		green: Math.floor(g * 255),
@@ -1217,9 +1217,9 @@ ActiveHex.prototype.noteOn = function(cents) {
 			sampleNumber = 1;
 		}
 	}
-
+	
 	if (!(settings.sampleBuffer[sampleNumber])) return; // Sample not yet loaded
-
+	
 	source.buffer = settings.sampleBuffer[sampleNumber]; // tell the source which sound to play
 	source.playbackRate.value = freq / sampleFreq;
 	// Create a gain node.
@@ -1266,7 +1266,7 @@ function init() {
 
 function loadSample(name, iteration) {
 	// It seems audioContext doesn't cope with simultaneous decodeAudioData calls ):
-
+	
 	var sampleFreqs = ["110", "220", "440", "880"];
 	//for (var i = 0; i < 4; ++i) {
 	var request = new XMLHttpRequest();
@@ -1274,7 +1274,7 @@ function loadSample(name, iteration) {
 	//console.log(iteration);
 	request.open('GET', url, true);
 	request.responseType = 'arraybuffer';
-
+	
 	// Decode asynchronously
 	request.onload = function() {
 		settings.audioContext.decodeAudioData(request.response, function(buffer) {
@@ -1454,10 +1454,10 @@ function nameToHex(colour) {
 	} else if (colour.length == 6 && colour.indexOf("#") == -1) {
 		return "#" + colour;
 	}
-
-
+	
+	
 	return "#EDEDE4"; //default button color!
-
+	
 }
 
 function hex2rgb(col) {
@@ -1485,7 +1485,7 @@ function rgb2hsv(r1, g1, b1) {
 		diffc = function(c) {
 			return (v - c) / 6 / diff + 1 / 2;
 		};
-
+	
 	if (diff == 0) {
 		h = s = 0;
 	} else {
@@ -1493,7 +1493,7 @@ function rgb2hsv(r1, g1, b1) {
 		rr = diffc(r);
 		gg = diffc(g);
 		bb = diffc(b);
-
+		
 		if (r === v) {
 			h = bb - gg;
 		} else if (g === v) {
@@ -1531,7 +1531,7 @@ function rgbToHex(r, g, b) {
 function checkPreset(init) {
 	var mselect = document.getElementById('quicklinks');
 	var url_str = window.location.href;
-
+	
 	//first check for .htm as end of url and set the default preset (31ET)
 	if (url_str.substr(url_str.length - 4) == '.htm') {
 		mselect.value = mselect.options[init].value;
