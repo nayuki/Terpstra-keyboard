@@ -201,7 +201,7 @@ getInputById("rSteps").value = "right" in getData ? getData.right : 3;
 getInputById("urSteps").value = "upright" in getData ? getData.upright : 10;
 getInputById("hexSize").value = "size" in getData ? getData.size : 60;
 getInputById("rotation").value = "rotation" in getData ? getData.rotation : 343.897886248;
-document.getElementById("instrument").value = "instrument" in getData ? getData.instrument : "rhodes";
+getElemById("instrument", HTMLSelectElement).value = "instrument" in getData ? getData.instrument : "rhodes";
 getInputById("enum").checked = "enum" in getData ? JSON.parse(getData["enum"]) : false;
 getInputById("equivSteps").value = "equivSteps" in getData ? getData.equivSteps : 17;
 getInputById("spectrum_colors").checked = "spectrum_colors" in getData ? JSON.parse(getData.spectrum_colors) : false;
@@ -213,13 +213,13 @@ var global_pressed_interval: number;
 var current_text_color: string = "#000000";
 
 if ("scale" in getData)
-	document.getElementById("scale").value = getData.scale[0];
+	getElemById("scale", HTMLTextAreaElement).value = getData.scale[0];
 
 if ("names" in getData)
-	document.getElementById("names").value = getData.names[0];
+	getElemById("names", HTMLTextAreaElement).value = getData.names[0];
 
 if ("note_colors" in getData)
-	document.getElementById("note_colors").value = getData.note_colors[0];
+	getElemById("note_colors", HTMLTextAreaElement).value = getData.note_colors[0];
 
 hideRevealNames();
 hideRevealColors();
@@ -285,7 +285,7 @@ function changeURL() {
 		"&upright=" + getInputById("urSteps").value +
 		"&size=" + getInputById("hexSize").value +
 		"&rotation=" + getInputById("rotation").value +
-		"&instrument=" + document.getElementById("instrument").value +
+		"&instrument=" + getElemById("instrument", HTMLSelectElement).value +
 		"&enum=" + getInputById("enum").checked +
 		"&equivSteps=" + getInputById("equivSteps").value +
 		"&spectrum_colors=" + getInputById("spectrum_colors").checked +
@@ -293,17 +293,17 @@ function changeURL() {
 		"&no_labels=" + getInputById("no_labels").checked;
 	
 	url += "&scale=";
-	url += encodeURIComponent(document.getElementById("scale").value);
+	url += encodeURIComponent(getElemById("scale", HTMLTextAreaElement).value);
 	
 	url += "&names=";
-	url += encodeURIComponent(document.getElementById("names").value);
+	url += encodeURIComponent(getElemById("names", HTMLTextAreaElement).value);
 	
 	url += "&note_colors=";
-	url += encodeURIComponent(document.getElementById("note_colors").value);
+	url += encodeURIComponent(getElemById("note_colors", HTMLTextAreaElement).value);
 	
 	// Find scl file description for the page title
 	
-	var scaleLines: Array<string> = document.getElementById("scale").value.split("\n");
+	var scaleLines: Array<string> = getElemById("scale", HTMLTextAreaElement).value.split("\n");
 	var first: boolean = true;
 	var foundDescription: boolean = false;
 	var description: string = "Terpstra Keyboard WebApp";
@@ -323,7 +323,7 @@ var settings = {};
 
 function parseScale() {
 	settings.scale = [];
-	var scaleLines: Array<string> = document.getElementById("scale").value.split("\n");
+	var scaleLines: Array<string> = getElemById("scale", HTMLTextAreaElement).value.split("\n");
 	scaleLines.forEach(function(line) {
 		if (line.match(/^[1234567890.\s/]+$/) && !line.match(/^\s+$/)) {
 			if (line.match(/\//)) {
@@ -344,7 +344,7 @@ function parseScale() {
 
 function parseScaleColors() {
 	settings.keycolors = [];
-	var colorsArray: Array<string> = document.getElementById("note_colors").value.split("\n");
+	var colorsArray: Array<string> = getElemById("note_colors", HTMLTextAreaElement).value.split("\n");
 	colorsArray.forEach(function(line) {
 		settings.keycolors.push(line);
 	});
@@ -445,11 +445,11 @@ function goKeyboard() {
 	settings.rotation = (getInputById("rotation").value * 2 * Math.PI) / 360;
 	parseScale();
 	parseScaleColors();
-	settings.names = document.getElementById("names").value.split("\n");
+	settings.names = getElemById("names", HTMLTextAreaElement).value.split("\n");
 	settings["enum"] = getInputById("enum").checked;
 	settings.equivSteps = parseInt(getInputById("equivSteps").value);
 	
-	settings.canvas = document.getElementById("keyboard");
+	settings.canvas = getElemById("keyboard", HTMLCanvasElement);
 	settings.context = settings.canvas.getContext("2d");
 	
 	settings.hexHeight = settings.hexSize * 2;
@@ -472,7 +472,7 @@ function goKeyboard() {
 	// Set up synth
 	
 	settings.sampleBuffer = [undefined, undefined, undefined];
-	var instrumentOption = document.getElementById("instrument").selectedIndex;
+	var instrumentOption = getElemById("instrument", HTMLSelectElement).selectedIndex;
 	var instruments: Array<{fileName:string, fade:number}> = [
 		{fileName: "piano", fade: 0.1},
 		{fileName: "harpsichord", fade: 0.2},
@@ -1451,7 +1451,7 @@ function rgbToHex(r: number, g: number, b: number): string {
 
 
 function checkPreset(init: number) {
-	var mselect = document.getElementById("quicklinks");
+	var mselect = getElemById("quicklinks", HTMLSelectElement);
 	var url_str: string = window.location.href;
 	
 	//first check for .htm as end of url and set the default preset (31ET)
@@ -1466,10 +1466,10 @@ function checkPreset(init: number) {
 }
 
 
-let ms: HTMLElement|null;
+let ms: HTMLSelectElement|null;
 
 function noPreset() {
-	ms = document.getElementById("quicklinks");
+	ms = getElemById("quicklinks", HTMLSelectElement);
 	ms.value = ms.options[0].value;
 }
 
@@ -1487,6 +1487,19 @@ function getInputById(id: string): HTMLInputElement {
 	if (elem instanceof HTMLInputElement)
 		return elem;
 	throw `HTML element not found: <input id="${id}">`;
+}
+
+
+type Constructor<T> = { new(...args: Array<any>): T };
+
+function getElemById<T>(id: string, type: Constructor<T>): T {
+	const result: HTMLElement|null = document.getElementById(id);
+	if (result instanceof type)
+		return result;
+	else if (result === null)
+		throw new Error("Element not found");
+	else
+		throw new TypeError("Invalid element type");
 }
 
 
