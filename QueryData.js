@@ -45,7 +45,7 @@ function QueryData(queryString, preserveDuplicates) {
 		var queryComponents = queryString.split(/[&;]/g);
 		
 		// loop over the query string components
-		for (var index = 0; index < queryComponents.length; index ++) {
+		for (var index = 0; index < queryComponents.length; index++) {
 			
 			// extract this component's key-value pair
 			var keyValuePair = queryComponents[index].split("=");

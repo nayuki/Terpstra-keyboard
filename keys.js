@@ -96,7 +96,7 @@ codeToCoords_mac = {
 	"ShiftLeft": new Point(-7, 1),
 	"Backquote": new Point(-6, -2),
 	"BracketRight": new Point(6, -1), // ]
-}
+};
 codeToCoords = {};
 keyCodeToCoords = {};
 
