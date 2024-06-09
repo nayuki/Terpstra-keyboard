@@ -193,7 +193,7 @@ if (decodeURIComponent(window.location.search) == "")
 //check\set preset
 checkPreset(16);
 // fill in form
-getElementById("settingsForm").onsubmit = goKeyboard;
+getHtmlById("settingsForm").onsubmit = goKeyboard;
 
 var getData = new QueryData(location.search, true);
 getInputById("fundamental").value = "fundamental" in getData ? getData.fundamental : 440;
@@ -227,30 +227,30 @@ hideRevealEnum();
 
 function hideRevealNames() {
 	if (getInputById("enum").checked) {
-		getElementById("equivSteps").style.display = "block";
-		getElementById("names").style.display = "none";
-		getElementById("numberLabel").style.display = "block";
-		getElementById("namesLabel").style.display = "none";
+		getHtmlById("equivSteps").style.display = "block";
+		getHtmlById("names").style.display = "none";
+		getHtmlById("numberLabel").style.display = "block";
+		getHtmlById("namesLabel").style.display = "none";
 	} else {
-		getElementById("equivSteps").style.display = "none";
-		getElementById("names").style.display = "block";
-		getElementById("numberLabel").style.display = "none";
-		getElementById("namesLabel").style.display = "block";
+		getHtmlById("equivSteps").style.display = "none";
+		getHtmlById("names").style.display = "block";
+		getHtmlById("numberLabel").style.display = "none";
+		getHtmlById("namesLabel").style.display = "block";
 	}
 	changeURL();
 }
 
 function hideRevealColors() {
 	if (getInputById("spectrum_colors").checked) {
-		getElementById("fundamental_color").style.display = "block";
-		getElementById("fundamental_colorLabel").style.display = "block";
-		getElementById("note_colors").style.display = "none";
-		getElementById("note_colorsLabel").style.display = "none";
+		getHtmlById("fundamental_color").style.display = "block";
+		getHtmlById("fundamental_colorLabel").style.display = "block";
+		getHtmlById("note_colors").style.display = "none";
+		getHtmlById("note_colorsLabel").style.display = "none";
 	} else {
-		getElementById("fundamental_color").style.display = "none";
-		getElementById("fundamental_colorLabel").style.display = "none";
-		getElementById("note_colors").style.display = "block";
-		getElementById("note_colorsLabel").style.display = "block";
+		getHtmlById("fundamental_color").style.display = "none";
+		getHtmlById("fundamental_colorLabel").style.display = "none";
+		getHtmlById("note_colors").style.display = "block";
+		getHtmlById("note_colorsLabel").style.display = "block";
 	}
 	changeURL();
 }
@@ -258,18 +258,18 @@ function hideRevealColors() {
 function hideRevealEnum() {
 	if (getInputById("no_labels").checked) {
 		getInputById("enum").disabled = true;
-		getElementById("equivSteps").style.display = "none";
-		getElementById("names").style.display = "none";
-		getElementById("numberLabel").style.display = "none";
-		getElementById("namesLabel").style.display = "none";
+		getHtmlById("equivSteps").style.display = "none";
+		getHtmlById("names").style.display = "none";
+		getHtmlById("numberLabel").style.display = "none";
+		getHtmlById("namesLabel").style.display = "none";
 	} else {
 		getInputById("enum").disabled = false;
 		if (!getInputById("enum").checked) {
-			getElementById("namesLabel").style.display = "block";
-			getElementById("names").style.display = "block";
+			getHtmlById("namesLabel").style.display = "block";
+			getHtmlById("names").style.display = "block";
 		} else {
-			getElementById("equivSteps").style.display = "block";
-			getElementById("numberLabel").style.display = "block";
+			getHtmlById("equivSteps").style.display = "block";
+			getHtmlById("numberLabel").style.display = "block";
 		}
 	}
 	changeURL();
@@ -420,9 +420,9 @@ function back() {
 		settings.activeHexObjects.splice(0, 1);
 	}
 	// UI change
-	getElementById("keyboard").style.display = "none";
-	getElementById("backButton").style.display = "none";
-	getElementById("landing-page").style.display = "block";
+	getHtmlById("keyboard").style.display = "none";
+	getHtmlById("backButton").style.display = "none";
+	getHtmlById("landing-page").style.display = "block";
 	document.body.style.overflow = "scroll";
 }
 
@@ -431,10 +431,10 @@ function goKeyboard() {
 	
 	// Set up screen
 	
-	getElementById("landing-page").style.display = "none";
-	getElementById("keyboard").style.display = "block";
+	getHtmlById("landing-page").style.display = "none";
+	getHtmlById("keyboard").style.display = "block";
 	document.body.style.overflow = "hidden";
-	getElementById("backButton").style.display = "block";
+	getHtmlById("backButton").style.display = "block";
 	
 	// set up settings constants
 	
@@ -1474,7 +1474,7 @@ function noPreset() {
 }
 
 
-function getElementById(id: string): HTMLElement {
+function getHtmlById(id: string): HTMLElement {
 	return getElemById(id, HTMLElement);
 }
 
@@ -1500,6 +1500,6 @@ function getElemById<T>(id: string, type: Constructor<T>): T {
 //initialize keyboard on load
 if (init_keyboard_onload) {
 	//hide landing page
-	getElementById("landing-page").style.display = "none";
+	getHtmlById("landing-page").style.display = "none";
 	setTimeout(function() { goKeyboard(); }, 1500);
 }
