@@ -193,7 +193,7 @@ if (decodeURIComponent(window.location.search) == "")
 //check\set preset
 checkPreset(16);
 // fill in form
-document.getElementById("settingsForm").onsubmit = goKeyboard;
+getElementById("settingsForm").onsubmit = goKeyboard;
 
 var getData = new QueryData(location.search, true);
 getInputById("fundamental").value = "fundamental" in getData ? getData.fundamental : 440;
@@ -227,30 +227,30 @@ hideRevealEnum();
 
 function hideRevealNames() {
 	if (getInputById("enum").checked) {
-		document.getElementById("equivSteps").style.display = "block";
-		document.getElementById("names").style.display = "none";
-		document.getElementById("numberLabel").style.display = "block";
-		document.getElementById("namesLabel").style.display = "none";
+		getElementById("equivSteps").style.display = "block";
+		getElementById("names").style.display = "none";
+		getElementById("numberLabel").style.display = "block";
+		getElementById("namesLabel").style.display = "none";
 	} else {
-		document.getElementById("equivSteps").style.display = "none";
-		document.getElementById("names").style.display = "block";
-		document.getElementById("numberLabel").style.display = "none";
-		document.getElementById("namesLabel").style.display = "block";
+		getElementById("equivSteps").style.display = "none";
+		getElementById("names").style.display = "block";
+		getElementById("numberLabel").style.display = "none";
+		getElementById("namesLabel").style.display = "block";
 	}
 	changeURL();
 }
 
 function hideRevealColors() {
 	if (getInputById("spectrum_colors").checked) {
-		document.getElementById("fundamental_color").style.display = "block";
-		document.getElementById("fundamental_colorLabel").style.display = "block";
-		document.getElementById("note_colors").style.display = "none";
-		document.getElementById("note_colorsLabel").style.display = "none";
+		getElementById("fundamental_color").style.display = "block";
+		getElementById("fundamental_colorLabel").style.display = "block";
+		getElementById("note_colors").style.display = "none";
+		getElementById("note_colorsLabel").style.display = "none";
 	} else {
-		document.getElementById("fundamental_color").style.display = "none";
-		document.getElementById("fundamental_colorLabel").style.display = "none";
-		document.getElementById("note_colors").style.display = "block";
-		document.getElementById("note_colorsLabel").style.display = "block";
+		getElementById("fundamental_color").style.display = "none";
+		getElementById("fundamental_colorLabel").style.display = "none";
+		getElementById("note_colors").style.display = "block";
+		getElementById("note_colorsLabel").style.display = "block";
 	}
 	changeURL();
 }
@@ -258,18 +258,18 @@ function hideRevealColors() {
 function hideRevealEnum() {
 	if (getInputById("no_labels").checked) {
 		getInputById("enum").disabled = true;
-		document.getElementById("equivSteps").style.display = "none";
-		document.getElementById("names").style.display = "none";
-		document.getElementById("numberLabel").style.display = "none";
-		document.getElementById("namesLabel").style.display = "none";
+		getElementById("equivSteps").style.display = "none";
+		getElementById("names").style.display = "none";
+		getElementById("numberLabel").style.display = "none";
+		getElementById("namesLabel").style.display = "none";
 	} else {
 		getInputById("enum").disabled = false;
 		if (!getInputById("enum").checked) {
-			document.getElementById("namesLabel").style.display = "block";
-			document.getElementById("names").style.display = "block";
+			getElementById("namesLabel").style.display = "block";
+			getElementById("names").style.display = "block";
 		} else {
-			document.getElementById("equivSteps").style.display = "block";
-			document.getElementById("numberLabel").style.display = "block";
+			getElementById("equivSteps").style.display = "block";
+			getElementById("numberLabel").style.display = "block";
 		}
 	}
 	changeURL();
@@ -420,9 +420,9 @@ function back() {
 		settings.activeHexObjects.splice(0, 1);
 	}
 	// UI change
-	document.getElementById("keyboard").style.display = "none";
-	document.getElementById("backButton").style.display = "none";
-	document.getElementById("landing-page").style.display = "block";
+	getElementById("keyboard").style.display = "none";
+	getElementById("backButton").style.display = "none";
+	getElementById("landing-page").style.display = "block";
 	document.body.style.overflow = "scroll";
 }
 
@@ -431,10 +431,10 @@ function goKeyboard() {
 	
 	// Set up screen
 	
-	document.getElementById("landing-page").style.display = "none";
-	document.getElementById("keyboard").style.display = "block";
+	getElementById("landing-page").style.display = "none";
+	getElementById("keyboard").style.display = "block";
 	document.body.style.overflow = "hidden";
-	document.getElementById("backButton").style.display = "block";
+	getElementById("backButton").style.display = "block";
 	
 	// set up settings constants
 	
@@ -1474,6 +1474,14 @@ function noPreset() {
 }
 
 
+function getElementById(id: string): HTMLElement {
+	const elem: HTMLElement|null = document.getElementById(id);
+	if (elem instanceof HTMLElement)
+		return elem;
+	throw "HTML element with ID not found: " + id;
+}
+
+
 function getInputById(id: string): HTMLInputElement {
 	const elem: HTMLElement|null = document.getElementById(id);
 	if (elem instanceof HTMLInputElement)
@@ -1485,6 +1493,6 @@ function getInputById(id: string): HTMLInputElement {
 //initialize keyboard on load
 if (init_keyboard_onload) {
 	//hide landing page
-	document.getElementById("landing-page").style.display = "none";
+	getElementById("landing-page").style.display = "none";
 	setTimeout(function() { goKeyboard(); }, 1500);
 }
