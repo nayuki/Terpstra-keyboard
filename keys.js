@@ -1,5 +1,5 @@
 var volume = 1.4;
-window.addEventListener('keydown',e => {
+window.addEventListener('keydown', e => {
 	e.preventDefault();
 	if (e.code === 'ArrowDown') {//ctrl
 		if (volume >= 0.1) {
@@ -135,28 +135,28 @@ codeToCoords_dell = {
 (function dell() {
 	var lines = [];
 	lines[0] = ["Escape", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8"];
-	lines[5] = ["F9", "F10", "F11", "F12","принтскрин", "Insert", "Delete"];
+	lines[5] = ["F9", "F10", "F11", "F12", "принтскрин", "Insert", "Delete"];
 	lines[1] = ["Backquote", "Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6", "Digit7", "Digit8", "Digit9", "Digit0", "Minus", "Equal", "Backspace"];
 	lines[2] = ["Tab", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "BracketLeft", "BracketRight", "Backslash"];
 	lines[3] = ["CapsLock", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "Quote", "Enter"];
 	lines[4] = ["ShiftLeft", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period", "Slash", "ShiftRight"];
 	
-	lines[0].forEach((code,i) =>
+	lines[0].forEach((code, i) =>
 		codeToCoords[code] = new Point(-6 + i, -3)
 	);
-	lines[5].forEach((code,i) =>
+	lines[5].forEach((code, i) =>
 		codeToCoords[code] = new Point(-6 + 8 + i, -3)
 	);
-	lines[1].forEach((code,i) =>
+	lines[1].forEach((code, i) =>
 		codeToCoords[code] = new Point(-6 + i, -2)
 	);
-	lines[2].forEach((code,i) =>
+	lines[2].forEach((code, i) =>
 		codeToCoords[code] = new Point(-6 + i, -1)
 	);
-	lines[3].forEach((code,i) =>
+	lines[3].forEach((code, i) =>
 		codeToCoords[code] = new Point(-6 + i, 0)
 	);
-	lines[4].forEach((code,i) =>
+	lines[4].forEach((code, i) =>
 		codeToCoords[code] = new Point(-6 + i, 1)
 	);
 })();
