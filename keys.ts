@@ -156,7 +156,7 @@ const codeToCoords_dell = {
 };
 
 (function dell() {
-	var lines = [];
+	var lines: Array<Array<string>> = [];
 	lines[0] = ["Escape", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8"];
 	lines[5] = ["F9", "F10", "F11", "F12", "принтскрин", "Insert", "Delete"];
 	lines[1] = ["Backquote", "Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6", "Digit7", "Digit8", "Digit9", "Digit0", "Minus", "Equal", "Backspace"];
@@ -303,7 +303,7 @@ function changeURL() {
 	
 	// Find scl file description for the page title
 	
-	var scaleLines = document.getElementById("scale").value.split("\n");
+	var scaleLines: Array<string> = document.getElementById("scale").value.split("\n");
 	var first: boolean = true;
 	var foundDescription: boolean = false;
 	var description: string = "Terpstra Keyboard WebApp";
@@ -323,12 +323,12 @@ var settings = {};
 
 function parseScale() {
 	settings.scale = [];
-	var scaleLines = document.getElementById("scale").value.split("\n");
+	var scaleLines: Array<string> = document.getElementById("scale").value.split("\n");
 	scaleLines.forEach(function(line) {
 		if (line.match(/^[1234567890.\s/]+$/) && !line.match(/^\s+$/)) {
 			if (line.match(/\//)) {
 				// ratio
-				var nd = line.split("/");
+				var nd: Array<string> = line.split("/");
 				var ratio: number = 1200 * Math.log(parseInt(nd[0]) / parseInt(nd[1])) / Math.log(2);
 				settings.scale.push(ratio);
 			} else {
@@ -344,14 +344,14 @@ function parseScale() {
 
 function parseScaleColors() {
 	settings.keycolors = [];
-	var colorsArray = document.getElementById("note_colors").value.split("\n");
+	var colorsArray: Array<string> = document.getElementById("note_colors").value.split("\n");
 	colorsArray.forEach(function(line) {
 		settings.keycolors.push(line);
 	});
 }
 
-function calculateRotationMatrix(rotation: number, center) {
-	var m = [];
+function calculateRotationMatrix(rotation: number, center): Array<number> {
+	var m: Array<number> = [];
 	m[0] = Math.cos(rotation);
 	m[1] = Math.sin(rotation);
 	m[2] = -m[1];
@@ -361,7 +361,7 @@ function calculateRotationMatrix(rotation: number, center) {
 	return m;
 }
 
-function applyMatrixToPoint(m, p) { /*Array, Point*/
+function applyMatrixToPoint(m: Array<number>, p) { /*Array, Point*/
 	return new Point(
 		m[0] * p.x + m[2] * p.y + m[4],
 		m[1] * p.x + m[3] * p.y + m[5],
@@ -397,7 +397,7 @@ function resizeHandler() {
 	
 	settings.rotationMatrix = calculateRotationMatrix(-settings.rotation, settings.centerpoint);
 	
-	var m = calculateRotationMatrix(settings.rotation, settings.centerpoint);
+	var m: Array<number> = calculateRotationMatrix(settings.rotation, settings.centerpoint);
 	settings.context.setTransform(m[0], m[1], m[2], m[3], m[4], m[5]);
 	
 	// Redraw Grid
@@ -473,7 +473,7 @@ function goKeyboard() {
 	
 	settings.sampleBuffer = [undefined, undefined, undefined];
 	var instrumentOption = document.getElementById("instrument").selectedIndex;
-	var instruments = [
+	var instruments: Array<{fileName:string, fade:number}> = [
 		{fileName: "piano", fade: 0.1},
 		{fileName: "harpsichord", fade: 0.2},
 		{fileName: "rhodes", fade: 0.1},
@@ -839,8 +839,8 @@ function drawHex(p, c: string) { /* Point, color */
 	
 	// Calculate hex vertices
 	
-	var x = [];
-	var y = [];
+	var x: Array<number> = [];
+	var y: Array<number> = [];
 	for (var i = 0; i < 6; i++) {
 		var angle: number = 2 * Math.PI / 6 * (i + 0.5);
 		x[i] = hexCenter.x + settings.hexSize * Math.cos(angle);
@@ -869,8 +869,8 @@ function drawHex(p, c: string) { /* Point, color */
 	
 	// Calculate hex vertices outside clipped path
 	
-	var x2 = [];
-	var y2 = [];
+	var x2: Array<number> = [];
+	var y2: Array<number> = [];
 	for (var i = 0; i < 6; i++) {
 		var angle: number = 2 * Math.PI / 6 * (i + 0.5);
 		x2[i] = hexCenter.x + (parseFloat(settings.hexSize) + 3) * Math.cos(angle);
@@ -976,7 +976,7 @@ function centsToColor(cents: number, pressed: boolean): string {
 		return rgb(returnColor[0], returnColor[1], returnColor[2]);
 	}
 	
-	var fcolor = hex2rgb("#" + settings.fundamental_color);
+	var fcolor: Array<number> = hex2rgb("#" + settings.fundamental_color);
 	fcolor = rgb2hsv(fcolor[0], fcolor[1], fcolor[2]);
 	
 	var h: number = fcolor.h / 360;
@@ -1195,7 +1195,7 @@ function init() {
 function loadSample(name: string, iteration: number) {
 	// It seems audioContext doesn't cope with simultaneous decodeAudioData calls ):
 	
-	var sampleFreqs = ["110", "220", "440", "880"];
+	var sampleFreqs: Array<string> = ["110", "220", "440", "880"];
 	//for (var i = 0; i < 4; ++i) {
 	var request = new XMLHttpRequest();
 	var url: string = "sounds/" + name + sampleFreqs[iteration] + ".mp3";
@@ -1385,7 +1385,7 @@ function nameToHex(colour: string): string {
 	return "#EDEDE4"; //default button color!
 }
 
-function hex2rgb(col: string) {
+function hex2rgb(col: string): Array<number> {
 	var r, g, b;
 	if (col.charAt(0) == "#")
 		col = col.substr(1);
