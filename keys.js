@@ -6,8 +6,7 @@ window.addEventListener('keydown',e=>{
 			volume=+(volume-0.1).toFixed(2);
 			console.log(volume);
 		}
-	}
-	else if (e.code==='ArrowUp') {
+	} else if (e.code==='ArrowUp') {
 		e.preventDefault();
 		if (volume<=2.9) {
 			volume=+(volume+0.1).toFixed(2);
@@ -716,9 +715,9 @@ function onKeyDown(e) {
 	}
 	
 	//Hatsevich:
-	else if(!settings.isMouseDown && !settings.isTouchDown
-		&& (e.code in codeToCoords)
-		&& settings.pressedKeys.indexOf(e.code) == -1) {
+	else if (!settings.isMouseDown && !settings.isTouchDown
+			&& (e.code in codeToCoords)
+			&& settings.pressedKeys.indexOf(e.code) == -1) {
 		settings.pressedKeys.push(e.code);
 		var coords = codeToCoords[e.code];
 		var hex = new ActiveHex(coords);
@@ -755,7 +754,7 @@ function onKeyUp(e) {
 	
 	//Hatsevich:
 	else if (!settings.isMouseDown && !settings.isTouchDown
-				&& (e.code in codeToCoords)) {
+			&& (e.code in codeToCoords)) {
 		var keyIndex = settings.pressedKeys.indexOf(e.code);
 		if (keyIndex != -1) {
 			settings.pressedKeys.splice(keyIndex, 1);

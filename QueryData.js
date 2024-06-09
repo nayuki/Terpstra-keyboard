@@ -63,7 +63,7 @@ function QueryData(queryString, preserveDuplicates) {
 					this[key] = [];
 				this[key].push(value);
 				
-			}else {
+			} else {
 				
 				// store the value
 				this[key] = value;
