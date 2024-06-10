@@ -707,8 +707,8 @@ class ActiveHex {
 	
 	public release: boolean = false;
 	public freq: number = 440;
-	private source: AudioBufferSourceNode;
-	private gainNode: GainNode;
+	private source: AudioBufferSourceNode|null = null;
+	private gainNode: GainNode|null = null;
 	
 	public constructor(
 		public coords: Point) {}
@@ -758,11 +758,11 @@ class ActiveHex {
 			notUndefined(settings.sustainedNotes).push(this);
 		else {
 			var fadeout: number = notUndefined(settings.audioContext).currentTime + notUndefined(settings.sampleFadeout);
-			if (this.gainNode) {
+			if (this.gainNode !== null) {
 				this.gainNode.gain.setTargetAtTime(0, notUndefined(settings.audioContext).currentTime,
 					notUndefined(settings.sampleFadeout));
 			}
-			if (this.source) {
+			if (this.source !== null) {
 				// This is a terrible fudge. Please forgive me - it's late, I'm tired, I
 				// have a deadline, I've got other shit to do
 				this.source.stop(fadeout + 4);
