@@ -1425,16 +1425,13 @@ function nameToHex(colour: string): string {
 }
 
 function hex2rgb(col: string): Array<number> {
-	var r, g, b;
+	var r: string, g: string, b: string;
 	if (col.charAt(0) == "#")
 		col = col.substr(1);
 	r = col.charAt(0) + col.charAt(1);
 	g = col.charAt(2) + col.charAt(3);
 	b = col.charAt(4) + col.charAt(5);
-	r = parseInt(r, 16);
-	g = parseInt(g, 16);
-	b = parseInt(b, 16);
-	return [r, g, b];
+	return [parseInt(r, 16), parseInt(g, 16), parseInt(b, 16)];
 }
 
 function rgb2hsv(r1: number, g1: number, b1: number): {h:number, s:number, v:number} {
