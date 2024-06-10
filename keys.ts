@@ -1096,22 +1096,17 @@ function drawHex(p: Point, c: string): void { /* Point, color */
 }
 
 function centsToColor(cents: number, pressed: boolean): string {
-	var returnColor: string;
 	if (!settings.spectrum_colors) {
 		if (typeof(notUndefined(settings.keycolors)[global_pressed_interval]) === "undefined")
-			returnColor = "#EDEDE4";
+			current_text_color = "#EDEDE4";
 		else
-			returnColor = notUndefined(settings.keycolors)[global_pressed_interval];
-		
-		var oldColor: string = returnColor;
+			current_text_color = notUndefined(settings.keycolors)[global_pressed_interval];
 		
 		//convert color name to hex
-		returnColor = nameToHex(returnColor);
-		
-		current_text_color = returnColor;
+		current_text_color = nameToHex(current_text_color);
 		
 		//convert the hex to rgb
-		let {red, green, blue} = Rgb8Color.fromCssHex(returnColor);
+		let {red, green, blue} = Rgb8Color.fromCssHex(current_text_color);
 		
 		//darken for pressed key
 		if (pressed) {
