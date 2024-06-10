@@ -1078,11 +1078,11 @@ function centsToColor(cents: number, pressed: boolean): string {
 	}
 	
 	var fcolor: Array<number> = hex2rgb("#" + settings.fundamental_color);
-	fcolor = rgb2hsv(fcolor[0], fcolor[1], fcolor[2]);
+	let fcolor1 = rgb2hsv(fcolor[0], fcolor[1], fcolor[2]);
 	
-	var h: number = fcolor.h / 360;
-	var s: number = fcolor.s / 100;
-	var v: number = fcolor.v / 100;
+	var h: number = fcolor1.h / 360;
+	var s: number = fcolor1.s / 100;
+	var v: number = fcolor1.v / 100;
 	//var h = 145 / 360; // green
 	var reduced: number = (cents / 1200) % 1;
 	if (reduced < 0)
