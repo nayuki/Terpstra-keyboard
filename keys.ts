@@ -613,7 +613,7 @@ function changeURL(): void {
 	var foundDescription: boolean = false;
 	var description: string = "Terpstra Keyboard WebApp";
 	
-	scaleLines.forEach(function(line) {
+	scaleLines.forEach((line: string) => {
 		if (!foundDescription && !line.match(/^\!/) && line.match(/[a-zA-Z]+/)) {
 			foundDescription = true;
 			description = line;
@@ -661,7 +661,7 @@ var settings: {
 function parseScale(): void {
 	settings.scale = [];
 	var scaleLines: Array<string> = scaleTextarea.value.split("\n");
-	scaleLines.forEach(function(line) {
+	scaleLines.forEach((line: string) => {
 		if (line.match(/^[1234567890.\s/]+$/) && !line.match(/^\s+$/)) {
 			if (line.match(/\//)) {
 				// ratio
@@ -682,9 +682,7 @@ function parseScale(): void {
 function parseScaleColors(): void {
 	settings.keycolors = [];
 	var colorsArray: Array<string> = noteColorsTextarea.value.split("\n");
-	colorsArray.forEach(function(line) {
-		notUndefined(settings.keycolors).push(line);
-	});
+	colorsArray.forEach((line: string) => notUndefined(settings.keycolors).push(line));
 }
 
 function calculateRotationMatrix(rotation: number, center: Point): Array<number> {
@@ -997,7 +995,7 @@ function goKeyboard() {
 			z2: number = 0;
 		
 		// Listen to motion events and update the position
-		window.addEventListener("devicemotion", function(e) {
+		window.addEventListener("devicemotion", (e) => {
 			x1 = e.accelerationIncludingGravity.x;
 			y1 = e.accelerationIncludingGravity.y;
 			z1 = e.accelerationIncludingGravity.z;
@@ -1005,7 +1003,7 @@ function goKeyboard() {
 		
 		// Periodically check the position and fire
 		// if the change is greater than the sensitivity
-		setInterval(function() {
+		setInterval(() => {
 			lastShakeCheck++;
 			var change: number = Math.abs(x1 - x2 + y1 - y2 + z1 - z2);
 			
@@ -1043,7 +1041,7 @@ function goKeyboard() {
 	settings.canvas.addEventListener("touchmove", handleTouch, false);
 	
 	settings.isMouseDown = false;
-	settings.canvas.addEventListener("mousedown", function(e) {
+	settings.canvas.addEventListener("mousedown", (e) => {
 		if (notUndefined(settings.pressedKeys).length != 0 || settings.isTouchDown)
 			return;
 		settings.isMouseDown = true;
@@ -1051,7 +1049,7 @@ function goKeyboard() {
 		mouseActive(e);
 	}, false);
 	
-	settings.canvas.addEventListener("mouseup", function(e) {
+	settings.canvas.addEventListener("mouseup", (e) => {
 		settings.isMouseDown = false;
 		if (notUndefined(settings.pressedKeys).length != 0 || settings.isTouchDown)
 			return;
@@ -1110,9 +1108,8 @@ function onKeyUp(e: KeyboardEvent): void {
 			notUndefined(settings.pressedKeys).splice(keyIndex, 1);
 			var coords: Point = notUndefined(settings.keyCodeToCoords)[e.keyCode];
 			drawHex(coords, centsToColor(hexCoordsToCents(coords), false));
-			var hexIndex: number = notUndefined(settings.activeHexObjects).findIndex(function(hex) {
-				return coords.equals(hex.coords);
-			});
+			var hexIndex: number = notUndefined(settings.activeHexObjects).findIndex(
+				(hex: ActiveHex) => coords.equals(hex.coords));
 			if (hexIndex != -1) {
 				notUndefined(settings.activeHexObjects)[hexIndex].noteOff();
 				notUndefined(settings.activeHexObjects).splice(hexIndex, 1);
@@ -1128,9 +1125,8 @@ function onKeyUp(e: KeyboardEvent): void {
 			notUndefined(settings.pressedKeys).splice(keyIndex, 1);
 			var coords: Point = codeToCoords[e.code];
 			drawHex(coords, centsToColor(hexCoordsToCents(coords), false));
-			var hexIndex: number = notUndefined(settings.activeHexObjects).findIndex(function(hex) {
-				return coords.equals(hex.coords);
-			});
+			var hexIndex: number = notUndefined(settings.activeHexObjects).findIndex(
+				(hex: ActiveHex) => coords.equals(hex.coords));
 			if (hexIndex != -1) {
 				notUndefined(settings.activeHexObjects)[hexIndex].noteOff();
 				notUndefined(settings.activeHexObjects).splice(hexIndex, 1);
@@ -1445,8 +1441,8 @@ function loadSample(name: string, iteration: number): void {
 	request.responseType = "arraybuffer";
 	
 	// Decode asynchronously
-	request.onload = function() {
-		notUndefined(settings.audioContext).decodeAudioData(request.response, function(buffer) {
+	request.onload = () => {
+		notUndefined(settings.audioContext).decodeAudioData(request.response, (buffer) => {
 			notUndefined(settings.sampleBuffer)[iteration] = buffer;
 			if (iteration < 3)
 				loadSample(name, iteration + 1);
@@ -1465,9 +1461,7 @@ function tempAlert(msg: string, duration: number): void {
 	var el: HTMLElement = document.createElement("div");
 	el.setAttribute("style", "position:absolute;top:40%;left:20%;background-color:white; font-size:25px;");
 	el.innerHTML = msg;
-	setTimeout(function() {
-		el.remove();
-	}, duration);
+	setTimeout(() => el.remove(), duration);
 	document.body.appendChild(el);
 }
 
@@ -1535,5 +1529,5 @@ function notUndefined<T>(val: T|undefined): T {
 if (init_keyboard_onload) {
 	//hide landing page
 	setElemVisible("landing-page", false);
-	setTimeout(function() { goKeyboard(); }, 1500);
+	setTimeout(() => goKeyboard(), 1500);
 }
