@@ -42,6 +42,16 @@ class Point {
 
 class Rgb8Color {
 	
+	public static fromCssHex(s: string): Rgb8Color {
+		if (s.startsWith("#"))
+			s = s.substr(1);
+		return new Rgb8Color(
+			parseInt(s.charAt(0) + s.charAt(1), 16),
+			parseInt(s.charAt(2) + s.charAt(3), 16),
+			parseInt(s.charAt(4) + s.charAt(5), 16));
+	}
+	
+	
 	public constructor(
 		public readonly red: number,
 		public readonly green: number,
@@ -1101,19 +1111,19 @@ function centsToColor(cents: number, pressed: boolean): string {
 		current_text_color = returnColor;
 		
 		//convert the hex to rgb
-		let returnColor1: Array<number> = hex2rgb(returnColor);
+		let {red, green, blue} = Rgb8Color.fromCssHex(returnColor);
 		
 		//darken for pressed key
 		if (pressed) {
-			returnColor1[0] -= 90;
-			returnColor1[1] -= 90;
+			red -= 90;
+			green -= 90;
 		}
 		
-		return new Rgb8Color(returnColor1[0], returnColor1[1], returnColor1[2]).toCssRgb();
+		return new Rgb8Color(red, green, blue).toCssRgb();
 	}
 	
-	var fcolor: Array<number> = hex2rgb("#" + settings.fundamental_color);
-	let fcolor1 = rgb2hsv(fcolor[0], fcolor[1], fcolor[2]);
+	var fcolor: Rgb8Color = Rgb8Color.fromCssHex("#" + settings.fundamental_color);
+	let fcolor1 = rgb2hsv(fcolor.red, fcolor.green, fcolor.blue);
 	
 	var h: number = fcolor1.h / 360;
 	var s: number = fcolor1.s / 100;
@@ -1423,16 +1433,6 @@ function nameToHex(colour: string): string {
 		return "#" + colour;
 	
 	return "#EDEDE4"; //default button color!
-}
-
-function hex2rgb(col: string): Array<number> {
-	var r: string, g: string, b: string;
-	if (col.charAt(0) == "#")
-		col = col.substr(1);
-	r = col.charAt(0) + col.charAt(1);
-	g = col.charAt(2) + col.charAt(3);
-	b = col.charAt(4) + col.charAt(5);
-	return [parseInt(r, 16), parseInt(g, 16), parseInt(b, 16)];
 }
 
 function rgb2hsv(r1: number, g1: number, b1: number): {h:number, s:number, v:number} {
