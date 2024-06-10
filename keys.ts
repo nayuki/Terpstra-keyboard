@@ -544,30 +544,30 @@ hideRevealEnum();
 
 function hideRevealNames(): void {
 	if (enumInput.checked) {
-		getHtmlById("equivSteps").style.display = "block";
-		getHtmlById("names").style.display = "none";
-		getHtmlById("numberLabel").style.display = "block";
-		getHtmlById("namesLabel").style.display = "none";
+		setElemVisible("equivSteps", true);
+		setElemVisible("names", false);
+		setElemVisible("numberLabel", true);
+		setElemVisible("namesLabel", false);
 	} else {
-		getHtmlById("equivSteps").style.display = "none";
-		getHtmlById("names").style.display = "block";
-		getHtmlById("numberLabel").style.display = "none";
-		getHtmlById("namesLabel").style.display = "block";
+		setElemVisible("equivSteps", false);
+		setElemVisible("names", true);
+		setElemVisible("numberLabel", false);
+		setElemVisible("namesLabel", true);
 	}
 	changeURL();
 }
 
 function hideRevealColors(): void {
 	if (spectrumColorsInput.checked) {
-		getHtmlById("fundamental_color").style.display = "block";
-		getHtmlById("fundamental_colorLabel").style.display = "block";
-		getHtmlById("note_colors").style.display = "none";
-		getHtmlById("note_colorsLabel").style.display = "none";
+		setElemVisible("fundamental_color", true);
+		setElemVisible("fundamental_colorLabel", true);
+		setElemVisible("note_colors", false);
+		setElemVisible("note_colorsLabel", false);
 	} else {
-		getHtmlById("fundamental_color").style.display = "none";
-		getHtmlById("fundamental_colorLabel").style.display = "none";
-		getHtmlById("note_colors").style.display = "block";
-		getHtmlById("note_colorsLabel").style.display = "block";
+		setElemVisible("fundamental_color", false);
+		setElemVisible("fundamental_colorLabel", false);
+		setElemVisible("note_colors", true);
+		setElemVisible("note_colorsLabel", true);
 	}
 	changeURL();
 }
@@ -575,18 +575,18 @@ function hideRevealColors(): void {
 function hideRevealEnum(): void {
 	if (noLabelsInput.checked) {
 		enumInput.disabled = true;
-		getHtmlById("equivSteps").style.display = "none";
-		getHtmlById("names").style.display = "none";
-		getHtmlById("numberLabel").style.display = "none";
-		getHtmlById("namesLabel").style.display = "none";
+		setElemVisible("equivSteps", false);
+		setElemVisible("names", false);
+		setElemVisible("numberLabel", false);
+		setElemVisible("namesLabel", false);
 	} else {
 		enumInput.disabled = false;
 		if (!enumInput.checked) {
-			getHtmlById("namesLabel").style.display = "block";
-			getHtmlById("names").style.display = "block";
+			setElemVisible("namesLabel", true);
+			setElemVisible("names", true);
 		} else {
-			getHtmlById("equivSteps").style.display = "block";
-			getHtmlById("numberLabel").style.display = "block";
+			setElemVisible("equivSteps", true);
+			setElemVisible("numberLabel", true);
 		}
 	}
 	changeURL();
@@ -843,9 +843,9 @@ function back(): void {
 		notUndefined(settings.activeHexObjects).splice(0, 1);
 	}
 	// UI change
-	getHtmlById("keyboard").style.display = "none";
-	getHtmlById("backButton").style.display = "none";
-	getHtmlById("landing-page").style.display = "block";
+	setElemVisible("keyboard", false);
+	setElemVisible("backButton", false);
+	setElemVisible("landing-page", true);
 	document.body.style.overflow = "scroll";
 }
 
@@ -854,10 +854,10 @@ function goKeyboard() {
 	
 	// Set up screen
 	
-	getHtmlById("landing-page").style.display = "none";
-	getHtmlById("keyboard").style.display = "block";
+	setElemVisible("landing-page", false);
+	setElemVisible("keyboard", true);
 	document.body.style.overflow = "hidden";
-	getHtmlById("backButton").style.display = "block";
+	setElemVisible("backButton", true);
 	
 	// set up settings constants
 	
@@ -1510,6 +1510,11 @@ function noPreset(): void {
 }
 
 
+function setElemVisible(id: string, vis: boolean): void {
+	getHtmlById(id).style.display = vis ? "block" : "none";
+}
+
+
 function getHtmlById(id: string): HTMLElement {
 	return getElemById(id, HTMLElement);
 }
@@ -1543,6 +1548,6 @@ function notUndefined<T>(val: T|undefined): T {
 //initialize keyboard on load
 if (init_keyboard_onload) {
 	//hide landing page
-	getHtmlById("landing-page").style.display = "none";
+	setElemVisible("landing-page", false);
 	setTimeout(function() { goKeyboard(); }, 1500);
 }
