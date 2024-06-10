@@ -1096,7 +1096,27 @@ function drawHex(p: Point, c: string): void { /* Point, color */
 }
 
 function centsToColor(cents: number, pressed: boolean): string {
-	if (!settings.spectrum_colors) {
+	if (settings.spectrum_colors) {
+		var fcolor: Rgb8Color = Rgb8Color.fromCssHex("#" + settings.fundamental_color);
+		let fcolor1 = rgb2hsv(fcolor);
+		
+		var h: number = fcolor1.h / 360;
+		var s: number = fcolor1.s / 100;
+		var v: number = fcolor1.v / 100;
+		//var h = 145 / 360; // green
+		var reduced: number = (cents / 1200) % 1;
+		if (reduced < 0)
+			reduced += 1;
+		h = (reduced + h) % 1;
+		
+		v = pressed ? v - (v / 2) : v;
+		
+		//setup text color
+		const color: Rgb8Color = HSVtoRGB(h, s, v);
+		current_text_color = color.toCssHex();
+		return color.toCssRgb();
+		
+	} else {
 		if (typeof(notUndefined(settings.keycolors)[global_pressed_interval]) === "undefined")
 			current_text_color = "#EDEDE4";
 		else
@@ -1116,25 +1136,6 @@ function centsToColor(cents: number, pressed: boolean): string {
 		
 		return new Rgb8Color(red, green, blue).toCssRgb();
 	}
-	
-	var fcolor: Rgb8Color = Rgb8Color.fromCssHex("#" + settings.fundamental_color);
-	let fcolor1 = rgb2hsv(fcolor);
-	
-	var h: number = fcolor1.h / 360;
-	var s: number = fcolor1.s / 100;
-	var v: number = fcolor1.v / 100;
-	//var h = 145 / 360; // green
-	var reduced: number = (cents / 1200) % 1;
-	if (reduced < 0)
-		reduced += 1;
-	h = (reduced + h) % 1;
-	
-	v = pressed ? v - (v / 2) : v;
-	
-	//setup text color
-	const color: Rgb8Color = HSVtoRGB(h, s, v);
-	current_text_color = color.toCssHex();
-	return color.toCssRgb();
 }
 
 function roundTowardZero(val: number): number {
