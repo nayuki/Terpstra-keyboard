@@ -813,13 +813,13 @@ function resizeHandler(): void {
 	drawGrid();
 }
 
-let is_key_event_added: number|undefined;
+let is_key_event_added: boolean = false;
 
 function back(): void {
 	// Remove key listener
 	window.removeEventListener("keydown", onKeyDown);
 	window.removeEventListener("keyup", onKeyUp);
-	is_key_event_added = undefined;
+	is_key_event_added = false;
 	// Stop all active notes
 	while (notUndefined(settings.activeHexObjects).length > 0) {
 		var coords: Point = notUndefined(settings.activeHexObjects)[0].coords;
@@ -920,8 +920,8 @@ function goKeyboard() {
 	//settings.canvas.addEventListener("keydown", onKeyDown, false); // Firefox isn't firing :(
 	//settings.canvas.addEventListener("keyup", onKeyUp, false);
 	
-	if (typeof(is_key_event_added) == "undefined") {
-		is_key_event_added = 1;
+	if (!is_key_event_added) {
+		is_key_event_added = true;
 		settings.pressedKeys = [];
 		settings.keyCodeToCoords = keyCodeToCoords/*{
 			49: new Point(-5, -2), // 1
