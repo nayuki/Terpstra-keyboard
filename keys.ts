@@ -84,9 +84,9 @@ function rgb2hsv(rgb: Rgb8Color): {h:number, s:number, v:number} {
 		if (r === v)
 			h = bb - gg;
 		else if (g === v)
-			h = (1 / 3) + rr - bb;
+			h = 1 / 3 + rr - bb;
 		else if (b === v)
-			h = (2 / 3) + gg - rr;
+			h = 2 / 3 + gg - rr;
 		else
 			throw new Error("Unreachable");
 		if (h < 0)
@@ -1163,8 +1163,8 @@ function getPosition(element: HTMLElement): {x:number, y:number} {
 	let yPosition: number = 0;
 	
 	while (element) {
-		xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
-		yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+		xPosition += element.offsetLeft - element.scrollLeft + element.clientLeft;
+		yPosition += element.offsetTop - element.scrollTop + element.clientTop;
 		const parent = element.offsetParent;
 		if (parent === null)
 			break;
