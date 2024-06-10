@@ -303,8 +303,8 @@ function centsToColor(cents: number, pressed: boolean): string {
 		if (reduced < 0)
 			reduced += 1;
 		h = (reduced + h) % 1;
-		
-		v = pressed ? v / 2 : v;
+		if (pressed)
+			v /= 2;
 		
 		//setup text color
 		currentTextColor = HSVtoRGB(h, s, v);
@@ -312,7 +312,7 @@ function centsToColor(cents: number, pressed: boolean): string {
 		
 	} else {
 		let colorStr: string;
-		if (typeof(notUndefined(settings.keycolors)[globalPressedInterval]) === "undefined")
+		if (typeof notUndefined(settings.keycolors)[globalPressedInterval] === "undefined")
 			colorStr = "#EDEDE4";
 		else
 			colorStr = notUndefined(settings.keycolors)[globalPressedInterval];
@@ -907,7 +907,7 @@ function goKeyboard() {
 	if (!isKeyEventAdded) {
 		isKeyEventAdded = true;
 		settings.pressedKeys = [];
-		settings.keyCodeToCoords = keyCodeToCoords/*{
+		settings.keyCodeToCoords = keyCodeToCoords; /*{
 			49: new Point(-5, -2), // 1
 			50: new Point(-4, -2), // 2
 			51: new Point(-3, -2), // 3
@@ -1128,17 +1128,15 @@ function mouseActive(e: MouseEvent): void {
 		const cents: number = hexCoordsToCents(coords);
 		notUndefined(settings.activeHexObjects)[0].noteOn(cents);
 		drawHex(coords, centsToColor(cents, true));
-	} else {
-		if (!coords.equals(notUndefined(settings.activeHexObjects)[0].coords)) {
-			notUndefined(settings.activeHexObjects)[0].noteOff();
-			drawHex(notUndefined(settings.activeHexObjects)[0].coords,
-				centsToColor(hexCoordsToCents(notUndefined(settings.activeHexObjects)[0].coords), false));
-			
-			notUndefined(settings.activeHexObjects)[0] = new ActiveHex(coords);
-			const cents: number = hexCoordsToCents(coords);
-			notUndefined(settings.activeHexObjects)[0].noteOn(cents);
-			drawHex(coords, centsToColor(cents, true));
-		}
+	} else if (!coords.equals(notUndefined(settings.activeHexObjects)[0].coords)) {
+		notUndefined(settings.activeHexObjects)[0].noteOff();
+		drawHex(notUndefined(settings.activeHexObjects)[0].coords,
+			centsToColor(hexCoordsToCents(notUndefined(settings.activeHexObjects)[0].coords), false));
+		
+		notUndefined(settings.activeHexObjects)[0] = new ActiveHex(coords);
+		const cents: number = hexCoordsToCents(coords);
+		notUndefined(settings.activeHexObjects)[0].noteOn(cents);
+		drawHex(coords, centsToColor(cents, true));
 	}
 }
 
@@ -1156,7 +1154,7 @@ function getPosition(element: HTMLElement): {x:number, y:number} {
 	let xPosition: number = 0;
 	let yPosition: number = 0;
 	
-	while (element) {
+	while (true) {
 		xPosition += element.offsetLeft - element.scrollLeft + element.clientLeft;
 		yPosition += element.offsetTop - element.scrollTop + element.clientTop;
 		const parent = element.offsetParent;
