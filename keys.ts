@@ -42,9 +42,9 @@ class Rgb8Color {
 		if (s.startsWith("#"))
 			s = s.substring(1);
 		return new Rgb8Color(
-			parseInt(s.charAt(0) + s.charAt(1), 16),
-			parseInt(s.charAt(2) + s.charAt(3), 16),
-			parseInt(s.charAt(4) + s.charAt(5), 16));
+			parseInt(s.substring(0, 2), 16),
+			parseInt(s.substring(2, 4), 16),
+			parseInt(s.substring(4, 6), 16));
 	}
 	
 	
@@ -310,7 +310,7 @@ function centsToColor(cents: number, pressed: boolean): string {
 			reduced += 1;
 		h = (reduced + h) % 1;
 		
-		v = pressed ? v - (v / 2) : v;
+		v = pressed ? v / 2 : v;
 		
 		//setup text color
 		current_text_color = HSVtoRGB(h, s, v);
@@ -591,16 +591,10 @@ function changeURL(): void {
 		"&equivSteps=" + equivStepsInput.value +
 		"&spectrum_colors=" + spectrumColorsInput.checked +
 		"&fundamental_color=" + fundamentalColorInput.value +
-		"&no_labels=" + noLabelsInput.checked;
-	
-	url += "&scale=";
-	url += encodeURIComponent(scaleTextarea.value);
-	
-	url += "&names=";
-	url += encodeURIComponent(namesTextarea.value);
-	
-	url += "&note_colors=";
-	url += encodeURIComponent(noteColorsTextarea.value);
+		"&no_labels=" + noLabelsInput.checked +
+		"&scale=" + encodeURIComponent(scaleTextarea.value) +
+		"&names=" + encodeURIComponent(namesTextarea.value) +
+		"&note_colors=" + encodeURIComponent(noteColorsTextarea.value);
 	
 	// Find scl file description for the page title
 	
@@ -1337,7 +1331,7 @@ function drawHex(p: Point, c: string): void {
 	const equivMultiple: number = Math.floor(note / equivSteps);
 	let reducedNote: number = note % equivSteps;
 	if (reducedNote < 0)
-		reducedNote = equivSteps + reducedNote;
+		reducedNote += equivSteps;
 	
 	if (!settings.no_labels) {
 		const name: string = settings["enum"] ? "" + reducedNote : notUndefined(settings.names)[reducedNote];
@@ -1401,7 +1395,7 @@ function getHexCoordsAt(coords: Point): Point {
 		for (let rOffset = -1; rOffset < 2; rOffset++) {
 			const neighbour: Point = new Point(q + qOffset, r + rOffset);
 			const diff: Point = hexCoordsToScreen(neighbour).minus(coords);
-			const distance: number = diff.x * diff.x + diff.y * diff.y;
+			const distance: number = Math.hypot(diff.x, diff.y);
 			if (distance < minimum) {
 				minimum = distance;
 				closestHex = neighbour;
