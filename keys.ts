@@ -1180,6 +1180,8 @@ function HSVtoRGB(h: number, s: number, v: number): string {
 		case 5:
 			r = v; g = p; b = q;
 			break;
+		default:
+			throw new Error("Unreachable");
 	}
 	return rgb(Math.floor(r * 255), Math.floor(g * 255), Math.floor(b * 255));
 }
@@ -1210,6 +1212,8 @@ function HSVtoRGB2(h: number, s: number, v: number): {red:number, green:number, 
 		case 5:
 			r = v; g = p; b = q;
 			break;
+		default:
+			throw new Error("Unreachable");
 	}
 	
 	return {
@@ -1460,6 +1464,8 @@ function rgb2hsv(r1: number, g1: number, b1: number): {h:number, s:number, v:num
 			h = (1 / 3) + rr - bb;
 		else if (b === v)
 			h = (2 / 3) + gg - rr;
+		else
+			throw new Error("Unreachable");
 		if (h < 0)
 			h += 1;
 		else if (h > 1)
