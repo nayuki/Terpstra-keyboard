@@ -18,8 +18,8 @@ window.addEventListener("keydown", e => {
 
 class Point {
 	public constructor(
-		public x: number,
-		public y: number) {}
+		public readonly x: number,
+		public readonly y: number) {}
 	
 	public equals(p: Point): boolean {
 		return this.x == p.x && this.y == p.y;
