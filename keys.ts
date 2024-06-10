@@ -1457,12 +1457,16 @@ function onLoadError(e: any): void {
 }
 
 
-function tempAlert(msg: string, duration: number): void {
+function tempAlert(msg: string, durationMs: number): void {
 	let el: HTMLElement = document.createElement("div");
-	el.setAttribute("style", "position:absolute;top:40%;left:20%;background-color:white; font-size:25px;");
-	el.innerHTML = msg;
-	setTimeout(() => el.remove(), duration);
-	document.body.appendChild(el);
+	el.textContent = msg;
+	el.style.position = "absolute";
+	el.style.top = "40%";
+	el.style.left = "20%";
+	el.style.backgroundColor = "white";
+	el.style.fontSize = "25px";
+	document.body.append(el);
+	setTimeout(() => el.remove(), durationMs);
 }
 
 
