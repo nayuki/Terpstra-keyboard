@@ -894,7 +894,7 @@ function goKeyboard() {
 	
 	//console.log(instruments[instrumentOption]);
 	
-	loadSample(instruments[instrumentOption].fileName, 0);
+	loadSamples(instruments[instrumentOption].fileName);
 	settings.sampleFadeout = instruments[instrumentOption].fade;
 	
 	// Set up keyboard, touch and mouse event handlers
@@ -1410,31 +1410,19 @@ function init(): void {
 	}
 }
 
-function loadSample(name: string, iteration: number): void {
+async function loadSamples(name: string): Promise<void> {
 	// It seems audioContext doesn't cope with simultaneous decodeAudioData calls ):
-	
 	const sampleFreqs: Array<string> = ["110", "220", "440", "880"];
-	//for (let i = 0; i < 4; ++i) {
-	let request = new XMLHttpRequest();
-	const url: string = "sounds/" + name + sampleFreqs[iteration] + ".mp3";
-	//console.log(iteration);
-	request.open("GET", url, true);
-	request.responseType = "arraybuffer";
-	
-	// Decode asynchronously
-	request.onload = () => {
-		notUndefined(settings.audioContext).decodeAudioData(request.response, (buffer) => {
-			notUndefined(settings.sampleBuffer)[iteration] = buffer;
-			if (iteration < 3)
-				loadSample(name, iteration + 1);
-		}, onLoadError);
-	};
-	request.send();
-	//}
-}
-
-function onLoadError(e: any): void {
-	alert("Couldn't load sample");
+	for (let i = 0; i < sampleFreqs.length; i++) {
+		const url: string = `sounds/${name}${sampleFreqs[i]}.mp3`;
+		const arrayBuf: ArrayBuffer = await (await fetch(url)).arrayBuffer();
+		try {
+			const audioBuf: AudioBuffer = await notUndefined(settings.audioContext).decodeAudioData(arrayBuf);
+			notUndefined(settings.sampleBuffer)[i] = audioBuf;
+		} catch (e) {
+			alert("Couldn't load sample");
+		}
+	}
 }
 
 
