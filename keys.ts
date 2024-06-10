@@ -843,7 +843,7 @@ function mouseActive(e: MouseEvent): void {
 		if (!coords.equals(settings.activeHexObjects[0].coords)) {
 			settings.activeHexObjects[0].noteOff();
 			drawHex(settings.activeHexObjects[0].coords,
-				centsToColor(hexCoordsToCents(settings.activeHexObjects[0].coords, false)));
+				centsToColor(hexCoordsToCents(settings.activeHexObjects[0].coords), false));
 			
 			settings.activeHexObjects[0] = new ActiveHex(coords);
 			var cents: number = hexCoordsToCents(coords);
