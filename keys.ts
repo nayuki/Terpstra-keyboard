@@ -1066,15 +1066,15 @@ function centsToColor(cents: number, pressed: boolean): string {
 		current_text_color = returnColor;
 		
 		//convert the hex to rgb
-		returnColor = hex2rgb(returnColor);
+		let returnColor1: Array<number> = hex2rgb(returnColor);
 		
 		//darken for pressed key
 		if (pressed) {
-			returnColor[0] -= 90;
-			returnColor[1] -= 90;
+			returnColor1[0] -= 90;
+			returnColor1[1] -= 90;
 		}
 		
-		return rgb(returnColor[0], returnColor[1], returnColor[2]);
+		return rgb(returnColor1[0], returnColor1[1], returnColor1[2]);
 	}
 	
 	var fcolor: Array<number> = hex2rgb("#" + settings.fundamental_color);
