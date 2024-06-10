@@ -1118,7 +1118,7 @@ function centsToColor(cents: number, pressed: boolean): string {
 	}
 	
 	var fcolor: Rgb8Color = Rgb8Color.fromCssHex("#" + settings.fundamental_color);
-	let fcolor1 = rgb2hsv(fcolor.red, fcolor.green, fcolor.blue);
+	let fcolor1 = rgb2hsv(fcolor);
 	
 	var h: number = fcolor1.h / 360;
 	var s: number = fcolor1.s / 100;
@@ -1430,11 +1430,11 @@ function nameToHex(colour: string): string {
 	return "#EDEDE4"; //default button color!
 }
 
-function rgb2hsv(r1: number, g1: number, b1: number): {h:number, s:number, v:number} {
+function rgb2hsv(rgb: Rgb8Color): {h:number, s:number, v:number} {
 	var rr: number, gg: number, bb: number,
-		r: number = arguments[0] / 255,
-		g: number = arguments[1] / 255,
-		b: number = arguments[2] / 255,
+		r: number = rgb.red / 255,
+		g: number = rgb.green / 255,
+		b: number = rgb.blue / 255,
 		h: number, s: number,
 		v: number = Math.max(r, g, b),
 		diff: number = v - Math.min(r, g, b),
