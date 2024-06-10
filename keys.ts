@@ -314,7 +314,39 @@ function changeURL(): void {
 	window.history.replaceState({}, "", url);
 }
 
-var settings = {};
+var settings: {
+	activeHexObjects?: Array<ActiveHex>,
+	audioContext?: AudioContext,
+	canvas?: HTMLCanvasElement,
+	centerpoint?: Point,
+	context?: CanvasRenderingContext2D,
+	enum?: boolean,
+	equivInterval?: number,
+	equivSteps?: number,
+	fundamental?: number,
+	fundamental_color?: string,
+	hexHeight?: number,
+	hexSize?: number,
+	hexVert?: number,
+	hexWidth?: number,
+	isMouseDown?: boolean,
+	isTouchDown?: boolean,
+	keyCodeToCoords?: {[index:string]: Point},
+	keycolors?: Array<string>,
+	names?: Array<string>,
+	no_labels?: boolean,
+	pressedKeys?: Array<number|string>,
+	rotation?: number,
+	rotationMatrix?: Array<number>,
+	rSteps?: number,
+	sampleBuffer?: Array<AudioBuffer|undefined>,
+	sampleFadeout?: number,
+	scale?: Array<number>,
+	spectrum_colors?: boolean,
+	sustain?: boolean,
+	sustainedNotes?: Array<ActiveHex>,
+	urSteps?: number,
+} = {};
 
 function parseScale(): void {
 	settings.scale = [];
