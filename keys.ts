@@ -141,8 +141,8 @@ function getContrastYIQ({red, green, blue}: Rgb8Color): string {
 }
 
 
-function nameToHex(colour: string): string {
-	const colours: {[index:string]: string} = {
+function nameToHex(color: string): string {
+	const colors: {[index:string]: string} = {
 		"aliceblue": "#f0f8ff",
 		"antiquewhite": "#faebd7",
 		"aqua": "#00ffff",
@@ -285,12 +285,12 @@ function nameToHex(colour: string): string {
 		"yellowgreen": "#9acd32",
 	};
 
-	if (typeof colours[colour.toLowerCase()] != "undefined")
-		return colours[colour.toLowerCase()];
-	else if (colour.indexOf("#") == 0)
-		return colour;
-	else if (colour.length == 6 && colour.indexOf("#") == -1)
-		return "#" + colour;
+	if (typeof colors[color.toLowerCase()] != "undefined")
+		return colors[color.toLowerCase()];
+	else if (color.indexOf("#") == 0)
+		return color;
+	else if (color.length == 6 && color.indexOf("#") == -1)
+		return "#" + color;
 	
 	return "#EDEDE4"; //default button color!
 }
@@ -1387,18 +1387,18 @@ function getHexCoordsAt(coords: Point): Point {
 	q = Math.round(q);
 	r = Math.round(r);
 	
-	// This gets an approximation; now check neighbours for minimum distance
+	// This gets an approximation; now check neighbors for minimum distance
 	
 	let minimum: number = 100000;
 	let closestHex: Point = new Point(q, r);
 	for (let qOffset = -1; qOffset < 2; qOffset++) {
 		for (let rOffset = -1; rOffset < 2; rOffset++) {
-			const neighbour: Point = new Point(q + qOffset, r + rOffset);
-			const diff: Point = hexCoordsToScreen(neighbour).minus(coords);
+			const neigbor: Point = new Point(q + qOffset, r + rOffset);
+			const diff: Point = hexCoordsToScreen(neigbor).minus(coords);
 			const distance: number = Math.hypot(diff.x, diff.y);
 			if (distance < minimum) {
 				minimum = distance;
-				closestHex = neighbour;
+				closestHex = neigbor;
 			}
 		}
 	}
