@@ -1132,9 +1132,9 @@ function centsToColor(cents: number, pressed: boolean): string {
 	v = pressed ? v - (v / 2) : v;
 	
 	//setup text color
-	const {red, green, blue} = HSVtoRGB(h, s, v);
-	current_text_color = new Rgb8Color(red, green, blue).toCssHex();
-	return new Rgb8Color(red, green, blue).toCssRgb();
+	const color: Rgb8Color = HSVtoRGB(h, s, v);
+	current_text_color = color.toCssHex();
+	return color.toCssRgb();
 }
 
 function roundTowardZero(val: number): number {
@@ -1188,7 +1188,7 @@ function getHexCoordsAt(coords: Point): Point {
 	return closestHex;
 }
 
-function HSVtoRGB(h: number, s: number, v: number): {red:number, green:number, blue:number} {
+function HSVtoRGB(h: number, s: number, v: number): Rgb8Color {
 	var r: number, g: number, b: number, i: number, f: number, p: number, q: number, t: number;
 	i = Math.floor(h * 6);
 	f = h * 6 - i;
@@ -1218,11 +1218,7 @@ function HSVtoRGB(h: number, s: number, v: number): {red:number, green:number, b
 			throw new Error("Unreachable");
 	}
 	
-	return {
-		red: Math.floor(r * 255),
-		green: Math.floor(g * 255),
-		blue: Math.floor(b * 255),
-	};
+	return new Rgb8Color(Math.floor(r * 255), Math.floor(g * 255), Math.floor(b * 255));
 }
 
 window.addEventListener("load", init, false);
