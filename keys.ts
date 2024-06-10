@@ -1059,7 +1059,7 @@ function onKeyDown(e: KeyboardEvent): void {
 	if (e.keyCode == 32) // Spacebar
 		settings.sustain = true;
 	else if (!settings.isMouseDown && !settings.isTouchDown
-			&& (e.keyCode in notUndefined(settings.keyCodeToCoords))
+			&& e.keyCode in notUndefined(settings.keyCodeToCoords)
 			&& notUndefined(settings.pressedKeys).indexOf(e.keyCode) == -1) {
 		notUndefined(settings.pressedKeys).push(e.keyCode);
 		const coords: Point = notUndefined(settings.keyCodeToCoords)[e.keyCode];
@@ -1072,7 +1072,7 @@ function onKeyDown(e: KeyboardEvent): void {
 	
 	//Hatsevich:
 	else if (!settings.isMouseDown && !settings.isTouchDown
-			&& (e.code in codeToCoords)
+			&& e.code in codeToCoords
 			&& notUndefined(settings.pressedKeys).indexOf(e.code) == -1) {
 		notUndefined(settings.pressedKeys).push(e.code);
 		const coords: Point = codeToCoords[e.code];
@@ -1091,7 +1091,7 @@ function onKeyUp(e: KeyboardEvent): void {
 			note.noteOff();
 		settings.sustainedNotes = [];
 	} else if (!settings.isMouseDown && !settings.isTouchDown
-			&& (e.keyCode in notUndefined(settings.keyCodeToCoords))) {
+			&& e.keyCode in notUndefined(settings.keyCodeToCoords)) {
 		const keyIndex = notUndefined(settings.pressedKeys).indexOf(e.keyCode);
 		if (keyIndex != -1) {
 			notUndefined(settings.pressedKeys).splice(keyIndex, 1);
@@ -1108,7 +1108,7 @@ function onKeyUp(e: KeyboardEvent): void {
 	
 	//Hatsevich:
 	else if (!settings.isMouseDown && !settings.isTouchDown
-			&& (e.code in codeToCoords)) {
+			&& e.code in codeToCoords) {
 		const keyIndex: number = notUndefined(settings.pressedKeys).indexOf(e.code);
 		if (keyIndex != -1) {
 			notUndefined(settings.pressedKeys).splice(keyIndex, 1);
