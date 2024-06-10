@@ -496,38 +496,54 @@ var init_keyboard_onload: boolean = true;
 if (decodeURIComponent(window.location.search) == "")
 	init_keyboard_onload = false;
 
+// HTML elements
+let fundamentalInput: HTMLInputElement = getInputById("fundamental");
+let rStepsInput: HTMLInputElement = getInputById("rSteps");
+let urStepsInput: HTMLInputElement = getInputById("urSteps");
+let hexSizeInput: HTMLInputElement = getInputById("hexSize");
+let rotationInput: HTMLInputElement = getInputById("rotation");
+let instrumentSelect: HTMLSelectElement = getElemById("instrument", HTMLSelectElement);
+let enumInput: HTMLInputElement = getInputById("enum");
+let equivStepsInput: HTMLInputElement = getInputById("equivSteps");
+let spectrumColorsInput: HTMLInputElement = getInputById("spectrum_colors");
+let fundamentalColorInput: HTMLInputElement = getInputById("fundamental_color");
+let noLabelsInput: HTMLInputElement = getInputById("no_labels");
+let scaleTextarea: HTMLTextAreaElement = getElemById("scale", HTMLTextAreaElement);
+let namesTextarea: HTMLTextAreaElement = getElemById("names", HTMLTextAreaElement);
+let noteColorsTextarea: HTMLTextAreaElement = getElemById("note_colors", HTMLTextAreaElement);
+
 //check\set preset
 checkPreset(16);
 // fill in form
 getHtmlById("settingsForm").onsubmit = goKeyboard;
 
 var getData: Map<string,string|Array<string>> = QueryData(location.search, true);
-getInputById("fundamental").value = mapGetMaybe(getData, "fundamental").map(v => v.toString()).unwrapOr("440");
-getInputById("rSteps").value = mapGetMaybe(getData, "right").map(v => v.toString()).unwrapOr("3");
-getInputById("urSteps").value = mapGetMaybe(getData, "upright").map(v => v.toString()).unwrapOr("10");
-getInputById("hexSize").value = mapGetMaybe(getData, "size").map(v => v.toString()).unwrapOr("60");
-getInputById("rotation").value = mapGetMaybe(getData, "rotation").map(v => v.toString()).unwrapOr("343.897886248");
-getElemById("instrument", HTMLSelectElement).value = mapGetMaybe(getData, "instrument").map(v => v.toString()).unwrapOr("rhodes");
-getInputById("enum").checked = mapGetMaybe(getData, "enum").map(v => JSON.parse(v.toString())).unwrapOr("false");
-getInputById("equivSteps").value = mapGetMaybe(getData, "equivSteps").map(v => v.toString()).unwrapOr("17");
-getInputById("spectrum_colors").checked = mapGetMaybe(getData, "spectrum_colors").map(v => JSON.parse(v.toString())).unwrapOr("false");
-getInputById("fundamental_color").value = mapGetMaybe(getData, "fundamental_color").map(v => v.toString()).unwrapOr("#41ff2e");
-getInputById("no_labels").checked = mapGetMaybe(getData, "no_labels").map(v => JSON.parse(v.toString())).unwrapOr("false");
+fundamentalInput.value = mapGetMaybe(getData, "fundamental").map(v => v.toString()).unwrapOr("440");
+rStepsInput.value = mapGetMaybe(getData, "right").map(v => v.toString()).unwrapOr("3");
+urStepsInput.value = mapGetMaybe(getData, "upright").map(v => v.toString()).unwrapOr("10");
+hexSizeInput.value = mapGetMaybe(getData, "size").map(v => v.toString()).unwrapOr("60");
+rotationInput.value = mapGetMaybe(getData, "rotation").map(v => v.toString()).unwrapOr("343.897886248");
+instrumentSelect.value = mapGetMaybe(getData, "instrument").map(v => v.toString()).unwrapOr("rhodes");
+enumInput.checked = mapGetMaybe(getData, "enum").map(v => JSON.parse(v.toString())).unwrapOr("false");
+equivStepsInput.value = mapGetMaybe(getData, "equivSteps").map(v => v.toString()).unwrapOr("17");
+spectrumColorsInput.checked = mapGetMaybe(getData, "spectrum_colors").map(v => JSON.parse(v.toString())).unwrapOr("false");
+fundamentalColorInput.value = mapGetMaybe(getData, "fundamental_color").map(v => v.toString()).unwrapOr("#41ff2e");
+noLabelsInput.checked = mapGetMaybe(getData, "no_labels").map(v => JSON.parse(v.toString())).unwrapOr("false");
 
 
 var global_pressed_interval: number;
 var current_text_color: Rgb8Color = new Rgb8Color(0, 0, 0);
 
-mapGetMaybe(getData, "scale").map(v => getElemById("scale", HTMLTextAreaElement).value = v[0]);
-mapGetMaybe(getData, "names").map(v => getElemById("names", HTMLTextAreaElement).value = v[0]);
-mapGetMaybe(getData, "note_colors").map(v => getElemById("note_colors", HTMLTextAreaElement).value = v[0]);
+mapGetMaybe(getData, "scale").map(v => scaleTextarea.value = v[0]);
+mapGetMaybe(getData, "names").map(v => namesTextarea.value = v[0]);
+mapGetMaybe(getData, "note_colors").map(v => noteColorsTextarea.value = v[0]);
 
 hideRevealNames();
 hideRevealColors();
 hideRevealEnum();
 
 function hideRevealNames(): void {
-	if (getInputById("enum").checked) {
+	if (enumInput.checked) {
 		getHtmlById("equivSteps").style.display = "block";
 		getHtmlById("names").style.display = "none";
 		getHtmlById("numberLabel").style.display = "block";
@@ -542,7 +558,7 @@ function hideRevealNames(): void {
 }
 
 function hideRevealColors(): void {
-	if (getInputById("spectrum_colors").checked) {
+	if (spectrumColorsInput.checked) {
 		getHtmlById("fundamental_color").style.display = "block";
 		getHtmlById("fundamental_colorLabel").style.display = "block";
 		getHtmlById("note_colors").style.display = "none";
@@ -557,15 +573,15 @@ function hideRevealColors(): void {
 }
 
 function hideRevealEnum(): void {
-	if (getInputById("no_labels").checked) {
-		getInputById("enum").disabled = true;
+	if (noLabelsInput.checked) {
+		enumInput.disabled = true;
 		getHtmlById("equivSteps").style.display = "none";
 		getHtmlById("names").style.display = "none";
 		getHtmlById("numberLabel").style.display = "none";
 		getHtmlById("namesLabel").style.display = "none";
 	} else {
-		getInputById("enum").disabled = false;
-		if (!getInputById("enum").checked) {
+		enumInput.disabled = false;
+		if (!enumInput.checked) {
 			getHtmlById("namesLabel").style.display = "block";
 			getHtmlById("names").style.display = "block";
 		} else {
@@ -581,30 +597,30 @@ function changeURL(): void {
 	var url: string = window.location.pathname + "?";
 	// add fundamental, right, upright, size
 	
-	url += "fundamental=" + getInputById("fundamental").value +
-		"&right=" + getInputById("rSteps").value +
-		"&upright=" + getInputById("urSteps").value +
-		"&size=" + getInputById("hexSize").value +
-		"&rotation=" + getInputById("rotation").value +
-		"&instrument=" + getElemById("instrument", HTMLSelectElement).value +
-		"&enum=" + getInputById("enum").checked +
-		"&equivSteps=" + getInputById("equivSteps").value +
-		"&spectrum_colors=" + getInputById("spectrum_colors").checked +
-		"&fundamental_color=" + getInputById("fundamental_color").value +
-		"&no_labels=" + getInputById("no_labels").checked;
+	url += "fundamental=" + fundamentalInput.value +
+		"&right=" + rStepsInput.value +
+		"&upright=" + urStepsInput.value +
+		"&size=" + hexSizeInput.value +
+		"&rotation=" + rotationInput.value +
+		"&instrument=" + instrumentSelect.value +
+		"&enum=" + enumInput.checked +
+		"&equivSteps=" + equivStepsInput.value +
+		"&spectrum_colors=" + spectrumColorsInput.checked +
+		"&fundamental_color=" + fundamentalColorInput.value +
+		"&no_labels=" + noLabelsInput.checked;
 	
 	url += "&scale=";
-	url += encodeURIComponent(getElemById("scale", HTMLTextAreaElement).value);
+	url += encodeURIComponent(scaleTextarea.value);
 	
 	url += "&names=";
-	url += encodeURIComponent(getElemById("names", HTMLTextAreaElement).value);
+	url += encodeURIComponent(namesTextarea.value);
 	
 	url += "&note_colors=";
-	url += encodeURIComponent(getElemById("note_colors", HTMLTextAreaElement).value);
+	url += encodeURIComponent(noteColorsTextarea.value);
 	
 	// Find scl file description for the page title
 	
-	var scaleLines: Array<string> = getElemById("scale", HTMLTextAreaElement).value.split("\n");
+	var scaleLines: Array<string> = scaleTextarea.value.split("\n");
 	var first: boolean = true;
 	var foundDescription: boolean = false;
 	var description: string = "Terpstra Keyboard WebApp";
@@ -656,7 +672,7 @@ var settings: {
 
 function parseScale(): void {
 	settings.scale = [];
-	var scaleLines: Array<string> = getElemById("scale", HTMLTextAreaElement).value.split("\n");
+	var scaleLines: Array<string> = scaleTextarea.value.split("\n");
 	scaleLines.forEach(function(line) {
 		if (line.match(/^[1234567890.\s/]+$/) && !line.match(/^\s+$/)) {
 			if (line.match(/\//)) {
@@ -677,7 +693,7 @@ function parseScale(): void {
 
 function parseScaleColors(): void {
 	settings.keycolors = [];
-	var colorsArray: Array<string> = getElemById("note_colors", HTMLTextAreaElement).value.split("\n");
+	var colorsArray: Array<string> = noteColorsTextarea.value.split("\n");
 	colorsArray.forEach(function(line) {
 		notUndefined(settings.keycolors).push(line);
 	});
@@ -845,16 +861,16 @@ function goKeyboard() {
 	
 	// set up settings constants
 	
-	settings.fundamental = parseFloat(getInputById("fundamental").value);
-	settings.rSteps = parseFloat(getInputById("rSteps").value);
-	settings.urSteps = settings.rSteps - parseFloat(getInputById("urSteps").value); // Adjust to different coordinate system
-	settings.hexSize = parseFloat(getInputById("hexSize").value);
-	settings.rotation = (parseFloat(getInputById("rotation").value) * 2 * Math.PI) / 360;
+	settings.fundamental = parseFloat(fundamentalInput.value);
+	settings.rSteps = parseFloat(rStepsInput.value);
+	settings.urSteps = settings.rSteps - parseFloat(urStepsInput.value); // Adjust to different coordinate system
+	settings.hexSize = parseFloat(hexSizeInput.value);
+	settings.rotation = (parseFloat(rotationInput.value) * 2 * Math.PI) / 360;
 	parseScale();
 	parseScaleColors();
-	settings.names = getElemById("names", HTMLTextAreaElement).value.split("\n");
-	settings["enum"] = getInputById("enum").checked;
-	settings.equivSteps = parseInt(getInputById("equivSteps").value);
+	settings.names = namesTextarea.value.split("\n");
+	settings["enum"] = enumInput.checked;
+	settings.equivSteps = parseInt(equivStepsInput.value);
 	
 	settings.canvas = getElemById("keyboard", HTMLCanvasElement);
 	const ctx = settings.canvas.getContext("2d");
@@ -866,9 +882,9 @@ function goKeyboard() {
 	settings.hexVert = settings.hexHeight * 3 / 4;
 	settings.hexWidth = Math.sqrt(3) / 2 * settings.hexHeight;
 	
-	settings.no_labels = getInputById("no_labels").checked;
-	settings.spectrum_colors = getInputById("spectrum_colors").checked;
-	settings.fundamental_color = getInputById("fundamental_color").value;
+	settings.no_labels = noLabelsInput.checked;
+	settings.spectrum_colors = spectrumColorsInput.checked;
+	settings.fundamental_color = fundamentalColorInput.value;
 	
 	// Set up resize handler
 	
@@ -882,7 +898,7 @@ function goKeyboard() {
 	// Set up synth
 	
 	settings.sampleBuffer = [undefined, undefined, undefined];
-	var instrumentOption = getElemById("instrument", HTMLSelectElement).selectedIndex;
+	var instrumentOption = instrumentSelect.selectedIndex;
 	var instruments: Array<{fileName:string, fade:number}> = [
 		{fileName: "piano", fade: 0.1},
 		{fileName: "harpsichord", fade: 0.2},
