@@ -313,21 +313,21 @@ function centsToColor(cents: number, pressed: boolean): string {
 		v = pressed ? v / 2 : v;
 		
 		//setup text color
-		current_text_color = HSVtoRGB(h, s, v);
-		return current_text_color.toCssRgb();
+		currentTextColor = HSVtoRGB(h, s, v);
+		return currentTextColor.toCssRgb();
 		
 	} else {
 		let colorStr: string;
-		if (typeof(notUndefined(settings.keycolors)[global_pressed_interval]) === "undefined")
+		if (typeof(notUndefined(settings.keycolors)[globalPressedInterval]) === "undefined")
 			colorStr = "#EDEDE4";
 		else
-			colorStr = notUndefined(settings.keycolors)[global_pressed_interval];
+			colorStr = notUndefined(settings.keycolors)[globalPressedInterval];
 		
 		//convert color name to hex
-		current_text_color = Rgb8Color.fromCssHex(nameToHex(colorStr));
+		currentTextColor = Rgb8Color.fromCssHex(nameToHex(colorStr));
 		
 		//convert the hex to rgb
-		let {red, green, blue} = current_text_color;
+		let {red, green, blue} = currentTextColor;
 		
 		//darken for pressed key
 		if (pressed) {
@@ -488,9 +488,9 @@ const codeToCoords_dell = {
 
 
 //check to see if we have params
-let init_keyboard_onload: boolean = true;
+let initKeyboardOnload: boolean = true;
 if (decodeURIComponent(window.location.search) == "")
-	init_keyboard_onload = false;
+	initKeyboardOnload = false;
 
 // HTML elements
 let fundamentalInput: HTMLInputElement = getInputById("fundamental");
@@ -527,8 +527,8 @@ fundamentalColorInput.value = mapGetMaybe(getData, "fundamental_color").map(v =>
 noLabelsInput.checked = mapGetMaybe(getData, "no_labels").map(v => JSON.parse(v.toString())).unwrapOr("false");
 
 
-let global_pressed_interval: number;
-let current_text_color: Rgb8Color = new Rgb8Color(0, 0, 0);
+let globalPressedInterval: number;
+let currentTextColor: Rgb8Color = new Rgb8Color(0, 0, 0);
 
 mapGetMaybe(getData, "scale").map(v => scaleTextarea.value = v[0]);
 mapGetMaybe(getData, "names").map(v => namesTextarea.value = v[0]);
@@ -803,13 +803,13 @@ function resizeHandler(): void {
 	drawGrid();
 }
 
-let is_key_event_added: boolean = false;
+let isKeyEventAdded: boolean = false;
 
 function back(): void {
 	// Remove key listener
 	window.removeEventListener("keydown", onKeyDown);
 	window.removeEventListener("keyup", onKeyUp);
-	is_key_event_added = false;
+	isKeyEventAdded = false;
 	// Stop all active notes
 	while (notUndefined(settings.activeHexObjects).length > 0) {
 		const coords: Point = notUndefined(settings.activeHexObjects)[0].coords;
@@ -910,8 +910,8 @@ function goKeyboard() {
 	//settings.canvas.addEventListener("keydown", onKeyDown, false); // Firefox isn't firing :(
 	//settings.canvas.addEventListener("keyup", onKeyUp, false);
 	
-	if (!is_key_event_added) {
-		is_key_event_added = true;
+	if (!isKeyEventAdded) {
+		isKeyEventAdded = true;
 		settings.pressedKeys = [];
 		settings.keyCodeToCoords = keyCodeToCoords/*{
 			49: new Point(-5, -2), // 1
@@ -1321,7 +1321,7 @@ function drawHex(p: Point, c: string): void {
 	// hexcoords = p and screenCoords = hexCenter
 	
 	//context.fillStyle = "black"; //bdl_04062016
-	context.fillStyle = getContrastYIQ(current_text_color);
+	context.fillStyle = getContrastYIQ(currentTextColor);
 	context.font = "22pt Arial";
 	context.textAlign = "center";
 	context.textBaseline = "middle";
@@ -1372,7 +1372,7 @@ function hexCoordsToCents(coords: Point): number {
 		octs -= 1;
 	}
 	const cents: number = octs * notUndefined(settings.equivInterval) + notUndefined(settings.scale)[reducedSteps];
-	global_pressed_interval = reducedSteps;
+	globalPressedInterval = reducedSteps;
 	return cents;
 }
 
@@ -1517,7 +1517,7 @@ function notUndefined<T>(val: T|undefined): T {
 
 
 //initialize keyboard on load
-if (init_keyboard_onload) {
+if (initKeyboardOnload) {
 	//hide landing page
 	setElemVisible("landing-page", false);
 	setTimeout(() => goKeyboard(), 1500);
