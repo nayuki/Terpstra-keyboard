@@ -543,32 +543,20 @@ hideRevealColors();
 hideRevealEnum();
 
 function hideRevealNames(): void {
-	if (enumInput.checked) {
-		setElemVisible("equivSteps", true);
-		setElemVisible("names", false);
-		setElemVisible("numberLabel", true);
-		setElemVisible("namesLabel", false);
-	} else {
-		setElemVisible("equivSteps", false);
-		setElemVisible("names", true);
-		setElemVisible("numberLabel", false);
-		setElemVisible("namesLabel", true);
-	}
+	const c: boolean = enumInput.checked;
+	setElemVisible("equivSteps", c);
+	setElemVisible("names", !c);
+	setElemVisible("numberLabel", c);
+	setElemVisible("namesLabel", !c);
 	changeURL();
 }
 
 function hideRevealColors(): void {
-	if (spectrumColorsInput.checked) {
-		setElemVisible("fundamental_color", true);
-		setElemVisible("fundamental_colorLabel", true);
-		setElemVisible("note_colors", false);
-		setElemVisible("note_colorsLabel", false);
-	} else {
-		setElemVisible("fundamental_color", false);
-		setElemVisible("fundamental_colorLabel", false);
-		setElemVisible("note_colors", true);
-		setElemVisible("note_colorsLabel", true);
-	}
+	const c: boolean = spectrumColorsInput.checked;
+	setElemVisible("fundamental_color", c);
+	setElemVisible("fundamental_colorLabel", c);
+	setElemVisible("note_colors", !c);
+	setElemVisible("note_colorsLabel", !c);
 	changeURL();
 }
 
