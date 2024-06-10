@@ -718,21 +718,20 @@ class ActiveHex {
 		var freq: number = notUndefined(settings.fundamental) * Math.pow(2, cents / 1200);
 		var source = notUndefined(settings.audioContext).createBufferSource(); // creates a sound source
 		// Choose sample
-		var sampleFreq: number = 110;
-		var sampleNumber: number = 0;
-		if (freq > 155) {
-			if (freq > 311) {
-				if (freq > 622) {
-					sampleFreq = 880;
-					sampleNumber = 3;
-				} else {
-					sampleFreq = 440;
-					sampleNumber = 2;
-				}
-			} else {
-				sampleFreq = 220;
-				sampleNumber = 1;
-			}
+		var sampleFreq: number;
+		var sampleNumber: number;
+		if (freq <= 155) {
+			sampleFreq = 110;
+			sampleNumber = 0;
+		} else if (freq <= 311) {
+			sampleFreq = 220;
+			sampleNumber = 1;
+		} else if (freq <= 622) {
+			sampleFreq = 440;
+			sampleNumber = 2;
+		} else {
+			sampleFreq = 880;
+			sampleNumber = 3;
 		}
 		
 		if (!notUndefined(settings.sampleBuffer)[sampleNumber]) // Sample not yet loaded
