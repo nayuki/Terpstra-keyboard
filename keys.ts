@@ -62,11 +62,6 @@ class Rgb8Color {
 		return `rgb(${this.red},${this.green},${this.blue})`;
 	}
 	
-	
-	public toCssHex(): string {
-		return "#" + (this.red << 16 | this.green << 8 | this.blue << 0).toString(16).padStart(6, "0");
-	}
-	
 }
 
 
@@ -242,7 +237,7 @@ getInputById("no_labels").checked = mapGetMaybe(getData, "no_labels").map(v => J
 
 
 var global_pressed_interval: number;
-var current_text_color: string = "#000000";
+var current_text_color: Rgb8Color = new Rgb8Color(0, 0, 0);
 
 mapGetMaybe(getData, "scale").map(v => getElemById("scale", HTMLTextAreaElement).value = v[0]);
 mapGetMaybe(getData, "names").map(v => getElemById("names", HTMLTextAreaElement).value = v[0]);
@@ -1112,21 +1107,21 @@ function centsToColor(cents: number, pressed: boolean): string {
 		v = pressed ? v - (v / 2) : v;
 		
 		//setup text color
-		const color: Rgb8Color = HSVtoRGB(h, s, v);
-		current_text_color = color.toCssHex();
-		return color.toCssRgb();
+		current_text_color = HSVtoRGB(h, s, v);
+		return current_text_color.toCssRgb();
 		
 	} else {
+		let colorStr: string;
 		if (typeof(notUndefined(settings.keycolors)[global_pressed_interval]) === "undefined")
-			current_text_color = "#EDEDE4";
+			colorStr = "#EDEDE4";
 		else
-			current_text_color = notUndefined(settings.keycolors)[global_pressed_interval];
+			colorStr = notUndefined(settings.keycolors)[global_pressed_interval];
 		
 		//convert color name to hex
-		current_text_color = nameToHex(current_text_color);
+		current_text_color = Rgb8Color.fromCssHex(nameToHex(colorStr));
 		
 		//convert the hex to rgb
-		let {red, green, blue} = Rgb8Color.fromCssHex(current_text_color);
+		let {red, green, blue} = current_text_color;
 		
 		//darken for pressed key
 		if (pressed) {
@@ -1467,13 +1462,8 @@ function rgb2hsv(rgb: Rgb8Color): {h:number, s:number, v:number} {
 	};
 }
 
-function getContrastYIQ(hexcolor: string): string {
-	hexcolor = hexcolor.replace("#", "");
-	var r: number = parseInt(hexcolor.substr(0, 2), 16);
-	var g: number = parseInt(hexcolor.substr(2, 2), 16);
-	var b: number = parseInt(hexcolor.substr(4, 2), 16);
-	var yiq: number = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-	return yiq >= 128 ? "black" : "white";
+function getContrastYIQ({red, green, blue}: Rgb8Color): string {
+	return (red * 299 + green * 587 + blue * 114) / 1000 >= 128 ? "black" : "white";
 }
 
 
