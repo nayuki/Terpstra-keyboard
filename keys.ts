@@ -52,6 +52,11 @@ class Rgb8Color {
 		return `rgb(${this.red},${this.green},${this.blue})`;
 	}
 	
+	
+	public toCssHex(): string {
+		return "#" + (this.red << 16 | this.green << 8 | this.blue << 0).toString(16).padStart(6, "0");
+	}
+	
 }
 
 
@@ -1123,7 +1128,7 @@ function centsToColor(cents: number, pressed: boolean): string {
 	
 	//setup text color
 	const {red, green, blue} = HSVtoRGB(h, s, v);
-	current_text_color = rgbToHex(red, green, blue);
+	current_text_color = new Rgb8Color(red, green, blue).toCssHex();
 	return new Rgb8Color(red, green, blue).toCssRgb();
 }
 
@@ -1477,10 +1482,6 @@ function getContrastYIQ(hexcolor: string): string {
 	var b: number = parseInt(hexcolor.substr(4, 2), 16);
 	var yiq: number = ((r * 299) + (g * 587) + (b * 114)) / 1000;
 	return yiq >= 128 ? "black" : "white";
-}
-
-function rgbToHex(r: number, g: number, b: number): string {
-	return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
 
