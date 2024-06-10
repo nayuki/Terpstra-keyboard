@@ -1427,8 +1427,6 @@ window.addEventListener("load", init, false);
 
 function init(): void {
 	try {
-		// Fix up for prefixing
-		window.AudioContext = window.AudioContext || window.webkitAudioContext;
 		settings.audioContext = new AudioContext();
 	} catch (e) {
 		alert("Web Audio API is not supported in this browser");
