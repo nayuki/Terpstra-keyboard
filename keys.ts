@@ -1105,9 +1105,9 @@ function centsToColor(cents: number, pressed: boolean): string {
 	v = pressed ? v - (v / 2) : v;
 	
 	//setup text color
-	var tcolor = HSVtoRGB(h, s, v);
-	current_text_color = rgbToHex(tcolor.red, tcolor.green, tcolor.blue);
-	return rgb(tcolor.red, tcolor.green, tcolor.blue);
+	const {red, green, blue} = HSVtoRGB(h, s, v);
+	current_text_color = rgbToHex(red, green, blue);
+	return rgb(red, green, blue);
 }
 
 function roundTowardZero(val: number): number {
