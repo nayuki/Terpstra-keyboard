@@ -540,11 +540,11 @@ function goKeyboard() {
 	
 	// set up settings constants
 	
-	settings.fundamental = getInputById("fundamental").value;
-	settings.rSteps = getInputById("rSteps").value;
-	settings.urSteps = parseFloat(settings.rSteps) - parseFloat(getInputById("urSteps").value); // Adjust to different coordinate system
-	settings.hexSize = getInputById("hexSize").value;
-	settings.rotation = (getInputById("rotation").value * 2 * Math.PI) / 360;
+	settings.fundamental = parseFloat(getInputById("fundamental").value);
+	settings.rSteps = parseFloat(getInputById("rSteps").value);
+	settings.urSteps = settings.rSteps - parseFloat(getInputById("urSteps").value); // Adjust to different coordinate system
+	settings.hexSize = parseFloat(getInputById("hexSize").value);
+	settings.rotation = (parseFloat(getInputById("rotation").value) * 2 * Math.PI) / 360;
 	parseScale();
 	parseScaleColors();
 	settings.names = getElemById("names", HTMLTextAreaElement).value.split("\n");
@@ -976,8 +976,8 @@ function drawHex(p: Point, c: string): void { /* Point, color */
 	var y2: Array<number> = [];
 	for (var i = 0; i < 6; i++) {
 		var angle: number = 2 * Math.PI / 6 * (i + 0.5);
-		x2[i] = hexCenter.x + (parseFloat(notUndefined(settings.hexSize)) + 3) * Math.cos(angle);
-		y2[i] = hexCenter.y + (parseFloat(notUndefined(settings.hexSize)) + 3) * Math.sin(angle);
+		x2[i] = hexCenter.x + (notUndefined(settings.hexSize) + 3) * Math.cos(angle);
+		y2[i] = hexCenter.y + (notUndefined(settings.hexSize) + 3) * Math.sin(angle);
 	}
 	
 	// Draw shadowed stroke outside clip to create pseudo-3d effect
@@ -1022,7 +1022,7 @@ function drawHex(p: Point, c: string): void { /* Point, color */
 	context.textBaseline = "middle";
 	
 	var note: number = p.x * notUndefined(settings.rSteps) + p.y * notUndefined(settings.urSteps);
-	var equivSteps: number = settings["enum"] ? parseInt(notUndefined(settings.equivSteps)) : notUndefined(settings.scale).length;
+	var equivSteps: number = settings["enum"] ? notUndefined(settings.equivSteps) : notUndefined(settings.scale).length;
 	var equivMultiple: number = Math.floor(note / equivSteps);
 	var reducedNote: number = note % equivSteps;
 	if (reducedNote < 0)
@@ -1046,7 +1046,7 @@ function drawHex(p: Point, c: string): void { /* Point, color */
 		context.font = "12pt Arial";
 		context.textAlign = "center";
 		context.textBaseline = "middle";
-		context.fillText(equivMultiple, 0, 0);
+		context.fillText(equivMultiple.toString(), 0, 0);
 	}
 	
 	context.restore();
