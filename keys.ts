@@ -1105,7 +1105,7 @@ function centsToColor(cents: number, pressed: boolean): string {
 	v = pressed ? v - (v / 2) : v;
 	
 	//setup text color
-	var tcolor = HSVtoRGB2(h, s, v);
+	var tcolor = HSVtoRGB(h, s, v);
 	current_text_color = rgbToHex(tcolor.red, tcolor.green, tcolor.blue);
 	return rgb(tcolor.red, tcolor.green, tcolor.blue);
 }
@@ -1165,7 +1165,7 @@ function rgb(r: number, g: number, b: number): string {
 	return "rgb(" + r + "," + g + "," + b + ")";
 }
 
-function HSVtoRGB2(h: number, s: number, v: number): {red:number, green:number, blue:number} {
+function HSVtoRGB(h: number, s: number, v: number): {red:number, green:number, blue:number} {
 	var r: number, g: number, b: number, i: number, f: number, p: number, q: number, t: number;
 	i = Math.floor(h * 6);
 	f = h * 6 - i;
