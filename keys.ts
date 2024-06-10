@@ -609,7 +609,6 @@ function changeURL(): void {
 	// Find scl file description for the page title
 	
 	const scaleLines: Array<string> = scaleTextarea.value.split("\n");
-	let first: boolean = true;
 	let foundDescription: boolean = false;
 	let description: string = "Terpstra Keyboard WebApp";
 	
@@ -1397,8 +1396,6 @@ function getHexCoordsAt(coords: Point): Point {
 	
 	q = Math.round(q);
 	r = Math.round(r);
-	
-	const guess: Point = hexCoordsToScreen(new Point(q, r));
 	
 	// This gets an approximation; now check neighbours for minimum distance
 	
