@@ -43,15 +43,15 @@ function QueryData(queryString?: string, preserveDuplicates?: boolean): Map<stri
 		queryString = queryString.replace(/\+/g, " ");
 		
 		// split the query string around ampersands and semicolons
-		var queryComponents: Array<string> = queryString.split(/[&;]/g);
+		const queryComponents: Array<string> = queryString.split(/[&;]/g);
 		
 		// loop over the query string components
-		for (var index = 0; index < queryComponents.length; index++) {
+		for (let index = 0; index < queryComponents.length; index++) {
 			
 			// extract this component's key-value pair
-			var keyValuePair: Array<string> = queryComponents[index].split("=");
-			var key: string          = decodeURIComponent(keyValuePair[0]);
-			var value: string        = keyValuePair.length > 1
+			const keyValuePair: Array<string> = queryComponents[index].split("=");
+			const key: string          = decodeURIComponent(keyValuePair[0]);
+			const value: string        = keyValuePair.length > 1
 			                 ? decodeURIComponent(keyValuePair[1])
 			                 : "";
 			
