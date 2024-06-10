@@ -1104,12 +1104,10 @@ function centsToColor(cents: number, pressed: boolean): string {
 	
 	v = pressed ? v - (v / 2) : v;
 	
-	returnColor = HSVtoRGB(h, s, v);
-	
 	//setup text color
 	var tcolor = HSVtoRGB2(h, s, v);
 	current_text_color = rgbToHex(tcolor.red, tcolor.green, tcolor.blue);
-	return returnColor;
+	return rgb(tcolor.red, tcolor.green, tcolor.blue);
 }
 
 function roundTowardZero(val: number): number {
@@ -1165,11 +1163,6 @@ function getHexCoordsAt(coords: Point): Point {
 
 function rgb(r: number, g: number, b: number): string {
 	return "rgb(" + r + "," + g + "," + b + ")";
-}
-
-function HSVtoRGB(h: number, s: number, v: number): string {
-	const {red, green, blue} = HSVtoRGB2(h, s, v);
-	return rgb(red, green, blue);
 }
 
 function HSVtoRGB2(h: number, s: number, v: number): {red:number, green:number, blue:number} {
