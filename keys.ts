@@ -694,7 +694,7 @@ function calculateRotationMatrix(rotation: number, center: Point): Array<number>
 	return m;
 }
 
-function applyMatrixToPoint(m: Array<number>, p: Point): Point { /*Array, Point*/
+function applyMatrixToPoint(m: Array<number>, p: Point): Point {
 	return new Point(
 		m[0] * p.x + m[2] * p.y + m[4],
 		m[1] * p.x + m[3] * p.y + m[5],
@@ -1246,13 +1246,13 @@ function drawGrid(): void {
 	}
 }
 
-function hexCoordsToScreen(hex: Point): Point { /* Point */
+function hexCoordsToScreen(hex: Point): Point {
 	var screenX: number = notUndefined(settings.centerpoint).x + hex.x * notUndefined(settings.hexWidth) + hex.y * notUndefined(settings.hexWidth) / 2;
 	var screenY: number = notUndefined(settings.centerpoint).y + hex.y * notUndefined(settings.hexVert);
 	return new Point(screenX, screenY);
 }
 
-function drawHex(p: Point, c: string): void { /* Point, color */
+function drawHex(p: Point, c: string): void {
 	var hexCenter: Point = hexCoordsToScreen(p);
 	
 	// Calculate hex vertices
