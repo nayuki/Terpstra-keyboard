@@ -1,17 +1,11 @@
 let volume: number = 1.4;
-window.addEventListener("keydown", e => {
-	e.preventDefault();
-	if (e.code === "ArrowDown") {//ctrl
-		if (volume >= 0.1) {
-			volume = +(volume - 0.1).toFixed(2);
-			console.log(volume);
-		}
-	} else if (e.code === "ArrowUp") {
+window.addEventListener("keydown", (e: KeyboardEvent) => {
+	if (e.code == "ArrowDown") {//ctrl
 		e.preventDefault();
-		if (volume <= 2.9) {
-			volume = +(volume + 0.1).toFixed(2);
-			console.log(volume);
-		}
+		volume = Math.max(volume - 0.1, 0);
+	} else if (e.code == "ArrowUp") {
+		e.preventDefault();
+		volume = Math.max(volume + 0.1, 3);
 	}
 });
 
