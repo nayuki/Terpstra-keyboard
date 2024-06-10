@@ -475,14 +475,17 @@ function resizeHandler(): void {
 	var newWidth: number = window.innerWidth;
 	var newHeight: number = window.innerHeight;
 	
-	settings.canvas.style.height = newHeight + "px";
-	settings.canvas.style.width = newWidth + "px";
+	let canvas = settings.canvas;
+	if (canvas === undefined)
+		throw new TypeError();
+	canvas.style.height = newHeight + "px";
+	canvas.style.width = newWidth + "px";
 	
-	settings.canvas.style.marginTop = (-newHeight / 2) + "px";
-	settings.canvas.style.marginLeft = (-newWidth / 2) + "px";
+	canvas.style.marginTop = (-newHeight / 2) + "px";
+	canvas.style.marginLeft = (-newWidth / 2) + "px";
 	
-	settings.canvas.width = newWidth;
-	settings.canvas.height = newHeight;
+	canvas.width = newWidth;
+	canvas.height = newHeight;
 	
 	// Find new centerpoint
 	
@@ -950,23 +953,26 @@ function drawHex(p: Point, c: string): void { /* Point, color */
 	
 	// Draw filled hex
 	
-	settings.context.beginPath();
-	settings.context.moveTo(x[0], y[0]);
+	let context = settings.context;
+	if (context === undefined)
+		throw new TypeError();
+	context.beginPath();
+	context.moveTo(x[0], y[0]);
 	for (var i = 1; i < 6; i++)
-		settings.context.lineTo(x[i], y[i]);
-	settings.context.closePath();
-	settings.context.fillStyle = c;
-	settings.context.fill();
+		context.lineTo(x[i], y[i]);
+	context.closePath();
+	context.fillStyle = c;
+	context.fill();
 	
 	// Save context and create a hex shaped clip
 	
-	settings.context.save();
-	settings.context.beginPath();
-	settings.context.moveTo(x[0], y[0]);
+	context.save();
+	context.beginPath();
+	context.moveTo(x[0], y[0]);
 	for (var i = 1; i < 6; i++)
-		settings.context.lineTo(x[i], y[i]);
-	settings.context.closePath();
-	settings.context.clip();
+		context.lineTo(x[i], y[i]);
+	context.closePath();
+	context.clip();
 	
 	// Calculate hex vertices outside clipped path
 	
@@ -980,44 +986,44 @@ function drawHex(p: Point, c: string): void { /* Point, color */
 	
 	// Draw shadowed stroke outside clip to create pseudo-3d effect
 	
-	settings.context.beginPath();
-	settings.context.moveTo(x2[0], y2[0]);
+	context.beginPath();
+	context.moveTo(x2[0], y2[0]);
 	for (var i = 1; i < 6; i++)
-		settings.context.lineTo(x2[i], y2[i]);
-	settings.context.closePath();
-	settings.context.strokeStyle = "black";
-	settings.context.lineWidth = 5;
-	settings.context.shadowBlur = 15;
-	settings.context.shadowColor = "black";
-	settings.context.shadowOffsetX = 0;
-	settings.context.shadowOffsetY = 0;
-	settings.context.stroke();
-	settings.context.restore();
+		context.lineTo(x2[i], y2[i]);
+	context.closePath();
+	context.strokeStyle = "black";
+	context.lineWidth = 5;
+	context.shadowBlur = 15;
+	context.shadowColor = "black";
+	context.shadowOffsetX = 0;
+	context.shadowOffsetY = 0;
+	context.stroke();
+	context.restore();
 	
 	// Add a clean stroke around hex
 	
-	settings.context.beginPath();
-	settings.context.moveTo(x[0], y[0]);
+	context.beginPath();
+	context.moveTo(x[0], y[0]);
 	for (var i = 1; i < 6; i++)
-		settings.context.lineTo(x[i], y[i]);
-	settings.context.closePath();
-	settings.context.lineWidth = 2;
-	settings.context.lineJoin = "round";
-	settings.context.strokeStyle = "black";
-	settings.context.stroke();
+		context.lineTo(x[i], y[i]);
+	context.closePath();
+	context.lineWidth = 2;
+	context.lineJoin = "round";
+	context.strokeStyle = "black";
+	context.stroke();
 	
 	// Add note name and equivalence interval multiple
 	
-	settings.context.save();
-	settings.context.translate(hexCenter.x, hexCenter.y);
-	settings.context.rotate(-settings.rotation);
+	context.save();
+	context.translate(hexCenter.x, hexCenter.y);
+	context.rotate(-settings.rotation);
 	// hexcoords = p and screenCoords = hexCenter
 	
-	//settings.context.fillStyle = "black"; //bdl_04062016
-	settings.context.fillStyle = getContrastYIQ(current_text_color);
-	settings.context.font = "22pt Arial";
-	settings.context.textAlign = "center";
-	settings.context.textBaseline = "middle";
+	//context.fillStyle = "black"; //bdl_04062016
+	context.fillStyle = getContrastYIQ(current_text_color);
+	context.font = "22pt Arial";
+	context.textAlign = "center";
+	context.textBaseline = "middle";
 	
 	var note: number = p.x * settings.rSteps + p.y * settings.urSteps;
 	var equivSteps: number = settings["enum"] ? parseInt(settings.equivSteps) : settings.scale.length;
@@ -1029,25 +1035,25 @@ function drawHex(p: Point, c: string): void { /* Point, color */
 	if (!settings.no_labels) {
 		var name: string = settings["enum"] ? "" + reducedNote : settings.names[reducedNote];
 		if (name) {
-			settings.context.save();
+			context.save();
 			var scaleFactor: number = name.length > 3 ? 3 / name.length : 1;
 			scaleFactor *= settings.hexSize / 50;
-			settings.context.scale(scaleFactor, scaleFactor);
-			settings.context.fillText(name, 0, 0);
-			settings.context.restore();
+			context.scale(scaleFactor, scaleFactor);
+			context.fillText(name, 0, 0);
+			context.restore();
 		}
 		
 		var scaleFactor: number = settings.hexSize / 50;
-		settings.context.scale(scaleFactor, scaleFactor);
-		settings.context.translate(10, -25);
-		settings.context.fillStyle = "white";
-		settings.context.font = "12pt Arial";
-		settings.context.textAlign = "center";
-		settings.context.textBaseline = "middle";
-		settings.context.fillText(equivMultiple, 0, 0);
+		context.scale(scaleFactor, scaleFactor);
+		context.translate(10, -25);
+		context.fillStyle = "white";
+		context.font = "12pt Arial";
+		context.textAlign = "center";
+		context.textBaseline = "middle";
+		context.fillText(equivMultiple, 0, 0);
 	}
 	
-	settings.context.restore();
+	context.restore();
 }
 
 function centsToColor(cents: number, pressed: boolean): string {
