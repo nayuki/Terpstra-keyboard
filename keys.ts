@@ -357,11 +357,11 @@ function parseScale(): void {
 				// ratio
 				var nd: Array<string> = line.split("/");
 				var ratio: number = 1200 * Math.log(parseInt(nd[0]) / parseInt(nd[1])) / Math.log(2);
-				settings.scale.push(ratio);
+				notUndefined(settings.scale).push(ratio);
 			} else {
 				if (line.match(/\./))
 				// cents
-					settings.scale.push(parseFloat(line));
+					notUndefined(settings.scale).push(parseFloat(line));
 			}
 		}
 	});
@@ -373,7 +373,7 @@ function parseScaleColors(): void {
 	settings.keycolors = [];
 	var colorsArray: Array<string> = getElemById("note_colors", HTMLTextAreaElement).value.split("\n");
 	colorsArray.forEach(function(line) {
-		settings.keycolors.push(line);
+		notUndefined(settings.keycolors).push(line);
 	});
 }
 
@@ -409,8 +409,8 @@ class ActiveHex {
 	
 	
 	public noteOn(cents: number): void {
-		var freq: number = settings.fundamental * Math.pow(2, cents / 1200);
-		var source = settings.audioContext.createBufferSource(); // creates a sound source
+		var freq: number = notUndefined(settings.fundamental) * Math.pow(2, cents / 1200);
+		var source = notUndefined(settings.audioContext).createBufferSource(); // creates a sound source
 		// Choose sample
 		var sampleFreq: number = 110;
 		var sampleNumber: number = 0;
@@ -429,17 +429,17 @@ class ActiveHex {
 			}
 		}
 		
-		if (!settings.sampleBuffer[sampleNumber]) // Sample not yet loaded
+		if (!notUndefined(settings.sampleBuffer)[sampleNumber]) // Sample not yet loaded
 			return;
 		
-		source.buffer = settings.sampleBuffer[sampleNumber]; // tell the source which sound to play
+		source.buffer = notUndefined(settings.sampleBuffer)[sampleNumber]; // tell the source which sound to play
 		source.playbackRate.value = freq / sampleFreq;
 		// Create a gain node.
-		var gainNode = settings.audioContext.createGain();
+		var gainNode = notUndefined(settings.audioContext).createGain();
 		// Connect the source to the gain node.
 		source.connect(gainNode);
 		// Connect the gain node to the destination.
-		gainNode.connect(settings.audioContext.destination);
+		gainNode.connect(notUndefined(settings.audioContext).destination);
 		source.connect(gainNode); // connect the source to the context's destination (the speakers)
 		gainNode.gain.value = volume;
 		source.start(0); // play the source now
@@ -450,12 +450,12 @@ class ActiveHex {
 	
 	public noteOff(): void {
 		if (settings.sustain)
-			settings.sustainedNotes.push(this);
+			notUndefined(settings.sustainedNotes).push(this);
 		else {
-			var fadeout: number = settings.audioContext.currentTime + settings.sampleFadeout;
+			var fadeout: number = notUndefined(settings.audioContext).currentTime + notUndefined(settings.sampleFadeout);
 			if (this.gainNode) {
-				this.gainNode.gain.setTargetAtTime(0, settings.audioContext.currentTime,
-					settings.sampleFadeout);
+				this.gainNode.gain.setTargetAtTime(0, notUndefined(settings.audioContext).currentTime,
+					notUndefined(settings.sampleFadeout));
 			}
 			if (this.source) {
 				// This is a terrible fudge. Please forgive me - it's late, I'm tired, I
@@ -475,9 +475,7 @@ function resizeHandler(): void {
 	var newWidth: number = window.innerWidth;
 	var newHeight: number = window.innerHeight;
 	
-	let canvas = settings.canvas;
-	if (canvas === undefined)
-		throw new TypeError();
+	let canvas = notUndefined(settings.canvas);
 	canvas.style.height = newHeight + "px";
 	canvas.style.width = newWidth + "px";
 	
@@ -496,13 +494,13 @@ function resizeHandler(): void {
 	// Rotate about it
 	
 	if (settings.rotationMatrix)
-		settings.context.restore();
-	settings.context.save();
+		notUndefined(settings.context).restore();
+	notUndefined(settings.context).save();
 	
-	settings.rotationMatrix = calculateRotationMatrix(-settings.rotation, settings.centerpoint);
+	settings.rotationMatrix = calculateRotationMatrix(-notUndefined(settings.rotation), settings.centerpoint);
 	
-	var m: Array<number> = calculateRotationMatrix(settings.rotation, settings.centerpoint);
-	settings.context.setTransform(m[0], m[1], m[2], m[3], m[4], m[5]);
+	var m: Array<number> = calculateRotationMatrix(notUndefined(settings.rotation), settings.centerpoint);
+	notUndefined(settings.context).setTransform(m[0], m[1], m[2], m[3], m[4], m[5]);
 	
 	// Redraw Grid
 	
@@ -517,11 +515,11 @@ function back(): void {
 	window.removeEventListener("keyup", onKeyUp);
 	is_key_event_added = undefined;
 	// Stop all active notes
-	while (settings.activeHexObjects.length > 0) {
-		var coords: Point = settings.activeHexObjects[0].coords;
-		settings.activeHexObjects[0].noteOff();
+	while (notUndefined(settings.activeHexObjects).length > 0) {
+		var coords: Point = notUndefined(settings.activeHexObjects)[0].coords;
+		notUndefined(settings.activeHexObjects)[0].noteOff();
 		drawHex(coords, centsToColor(hexCoordsToCents(coords), false));
-		settings.activeHexObjects.splice(0, 1);
+		notUndefined(settings.activeHexObjects).splice(0, 1);
 	}
 	// UI change
 	getHtmlById("keyboard").style.display = "none";
@@ -556,7 +554,7 @@ function goKeyboard() {
 	settings.canvas = getElemById("keyboard", HTMLCanvasElement);
 	settings.context = settings.canvas.getContext("2d");
 	
-	settings.hexHeight = settings.hexSize * 2;
+	settings.hexHeight = notUndefined(settings.hexSize) * 2;
 	settings.hexVert = settings.hexHeight * 3 / 4;
 	settings.hexWidth = Math.sqrt(3) / 2 * settings.hexHeight;
 	
@@ -706,8 +704,8 @@ function goKeyboard() {
 					
 					if (settings.sustain == true) {
 						settings.sustain = false;
-						for (var note = 0; note < settings.sustainedNotes.length; note++)
-							settings.sustainedNotes[note].noteOff();
+						for (var note = 0; note < notUndefined(settings.sustainedNotes).length; note++)
+							notUndefined(settings.sustainedNotes)[note].noteOff();
 						settings.sustainedNotes = [];
 						tempAlert("Sustain Off", 900);
 					} else {
@@ -734,23 +732,23 @@ function goKeyboard() {
 	
 	settings.isMouseDown = false;
 	settings.canvas.addEventListener("mousedown", function(e) {
-		if (settings.pressedKeys.length != 0 || settings.isTouchDown)
+		if (notUndefined(settings.pressedKeys).length != 0 || settings.isTouchDown)
 			return;
 		settings.isMouseDown = true;
-		settings.canvas.addEventListener("mousemove", mouseActive, false);
+		notUndefined(settings.canvas).addEventListener("mousemove", mouseActive, false);
 		mouseActive(e);
 	}, false);
 	
 	settings.canvas.addEventListener("mouseup", function(e) {
 		settings.isMouseDown = false;
-		if (settings.pressedKeys.length != 0 || settings.isTouchDown)
+		if (notUndefined(settings.pressedKeys).length != 0 || settings.isTouchDown)
 			return;
-		settings.canvas.removeEventListener("mousemove", mouseActive);
-		if (settings.activeHexObjects.length > 0) {
-			var coords: Point = settings.activeHexObjects[0].coords;
-			settings.activeHexObjects[0].noteOff();
+		notUndefined(settings.canvas).removeEventListener("mousemove", mouseActive);
+		if (notUndefined(settings.activeHexObjects).length > 0) {
+			var coords: Point = notUndefined(settings.activeHexObjects)[0].coords;
+			notUndefined(settings.activeHexObjects)[0].noteOff();
 			drawHex(coords, centsToColor(hexCoordsToCents(coords), false));
-			settings.activeHexObjects.pop();
+			notUndefined(settings.activeHexObjects).pop();
 		}
 	}, false);
 	return false;
@@ -762,12 +760,12 @@ function onKeyDown(e: KeyboardEvent): void {
 	if (e.keyCode == 32) // Spacebar
 		settings.sustain = true;
 	else if (!settings.isMouseDown && !settings.isTouchDown
-			&& (e.keyCode in settings.keyCodeToCoords)
-			&& settings.pressedKeys.indexOf(e.keyCode) == -1) {
-		settings.pressedKeys.push(e.keyCode);
-		var coords: Point = settings.keyCodeToCoords[e.keyCode];
+			&& (e.keyCode in notUndefined(settings.keyCodeToCoords))
+			&& notUndefined(settings.pressedKeys).indexOf(e.keyCode) == -1) {
+		notUndefined(settings.pressedKeys).push(e.keyCode);
+		var coords: Point = notUndefined(settings.keyCodeToCoords)[e.keyCode];
 		var hex: ActiveHex = new ActiveHex(coords);
-		settings.activeHexObjects.push(hex);
+		notUndefined(settings.activeHexObjects).push(hex);
 		var cents: number = hexCoordsToCents(coords);
 		drawHex(coords, centsToColor(cents, true));
 		hex.noteOn(cents);
@@ -776,11 +774,11 @@ function onKeyDown(e: KeyboardEvent): void {
 	//Hatsevich:
 	else if (!settings.isMouseDown && !settings.isTouchDown
 			&& (e.code in codeToCoords)
-			&& settings.pressedKeys.indexOf(e.code) == -1) {
-		settings.pressedKeys.push(e.code);
+			&& notUndefined(settings.pressedKeys).indexOf(e.code) == -1) {
+		notUndefined(settings.pressedKeys).push(e.code);
 		var coords: Point = codeToCoords[e.code];
 		var hex: ActiveHex = new ActiveHex(coords);
-		settings.activeHexObjects.push(hex);
+		notUndefined(settings.activeHexObjects).push(hex);
 		var cents: number = hexCoordsToCents(coords);
 		drawHex(coords, centsToColor(cents, true));
 		hex.noteOn(cents);
@@ -790,22 +788,22 @@ function onKeyDown(e: KeyboardEvent): void {
 function onKeyUp(e: KeyboardEvent): void {
 	if (e.keyCode == 32) { // Spacebar
 		settings.sustain = false;
-		for (var note = 0; note < settings.sustainedNotes.length; note++)
-			settings.sustainedNotes[note].noteOff();
+		for (var note = 0; note < notUndefined(settings.sustainedNotes).length; note++)
+			notUndefined(settings.sustainedNotes)[note].noteOff();
 		settings.sustainedNotes = [];
 	} else if (!settings.isMouseDown && !settings.isTouchDown
-			&& (e.keyCode in settings.keyCodeToCoords)) {
-		var keyIndex = settings.pressedKeys.indexOf(e.keyCode);
+			&& (e.keyCode in notUndefined(settings.keyCodeToCoords))) {
+		var keyIndex = notUndefined(settings.pressedKeys).indexOf(e.keyCode);
 		if (keyIndex != -1) {
-			settings.pressedKeys.splice(keyIndex, 1);
-			var coords: Point = settings.keyCodeToCoords[e.keyCode];
+			notUndefined(settings.pressedKeys).splice(keyIndex, 1);
+			var coords: Point = notUndefined(settings.keyCodeToCoords)[e.keyCode];
 			drawHex(coords, centsToColor(hexCoordsToCents(coords), false));
-			var hexIndex: number = settings.activeHexObjects.findIndex(function(hex) {
+			var hexIndex: number = notUndefined(settings.activeHexObjects).findIndex(function(hex) {
 				return coords.equals(hex.coords);
 			});
 			if (hexIndex != -1) {
-				settings.activeHexObjects[hexIndex].noteOff();
-				settings.activeHexObjects.splice(hexIndex, 1);
+				notUndefined(settings.activeHexObjects)[hexIndex].noteOff();
+				notUndefined(settings.activeHexObjects).splice(hexIndex, 1);
 			}
 		}
 	}
@@ -813,17 +811,17 @@ function onKeyUp(e: KeyboardEvent): void {
 	//Hatsevich:
 	else if (!settings.isMouseDown && !settings.isTouchDown
 			&& (e.code in codeToCoords)) {
-		var keyIndex: number = settings.pressedKeys.indexOf(e.code);
+		var keyIndex: number = notUndefined(settings.pressedKeys).indexOf(e.code);
 		if (keyIndex != -1) {
-			settings.pressedKeys.splice(keyIndex, 1);
+			notUndefined(settings.pressedKeys).splice(keyIndex, 1);
 			var coords: Point = codeToCoords[e.code];
 			drawHex(coords, centsToColor(hexCoordsToCents(coords), false));
-			var hexIndex: number = settings.activeHexObjects.findIndex(function(hex) {
+			var hexIndex: number = notUndefined(settings.activeHexObjects).findIndex(function(hex) {
 				return coords.equals(hex.coords);
 			});
 			if (hexIndex != -1) {
-				settings.activeHexObjects[hexIndex].noteOff();
-				settings.activeHexObjects.splice(hexIndex, 1);
+				notUndefined(settings.activeHexObjects)[hexIndex].noteOff();
+				notUndefined(settings.activeHexObjects).splice(hexIndex, 1);
 			}
 		}
 	}
@@ -834,20 +832,20 @@ function mouseActive(e: MouseEvent): void {
 	
 	coords = getHexCoordsAt(coords);
 	
-	if (settings.activeHexObjects.length == 0) {
-		settings.activeHexObjects[0] = new ActiveHex(coords);
+	if (notUndefined(settings.activeHexObjects).length == 0) {
+		notUndefined(settings.activeHexObjects)[0] = new ActiveHex(coords);
 		var cents: number = hexCoordsToCents(coords);
-		settings.activeHexObjects[0].noteOn(cents);
+		notUndefined(settings.activeHexObjects)[0].noteOn(cents);
 		drawHex(coords, centsToColor(cents, true));
 	} else {
-		if (!coords.equals(settings.activeHexObjects[0].coords)) {
-			settings.activeHexObjects[0].noteOff();
-			drawHex(settings.activeHexObjects[0].coords,
-				centsToColor(hexCoordsToCents(settings.activeHexObjects[0].coords), false));
+		if (!coords.equals(notUndefined(settings.activeHexObjects)[0].coords)) {
+			notUndefined(settings.activeHexObjects)[0].noteOff();
+			drawHex(notUndefined(settings.activeHexObjects)[0].coords,
+				centsToColor(hexCoordsToCents(notUndefined(settings.activeHexObjects)[0].coords), false));
 			
-			settings.activeHexObjects[0] = new ActiveHex(coords);
+			notUndefined(settings.activeHexObjects)[0] = new ActiveHex(coords);
 			var cents: number = hexCoordsToCents(coords);
-			settings.activeHexObjects[0].noteOn(cents);
+			notUndefined(settings.activeHexObjects)[0].noteOn(cents);
 			drawHex(coords, centsToColor(cents, true));
 		}
 	}
@@ -877,23 +875,23 @@ function getPosition(element): {x:number, y:number} {
 
 function handleTouch(e): void {
 	e.preventDefault();
-	if (settings.pressedKeys.length != 0 || settings.isMouseDown) {
+	if (notUndefined(settings.pressedKeys).length != 0 || settings.isMouseDown) {
 		settings.isTouchDown = false;
 		return;
 	}
 	settings.isTouchDown = e.targetTouches.length != 0;
 	
-	for (var i = 0; i < settings.activeHexObjects.length; i++)
-		settings.activeHexObjects[i].release = true;
+	for (var i = 0; i < notUndefined(settings.activeHexObjects).length; i++)
+		notUndefined(settings.activeHexObjects)[i].release = true;
 	
 	for (var i = 0; i < e.targetTouches.length; i++) {
-		var coords: Point = getHexCoordsAt(new Point(e.targetTouches[i].pageX - settings.canvas.offsetLeft,
-			e.targetTouches[i].pageY - settings.canvas.offsetTop));
+		var coords: Point = getHexCoordsAt(new Point(e.targetTouches[i].pageX - notUndefined(settings.canvas).offsetLeft,
+			e.targetTouches[i].pageY - notUndefined(settings.canvas).offsetTop));
 		var found: boolean = false;
 		
-		for (var j = 0; j < settings.activeHexObjects.length; j++) {
-			if (coords.equals(settings.activeHexObjects[j].coords)) {
-				settings.activeHexObjects[j].release = false;
+		for (var j = 0; j < notUndefined(settings.activeHexObjects).length; j++) {
+			if (coords.equals(notUndefined(settings.activeHexObjects)[j].coords)) {
+				notUndefined(settings.activeHexObjects)[j].release = false;
 				found = true;
 			}
 		}
@@ -903,25 +901,25 @@ function handleTouch(e): void {
 			newHex.noteOn(cents);
 			var c: string = centsToColor(cents, true);
 			drawHex(coords, c);
-			settings.activeHexObjects.push(newHex);
+			notUndefined(settings.activeHexObjects).push(newHex);
 		}
 	}
 	
-	for (var i = settings.activeHexObjects.length - 1; i >= 0; i--) {
-		if (settings.activeHexObjects[i].release) {
-			settings.activeHexObjects[i].noteOff();
-			var coords: Point = settings.activeHexObjects[i].coords;
+	for (var i = notUndefined(settings.activeHexObjects).length - 1; i >= 0; i--) {
+		if (notUndefined(settings.activeHexObjects)[i].release) {
+			notUndefined(settings.activeHexObjects)[i].noteOff();
+			var coords: Point = notUndefined(settings.activeHexObjects)[i].coords;
 			var c: string = centsToColor(hexCoordsToCents(coords), false);
 			drawHex(coords, c);
-			settings.activeHexObjects.splice(i, 1);
+			notUndefined(settings.activeHexObjects).splice(i, 1);
 		}
 	}
 }
 
 function drawGrid(): void {
-	var max: number = settings.centerpoint.x > settings.centerpoint.y ?
-		settings.centerpoint.x / settings.hexSize :
-		settings.centerpoint.y / settings.hexSize;
+	var max: number = notUndefined(settings.centerpoint).x > notUndefined(settings.centerpoint).y ?
+		notUndefined(settings.centerpoint).x / notUndefined(settings.hexSize) :
+		notUndefined(settings.centerpoint).y / notUndefined(settings.hexSize);
 	max = Math.floor(max);
 	for (var r = -max; r < max; r++) {
 		for (var ur = -max; ur < max; ur++) {
@@ -933,8 +931,8 @@ function drawGrid(): void {
 }
 
 function hexCoordsToScreen(hex: Point): Point { /* Point */
-	var screenX: number = settings.centerpoint.x + hex.x * settings.hexWidth + hex.y * settings.hexWidth / 2;
-	var screenY: number = settings.centerpoint.y + hex.y * settings.hexVert;
+	var screenX: number = notUndefined(settings.centerpoint).x + hex.x * notUndefined(settings.hexWidth) + hex.y * notUndefined(settings.hexWidth) / 2;
+	var screenY: number = notUndefined(settings.centerpoint).y + hex.y * notUndefined(settings.hexVert);
 	return new Point(screenX, screenY);
 }
 
@@ -947,15 +945,13 @@ function drawHex(p: Point, c: string): void { /* Point, color */
 	var y: Array<number> = [];
 	for (var i = 0; i < 6; i++) {
 		var angle: number = 2 * Math.PI / 6 * (i + 0.5);
-		x[i] = hexCenter.x + settings.hexSize * Math.cos(angle);
-		y[i] = hexCenter.y + settings.hexSize * Math.sin(angle);
+		x[i] = hexCenter.x + notUndefined(settings.hexSize) * Math.cos(angle);
+		y[i] = hexCenter.y + notUndefined(settings.hexSize) * Math.sin(angle);
 	}
 	
 	// Draw filled hex
 	
-	let context = settings.context;
-	if (context === undefined)
-		throw new TypeError();
+	let context = notUndefined(settings.context);
 	context.beginPath();
 	context.moveTo(x[0], y[0]);
 	for (var i = 1; i < 6; i++)
@@ -980,8 +976,8 @@ function drawHex(p: Point, c: string): void { /* Point, color */
 	var y2: Array<number> = [];
 	for (var i = 0; i < 6; i++) {
 		var angle: number = 2 * Math.PI / 6 * (i + 0.5);
-		x2[i] = hexCenter.x + (parseFloat(settings.hexSize) + 3) * Math.cos(angle);
-		y2[i] = hexCenter.y + (parseFloat(settings.hexSize) + 3) * Math.sin(angle);
+		x2[i] = hexCenter.x + (parseFloat(notUndefined(settings.hexSize)) + 3) * Math.cos(angle);
+		y2[i] = hexCenter.y + (parseFloat(notUndefined(settings.hexSize)) + 3) * Math.sin(angle);
 	}
 	
 	// Draw shadowed stroke outside clip to create pseudo-3d effect
@@ -1016,7 +1012,7 @@ function drawHex(p: Point, c: string): void { /* Point, color */
 	
 	context.save();
 	context.translate(hexCenter.x, hexCenter.y);
-	context.rotate(-settings.rotation);
+	context.rotate(-notUndefined(settings.rotation));
 	// hexcoords = p and screenCoords = hexCenter
 	
 	//context.fillStyle = "black"; //bdl_04062016
@@ -1025,25 +1021,25 @@ function drawHex(p: Point, c: string): void { /* Point, color */
 	context.textAlign = "center";
 	context.textBaseline = "middle";
 	
-	var note: number = p.x * settings.rSteps + p.y * settings.urSteps;
-	var equivSteps: number = settings["enum"] ? parseInt(settings.equivSteps) : settings.scale.length;
+	var note: number = p.x * notUndefined(settings.rSteps) + p.y * notUndefined(settings.urSteps);
+	var equivSteps: number = settings["enum"] ? parseInt(notUndefined(settings.equivSteps)) : notUndefined(settings.scale).length;
 	var equivMultiple: number = Math.floor(note / equivSteps);
 	var reducedNote: number = note % equivSteps;
 	if (reducedNote < 0)
 		reducedNote = equivSteps + reducedNote;
 	
 	if (!settings.no_labels) {
-		var name: string = settings["enum"] ? "" + reducedNote : settings.names[reducedNote];
+		var name: string = settings["enum"] ? "" + reducedNote : notUndefined(settings.names)[reducedNote];
 		if (name) {
 			context.save();
 			var scaleFactor: number = name.length > 3 ? 3 / name.length : 1;
-			scaleFactor *= settings.hexSize / 50;
+			scaleFactor *= notUndefined(settings.hexSize) / 50;
 			context.scale(scaleFactor, scaleFactor);
 			context.fillText(name, 0, 0);
 			context.restore();
 		}
 		
-		var scaleFactor: number = settings.hexSize / 50;
+		var scaleFactor: number = notUndefined(settings.hexSize) / 50;
 		context.scale(scaleFactor, scaleFactor);
 		context.translate(10, -25);
 		context.fillStyle = "white";
@@ -1059,10 +1055,10 @@ function drawHex(p: Point, c: string): void { /* Point, color */
 function centsToColor(cents: number, pressed: boolean): string {
 	var returnColor: string;
 	if (!settings.spectrum_colors) {
-		if (typeof(settings.keycolors[global_pressed_interval]) === "undefined")
+		if (typeof(notUndefined(settings.keycolors)[global_pressed_interval]) === "undefined")
 			returnColor = "#EDEDE4";
 		else
-			returnColor = settings.keycolors[global_pressed_interval];
+			returnColor = notUndefined(settings.keycolors)[global_pressed_interval];
 		
 		var oldColor: string = returnColor;
 		
@@ -1112,25 +1108,25 @@ function roundTowardZero(val: number): number {
 }
 
 function hexCoordsToCents(coords: Point): number {
-	var distance: number = coords.x * settings.rSteps + coords.y * settings.urSteps;
-	var octs: number = roundTowardZero(distance / settings.scale.length);
-	var reducedSteps = distance % settings.scale.length;
+	var distance: number = coords.x * notUndefined(settings.rSteps) + coords.y * notUndefined(settings.urSteps);
+	var octs: number = roundTowardZero(distance / notUndefined(settings.scale).length);
+	var reducedSteps = distance % notUndefined(settings.scale).length;
 	if (reducedSteps < 0) {
-		reducedSteps += settings.scale.length;
+		reducedSteps += notUndefined(settings.scale).length;
 		octs -= 1;
 	}
-	var cents: number = octs * settings.equivInterval + settings.scale[reducedSteps];
+	var cents: number = octs * notUndefined(settings.equivInterval) + notUndefined(settings.scale)[reducedSteps];
 	global_pressed_interval = reducedSteps;
 	return cents;
 }
 
 function getHexCoordsAt(coords: Point): Point {
-	coords = applyMatrixToPoint(settings.rotationMatrix, coords);
-	var x: number = coords.x - settings.centerpoint.x;
-	var y: number = coords.y - settings.centerpoint.y;
+	coords = applyMatrixToPoint(notUndefined(settings.rotationMatrix), coords);
+	var x: number = coords.x - notUndefined(settings.centerpoint).x;
+	var y: number = coords.y - notUndefined(settings.centerpoint).y;
 	
-	var q: number = (x * Math.sqrt(3) / 3 - y / 3) / settings.hexSize;
-	var r: number = y * 2 / 3 / settings.hexSize;
+	var q: number = (x * Math.sqrt(3) / 3 - y / 3) / notUndefined(settings.hexSize);
+	var r: number = y * 2 / 3 / notUndefined(settings.hexSize);
 	
 	q = Math.round(q);
 	r = Math.round(r);
@@ -1254,8 +1250,8 @@ function loadSample(name: string, iteration: number): void {
 	
 	// Decode asynchronously
 	request.onload = function() {
-		settings.audioContext.decodeAudioData(request.response, function(buffer) {
-			settings.sampleBuffer[iteration] = buffer;
+		notUndefined(settings.audioContext).decodeAudioData(request.response, function(buffer) {
+			notUndefined(settings.sampleBuffer)[iteration] = buffer;
 			if (iteration < 3)
 				loadSample(name, iteration + 1);
 		}, onLoadError);
@@ -1542,6 +1538,13 @@ function getElemById<T>(id: string, type: Constructor<T>): T {
 		throw new Error("Element not found");
 	else
 		throw new TypeError("Invalid element type");
+}
+
+
+function notUndefined<T>(val: T|undefined): T {
+	if (val === undefined)
+		throw new TypeError();
+	return val;
 }
 
 
