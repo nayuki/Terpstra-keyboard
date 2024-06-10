@@ -1411,11 +1411,11 @@ function init(): void {
 }
 
 async function loadSamples(name: string): Promise<void> {
-	// It seems audioContext doesn't cope with simultaneous decodeAudioData calls ):
 	const sampleFreqs: Array<string> = ["110", "220", "440", "880"];
-	for (let i = 0; i < sampleFreqs.length; i++) {
-		const url: string = `sounds/${name}${sampleFreqs[i]}.mp3`;
-		const arrayBuf: ArrayBuffer = await (await fetch(url)).arrayBuffer();
+	const responses: Array<Promise<Response>> = sampleFreqs.map(freq => fetch(`sounds/${name}${freq}.mp3`));
+	// It seems audioContext doesn't cope with simultaneous decodeAudioData calls ):
+	for (let i = 0; i < responses.length; i++) {
+		const arrayBuf: ArrayBuffer = await (await responses[i]).arrayBuffer();
 		try {
 			const audioBuf: AudioBuffer = await notUndefined(settings.audioContext).decodeAudioData(arrayBuf);
 			notUndefined(settings.sampleBuffer)[i] = audioBuf;
