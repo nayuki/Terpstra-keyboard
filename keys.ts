@@ -26,15 +26,11 @@ class Point {
 	}
 	
 	public plus(p: Point): Point {
-		const x: number = this.x + p.x;
-		const y: number = this.y + p.y;
-		return new Point(x, y);
+		return new Point(this.x + p.x, this.y + p.y);
 	}
 	
 	public minus(p: Point): Point {
-		const x: number = this.x - p.x;
-		const y: number = this.y - p.y;
-		return new Point(x, y);
+		return new Point(this.x - p.x, this.y - p.y);
 	}
 }
 
