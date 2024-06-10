@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<title>Terpstra Keyboard WebApp</title>
 		
-		<meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, target-densitydpi=device-dpi">
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-		<meta name="author" content="James Fenn">
+		<meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, target-densitydpi=device-dpi"/>
+		<meta name="apple-mobile-web-app-capable" content="yes"/>
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+		<meta name="author" content="James Fenn"/>
 		
-		<link rel="stylesheet" href="normalize.css">
-		<link rel="stylesheet" href="skeleton.css">
-		<link rel="stylesheet" href="terpstra-style.css">
+		<link rel="stylesheet" href="normalize.css"/>
+		<link rel="stylesheet" href="skeleton.css"/>
+		<link rel="stylesheet" href="terpstra-style.css"/>
 		
 		<script src="QueryData.js"></script>
 		<script src="jscolor.js"></script>
@@ -22,7 +22,7 @@
 			<div class="container">
 				<h2><a href="http://terpstrakeyboard.com/">Terpstra Keyboard</a> <a href="http://terpstrakeyboard.com/play-it-now/">WebApp</a></h2>
 				<div class="row">
-					<img alt="" src="1x1.png">
+					<img alt="" src="1x1.png"/>
 				</div>
 				
 				<form id="settingsForm">
@@ -71,23 +71,23 @@
 								</select>
 								
 								<label>Fundamental (Hz)</label>
-								<input id="fundamental" type="number" step="any" min="0.015625" max="16384" value="256" onchange="changeURL();noPreset();" class="u-full-width">
+								<input id="fundamental" type="number" step="any" min="0.015625" max="16384" value="256" onchange="changeURL();noPreset();" class="u-full-width"/>
 							</div>
 							
 							<div class="u-half-width">
 								<label>Right Facing Steps</label>
-								<input id="rSteps" type="number" min="-1220" max="1220" value="4" onchange="changeURL();noPreset();" class="u-full-width">
+								<input id="rSteps" type="number" min="-1220" max="1220" value="4" onchange="changeURL();noPreset();" class="u-full-width"/>
 								<label>Up/Right Facing Steps</label>
-								<input id="urSteps" type="number" min="-1220" max="1220" value="7" onchange="changeURL();noPreset();" class="u-full-width">
+								<input id="urSteps" type="number" min="-1220" max="1220" value="7" onchange="changeURL();noPreset();" class="u-full-width"/>
 							</div>
 						</div>
 						
 						<div class="one-half column thincol-parent">
 							<div class="u-half-width rpad">
 								<label>Hex Size (pixels)</label>
-								<input id="hexSize" type="number" step="any" min="20" max="1000" value="50" onchange="changeURL();noPreset();" class="u-full-width">
+								<input id="hexSize" type="number" step="any" min="20" max="1000" value="50" onchange="changeURL();noPreset();" class="u-full-width"/>
 								<label>Rotation (degrees)</label>
-								<input id="rotation" type="number" step="any" min="0" max="360" value="343.897886248" onchange="changeURL();noPreset();" class="u-full-width">
+								<input id="rotation" type="number" step="any" min="0" max="360" value="343.897886248" onchange="changeURL();noPreset();" class="u-full-width"/>
 							</div>
 							
 							<div class="u-half-width">
@@ -120,15 +120,15 @@
 									</optgroup>
 								</select>
 								<label>
-									<input id="enum" type="checkbox" name="number_or_name" value="fnord" onchange="hideRevealNames();noPreset();">
+									<input id="enum" type="checkbox" name="number_or_name" value="fnord" onchange="hideRevealNames();noPreset();"/>
 									<span class="label-body">Enumerate Scale</span>
 								</label>
 								<label>
-									<input id="spectrum_colors" type="checkbox" name="spectrum_colors" value="fnord" onchange="hideRevealColors();noPreset();">
+									<input id="spectrum_colors" type="checkbox" name="spectrum_colors" value="fnord" onchange="hideRevealColors();noPreset();"/>
 									<span class="label-body">Use Spectrum Colors</span>
 								</label>
 								<label>
-									<input id="no_labels" type="checkbox" name="no_labels" value="fnord" onchange="hideRevealEnum();noPreset();">
+									<input id="no_labels" type="checkbox" name="no_labels" value="fnord" onchange="hideRevealEnum();noPreset();"/>
 									<span class="label-body">Blank Keys (No labels)</span>
 								</label>
 							</div>
@@ -136,7 +136,7 @@
 					</div>
 					
 					<div class="row">
-						<img alt="" src="1x1.png" style="margin: 1.5%">
+						<img alt="" src="1x1.png" style="margin: 1.5%"/>
 					</div>
 					
 					<div class="row">
@@ -172,7 +172,7 @@
 						<div class="one-half column thincol-parent">
 							<div class="u-half-width rpad">
 								<label id="numberLabel" style="display: block;">Steps To Equivalence Interval</label>
-								<input id="equivSteps" type="number" min="1" max="999" value="" onchange="changeURL();noPreset();" style="display: block;" class="u-full-width">
+								<input id="equivSteps" type="number" min="1" max="999" value="" onchange="changeURL();noPreset();" style="display: block;" class="u-full-width"/>
 								<label id="namesLabel" style="display: none;">Note Names</label>
 								<textarea id="names" onchange="changeURL();noPreset();" class="iosscrollable u-full-width" rows="12" style="display: none;">R
 22/21
@@ -195,7 +195,7 @@
 							
 							<div class="u-half-width">
 								<label id="fundamental_colorLabel" style="display: none;">Fundamental Color</label>
-								<input type="text" id="fundamental_color" style="display: none;" class="jscolor u-full-width" value="#55ff55">
+								<input type="text" id="fundamental_color" style="display: none;" class="jscolor u-full-width" value="#55ff55"/>
 								<label id="note_colorsLabel">Color Layout</label>
 								<textarea id="note_colors" onchange="changeURL();noPreset();" class="iosscrollable u-full-width" rows="12">47A2FF
 FFE496
@@ -217,8 +217,8 @@ FFC37D
 							</div>
 						</div>
 					</div>
-					<br>
-					<input name="Submit" type="submit" value="Make me a microtonal keyboard!">
+					<br/>
+					<input name="Submit" type="submit" value="Make me a microtonal keyboard!"/>
 				</form>
 			</div>
 			
@@ -229,7 +229,7 @@ FFC37D
 		
 		<canvas id="keyboard" tabindex="1" width="1897" height="936" style="display: none; height: 936px; width: 1897px; margin-top: -468px; margin-left: -948.5px;"></canvas>
 		
-		<img alt="Return to keyboard design" src="back.png" id="backButton" onclick="back()" style="display: none;">
+		<img alt="Return to keyboard design" src="back.png" id="backButton" onclick="back()" style="display: none;"/>
 		
 		<script src="keys.js"></script>
 	</body>
