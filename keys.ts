@@ -40,7 +40,7 @@ class Rgb8Color {
 	
 	public static fromCssHex(s: string): Rgb8Color {
 		if (s.startsWith("#"))
-			s = s.substr(1);
+			s = s.substring(1);
 		return new Rgb8Color(
 			parseInt(s.charAt(0) + s.charAt(1), 16),
 			parseInt(s.charAt(2) + s.charAt(3), 16),
@@ -1468,7 +1468,7 @@ function checkPreset(init: number): void {
 	const url_str: string = window.location.href;
 	
 	//first check for .htm as end of url and set the default preset (31ET)
-	if (url_str.substr(url_str.length - 4) == ".htm")
+	if (url_str.substring(url_str.length - 4) == ".htm")
 		mselect.value = mselect.options[init].value;
 	for (let i = 0; i < mselect.length; i++) {
 		if (url_str.indexOf(mselect.options[i].value) != -1) {
