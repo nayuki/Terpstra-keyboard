@@ -432,7 +432,7 @@ class ActiveHex {
 		if (!notUndefined(settings.sampleBuffer)[sampleNumber]) // Sample not yet loaded
 			return;
 		
-		source.buffer = notUndefined(settings.sampleBuffer)[sampleNumber]; // tell the source which sound to play
+		source.buffer = notUndefined(settings.sampleBuffer)[sampleNumber] ?? null; // tell the source which sound to play
 		source.playbackRate.value = freq / sampleFreq;
 		// Create a gain node.
 		var gainNode = notUndefined(settings.audioContext).createGain();
@@ -507,7 +507,7 @@ function resizeHandler(): void {
 	drawGrid();
 }
 
-let is_key_event_added;
+let is_key_event_added: number|undefined;
 
 function back(): void {
 	// Remove key listener
@@ -552,7 +552,10 @@ function goKeyboard() {
 	settings.equivSteps = parseInt(getInputById("equivSteps").value);
 	
 	settings.canvas = getElemById("keyboard", HTMLCanvasElement);
-	settings.context = settings.canvas.getContext("2d");
+	const ctx = settings.canvas.getContext("2d");
+	if (ctx === null)
+		throw new Error("Assertion error");
+	settings.context = ctx;
 	
 	settings.hexHeight = notUndefined(settings.hexSize) * 2;
 	settings.hexVert = settings.hexHeight * 3 / 4;
@@ -852,20 +855,28 @@ function mouseActive(e: MouseEvent): void {
 }
 
 function getPointerPosition(e: MouseEvent): Point {
-	var parentPosition = getPosition(e.currentTarget);
+	const target = e.currentTarget;
+	if (!(target instanceof HTMLElement))
+		throw new TypeError();
+	var parentPosition = getPosition(target);
 	var xPosition: number = e.clientX - parentPosition.x;
 	var yPosition: number = e.clientY - parentPosition.y;
 	return new Point(xPosition, yPosition);
 }
 
-function getPosition(element): {x:number, y:number} {
+function getPosition(element: HTMLElement): {x:number, y:number} {
 	var xPosition: number = 0;
 	var yPosition: number = 0;
 	
 	while (element) {
 		xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
 		yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
-		element = element.offsetParent;
+		const parent = element.offsetParent;
+		if (parent === null)
+			break;
+		if (!(parent instanceof HTMLElement))
+			throw new TypeError();
+		element = parent;
 	}
 	return {
 		x: xPosition,
@@ -873,7 +884,7 @@ function getPosition(element): {x:number, y:number} {
 	};
 }
 
-function handleTouch(e): void {
+function handleTouch(e: TouchEvent): void {
 	e.preventDefault();
 	if (notUndefined(settings.pressedKeys).length != 0 || settings.isMouseDown) {
 		settings.isTouchDown = false;
@@ -1260,7 +1271,7 @@ function loadSample(name: string, iteration: number): void {
 	//}
 }
 
-function onLoadError(e: Event): void {
+function onLoadError(e: any): void {
 	alert("Couldn't load sample");
 }
 
@@ -1270,7 +1281,7 @@ function tempAlert(msg: string, duration: number): void {
 	el.setAttribute("style", "position:absolute;top:40%;left:20%;background-color:white; font-size:25px;");
 	el.innerHTML = msg;
 	setTimeout(function() {
-		el.parentNode.removeChild(el);
+		el.remove();
 	}, duration);
 	document.body.appendChild(el);
 }
