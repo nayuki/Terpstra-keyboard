@@ -39,6 +39,23 @@ class Point {
 }
 
 
+
+class Rgb8Color {
+	
+	public constructor(
+		public readonly red: number,
+		public readonly green: number,
+		public readonly blue: number) {}
+	
+	
+	public toCssRgb(): string {
+		return `rgb(${this.red},${this.green},${this.blue})`;
+	}
+	
+}
+
+
+
 const keyCodeToCoords_mac: {[index:string]: Point} = {
 	27: new Point(-5, -3), // esc
 	112: new Point(-4, -3), // f1
@@ -1087,7 +1104,7 @@ function centsToColor(cents: number, pressed: boolean): string {
 			returnColor1[1] -= 90;
 		}
 		
-		return rgb(returnColor1[0], returnColor1[1], returnColor1[2]);
+		return new Rgb8Color(returnColor1[0], returnColor1[1], returnColor1[2]).toCssRgb();
 	}
 	
 	var fcolor: Array<number> = hex2rgb("#" + settings.fundamental_color);
@@ -1107,7 +1124,7 @@ function centsToColor(cents: number, pressed: boolean): string {
 	//setup text color
 	const {red, green, blue} = HSVtoRGB(h, s, v);
 	current_text_color = rgbToHex(red, green, blue);
-	return rgb(red, green, blue);
+	return new Rgb8Color(red, green, blue).toCssRgb();
 }
 
 function roundTowardZero(val: number): number {
@@ -1159,10 +1176,6 @@ function getHexCoordsAt(coords: Point): Point {
 	}
 	
 	return closestHex;
-}
-
-function rgb(r: number, g: number, b: number): string {
-	return "rgb(" + r + "," + g + "," + b + ")";
 }
 
 function HSVtoRGB(h: number, s: number, v: number): {red:number, green:number, blue:number} {
