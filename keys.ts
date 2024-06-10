@@ -195,31 +195,26 @@ checkPreset(16);
 // fill in form
 getHtmlById("settingsForm").onsubmit = goKeyboard;
 
-var getData = new QueryData(location.search, true);
-getInputById("fundamental").value = "fundamental" in getData ? getData.fundamental : 440;
-getInputById("rSteps").value = "right" in getData ? getData.right : 3;
-getInputById("urSteps").value = "upright" in getData ? getData.upright : 10;
-getInputById("hexSize").value = "size" in getData ? getData.size : 60;
-getInputById("rotation").value = "rotation" in getData ? getData.rotation : 343.897886248;
-getElemById("instrument", HTMLSelectElement).value = "instrument" in getData ? getData.instrument : "rhodes";
-getInputById("enum").checked = "enum" in getData ? JSON.parse(getData["enum"]) : false;
-getInputById("equivSteps").value = "equivSteps" in getData ? getData.equivSteps : 17;
-getInputById("spectrum_colors").checked = "spectrum_colors" in getData ? JSON.parse(getData.spectrum_colors) : false;
-getInputById("fundamental_color").value = "fundamental_color" in getData ? getData.fundamental_color : "#41ff2e";
-getInputById("no_labels").checked = "no_labels" in getData ? JSON.parse(getData.no_labels) : false;
+var getData: Map<string,string|Array<string>> = QueryData(location.search, true);
+getInputById("fundamental").value = mapGetMaybe(getData, "fundamental").map(v => v.toString()).unwrapOr("440");
+getInputById("rSteps").value = mapGetMaybe(getData, "right").map(v => v.toString()).unwrapOr("3");
+getInputById("urSteps").value = mapGetMaybe(getData, "upright").map(v => v.toString()).unwrapOr("10");
+getInputById("hexSize").value = mapGetMaybe(getData, "size").map(v => v.toString()).unwrapOr("60");
+getInputById("rotation").value = mapGetMaybe(getData, "rotation").map(v => v.toString()).unwrapOr("343.897886248");
+getElemById("instrument", HTMLSelectElement).value = mapGetMaybe(getData, "instrument").map(v => v.toString()).unwrapOr("rhodes");
+getInputById("enum").checked = mapGetMaybe(getData, "enum").map(v => JSON.parse(v.toString())).unwrapOr("false");
+getInputById("equivSteps").value = mapGetMaybe(getData, "equivSteps").map(v => v.toString()).unwrapOr("17");
+getInputById("spectrum_colors").checked = mapGetMaybe(getData, "spectrum_colors").map(v => JSON.parse(v.toString())).unwrapOr("false");
+getInputById("fundamental_color").value = mapGetMaybe(getData, "fundamental_color").map(v => v.toString()).unwrapOr("#41ff2e");
+getInputById("no_labels").checked = mapGetMaybe(getData, "no_labels").map(v => JSON.parse(v.toString())).unwrapOr("false");
 
 
 var global_pressed_interval: number;
 var current_text_color: string = "#000000";
 
-if ("scale" in getData)
-	getElemById("scale", HTMLTextAreaElement).value = getData.scale[0];
-
-if ("names" in getData)
-	getElemById("names", HTMLTextAreaElement).value = getData.names[0];
-
-if ("note_colors" in getData)
-	getElemById("note_colors", HTMLTextAreaElement).value = getData.note_colors[0];
+mapGetMaybe(getData, "scale").map(v => getElemById("scale", HTMLTextAreaElement).value = v[0]);
+mapGetMaybe(getData, "names").map(v => getElemById("names", HTMLTextAreaElement).value = v[0]);
+mapGetMaybe(getData, "note_colors").map(v => getElemById("note_colors", HTMLTextAreaElement).value = v[0]);
 
 hideRevealNames();
 hideRevealColors();
