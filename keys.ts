@@ -1014,8 +1014,8 @@ function goKeyboard() {
 					
 					if (settings.sustain == true) {
 						settings.sustain = false;
-						for (let note = 0; note < notUndefined(settings.sustainedNotes).length; note++)
-							notUndefined(settings.sustainedNotes)[note].noteOff();
+						for (let note of notUndefined(settings.sustainedNotes))
+							note.noteOff();
 						settings.sustainedNotes = [];
 						tempAlert("Sustain Off", 900);
 					} else {
@@ -1098,8 +1098,8 @@ function onKeyDown(e: KeyboardEvent): void {
 function onKeyUp(e: KeyboardEvent): void {
 	if (e.keyCode == 32) { // Spacebar
 		settings.sustain = false;
-		for (let note = 0; note < notUndefined(settings.sustainedNotes).length; note++)
-			notUndefined(settings.sustainedNotes)[note].noteOff();
+		for (let note of notUndefined(settings.sustainedNotes))
+			note.noteOff();
 		settings.sustainedNotes = [];
 	} else if (!settings.isMouseDown && !settings.isTouchDown
 			&& (e.keyCode in notUndefined(settings.keyCodeToCoords))) {
@@ -1197,17 +1197,17 @@ function handleTouch(e: TouchEvent): void {
 	}
 	settings.isTouchDown = e.targetTouches.length != 0;
 	
-	for (let i = 0; i < notUndefined(settings.activeHexObjects).length; i++)
-		notUndefined(settings.activeHexObjects)[i].release = true;
+	for (let hex of notUndefined(settings.activeHexObjects))
+		hex.release = true;
 	
 	for (let i = 0; i < e.targetTouches.length; i++) {
 		const coords: Point = getHexCoordsAt(new Point(e.targetTouches[i].pageX - notUndefined(settings.canvas).offsetLeft,
 			e.targetTouches[i].pageY - notUndefined(settings.canvas).offsetTop));
 		let found: boolean = false;
 		
-		for (let j = 0; j < notUndefined(settings.activeHexObjects).length; j++) {
-			if (coords.equals(notUndefined(settings.activeHexObjects)[j].coords)) {
-				notUndefined(settings.activeHexObjects)[j].release = false;
+		for (let hex of notUndefined(settings.activeHexObjects)) {
+			if (coords.equals(hex.coords)) {
+				hex.release = false;
 				found = true;
 			}
 		}

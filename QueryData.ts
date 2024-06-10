@@ -46,10 +46,10 @@ function QueryData(queryString?: string, preserveDuplicates?: boolean): Map<stri
 		const queryComponents: Array<string> = queryString.split(/[&;]/g);
 		
 		// loop over the query string components
-		for (let index = 0; index < queryComponents.length; index++) {
+		for (const component of queryComponents) {
 			
 			// extract this component's key-value pair
-			const keyValuePair: Array<string> = queryComponents[index].split("=");
+			const keyValuePair: Array<string> = component.split("=");
 			const key: string          = decodeURIComponent(keyValuePair[0]);
 			const value: string        = keyValuePair.length > 1
 			                 ? decodeURIComponent(keyValuePair[1])
