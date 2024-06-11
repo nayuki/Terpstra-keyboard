@@ -419,7 +419,7 @@ const codeToCoords_mac = {
 	"BracketRight": new Point(6, -1), // ]
 };
 let codeToCoords: {[index:string]: Point} = {};
-const keyCodeToCoords = {};
+const keyCodeToCoords: {[index:number]: Point} = {};
 
 const codeToCoords_dell = {
 	"Backquote": new Point(-6, -2), // `
@@ -661,7 +661,7 @@ function goKeyboard() {
 	// Set up synth
 	
 	let sampleBuffer: Array<AudioBuffer|undefined> = [undefined, undefined, undefined];
-	const instrumentOption = instrumentSelect.selectedIndex;
+	const instrumentOption: number = instrumentSelect.selectedIndex;
 	const instruments: Array<{fileName:string, fade:number}> = [
 		{fileName: "piano", fade: 0.1},
 		{fileName: "harpsichord", fade: 0.2},
@@ -1055,7 +1055,7 @@ function goKeyboard() {
 			sustainedNotes = [];
 		} else if (!isMouseDown && !isTouchDown
 				&& e.keyCode in keyCodeToCoords) {
-			const keyIndex = pressedKeys.indexOf(e.keyCode);
+			const keyIndex: number = pressedKeys.indexOf(e.keyCode);
 			if (keyIndex != -1) {
 				pressedKeys.splice(keyIndex, 1);
 				const coords: Point = keyCodeToCoords[e.keyCode];
