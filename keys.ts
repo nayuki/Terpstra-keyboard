@@ -1320,7 +1320,7 @@ function drawHex(p: Point, c: string): void {
 		context.font = "12pt Arial";
 		context.textAlign = "center";
 		context.textBaseline = "middle";
-		context.fillText(equivMultiple.toString(), 0, 0);
+		context.fillText(equivMultiple.toString().replace(/-/, "\u2212"), 0, 0);
 	}
 	
 	context.restore();
