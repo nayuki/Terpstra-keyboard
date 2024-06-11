@@ -650,30 +650,6 @@ let settings: {
 	urSteps?: number,
 } = {};
 
-function parseScale(): void {
-	settings.scale = [];
-	for (const line of scaleTextarea.value.split("\n")) {
-		if (line.match(/^[1234567890.\s/]+$/) && !line.match(/^\s+$/)) {
-			if (line.match(/\//)) {
-				// ratio
-				const nd: Array<string> = line.split("/");
-				const ratio: number = 1200 * Math.log(parseInt(nd[0]) / parseInt(nd[1])) / Math.log(2);
-				notUndefined(settings.scale).push(ratio);
-			} else {
-				if (line.match(/\./))
-				// cents
-					notUndefined(settings.scale).push(parseFloat(line));
-			}
-		}
-	}
-	settings.equivInterval = settings.scale.pop();
-	settings.scale.unshift(0);
-}
-
-function parseScaleColors(): void {
-	settings.keycolors = noteColorsTextarea.value.split("\n");
-}
-
 function calculateRotationMatrix(rotation: number, center: Point): Array<number> {
 	let m: Array<number> = [];
 	m[0] = Math.cos(rotation);
@@ -840,8 +816,27 @@ function goKeyboard() {
 	settings.urSteps = settings.rSteps - parseFloat(urStepsInput.value); // Adjust to different coordinate system
 	settings.hexSize = parseFloat(hexSizeInput.value);
 	settings.rotation = (parseFloat(rotationInput.value) * 2 * Math.PI) / 360;
-	parseScale();
-	parseScaleColors();
+	
+	settings.scale = [];
+	for (const line of scaleTextarea.value.split("\n")) {
+		if (line.match(/^[1234567890.\s/]+$/) && !line.match(/^\s+$/)) {
+			if (line.match(/\//)) {
+				// ratio
+				const nd: Array<string> = line.split("/");
+				const ratio: number = 1200 * Math.log(parseInt(nd[0]) / parseInt(nd[1])) / Math.log(2);
+				notUndefined(settings.scale).push(ratio);
+			} else {
+				if (line.match(/\./))
+				// cents
+					notUndefined(settings.scale).push(parseFloat(line));
+			}
+		}
+	}
+	settings.equivInterval = settings.scale.pop();
+	settings.scale.unshift(0);
+	
+	settings.keycolors = noteColorsTextarea.value.split("\n");
+	
 	settings.names = namesTextarea.value.split("\n");
 	settings["enum"] = enumInput.checked;
 	settings.equivSteps = parseInt(equivStepsInput.value);
