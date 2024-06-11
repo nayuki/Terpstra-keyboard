@@ -11,11 +11,6 @@ function initialize(): void {
 		}
 	});
 	
-	//check to see if we have params
-	let initKeyboardOnload: boolean = true;
-	if (decodeURIComponent(window.location.search) == "")
-		initKeyboardOnload = false;
-	
 	//check\set preset
 	checkPreset(16);
 	// fill in form
@@ -42,11 +37,12 @@ function initialize(): void {
 	hideRevealColors();
 	hideRevealEnum();
 	
-	//initialize keyboard on load
-	if (initKeyboardOnload) {
+	//check to see if we have params
+	if (decodeURIComponent(window.location.search) != "") {
+		//initialize keyboard on load
 		//hide landing page
 		setElemVisible("landing-page", false);
-		setTimeout(() => goKeyboard(), 1500);
+		setTimeout(goKeyboard, 1500);
 	}
 }
 
