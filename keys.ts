@@ -622,7 +622,7 @@ function changeURL(): void {
 let settings: {
 	activeHexObjects?: Array<ActiveHex>,
 	centerpoint?: Point,
-	enum?: boolean,
+	enumerateScale?: boolean,
 	equivInterval?: number,
 	equivSteps?: number,
 	fundamental?: number,
@@ -838,7 +838,7 @@ function goKeyboard() {
 	settings.keycolors = noteColorsTextarea.value.split("\n");
 	
 	settings.names = namesTextarea.value.split("\n");
-	settings["enum"] = enumInput.checked;
+	settings.enumerateScale = enumInput.checked;
 	settings.equivSteps = parseInt(equivStepsInput.value);
 	
 	settings.hexHeight = notUndefined(settings.hexSize) * 2;
@@ -1304,14 +1304,14 @@ function drawHex(p: Point, c: string): void {
 	context.textBaseline = "middle";
 	
 	const note: number = p.x * notUndefined(settings.rSteps) + p.y * notUndefined(settings.urSteps);
-	const equivSteps: number = settings["enum"] ? notUndefined(settings.equivSteps) : notUndefined(settings.scale).length;
+	const equivSteps: number = settings.enumerateScale ? notUndefined(settings.equivSteps) : notUndefined(settings.scale).length;
 	const equivMultiple: number = Math.floor(note / equivSteps);
 	let reducedNote: number = note % equivSteps;
 	if (reducedNote < 0)
 		reducedNote += equivSteps;
 	
 	if (!settings.no_labels) {
-		const name: string = settings["enum"] ? "" + reducedNote : notUndefined(settings.names)[reducedNote];
+		const name: string = settings.enumerateScale ? "" + reducedNote : notUndefined(settings.names)[reducedNote];
 		if (name) {
 			context.save();
 			let scaleFactor: number = name.length > 3 ? 3 / name.length : 1;
