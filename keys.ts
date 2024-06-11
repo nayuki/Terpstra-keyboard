@@ -1129,27 +1129,22 @@ function getPointerPosition(e: MouseEvent): Point {
 	const target = e.currentTarget;
 	if (!(target instanceof HTMLElement))
 		throw new TypeError();
-	const parentPosition: Point = getPosition(target);
-	const xPosition: number = e.clientX - parentPosition.x;
-	const yPosition: number = e.clientY - parentPosition.y;
-	return new Point(xPosition, yPosition);
+	return new Point(e.clientX, e.clientY).minus(getPosition(target));
 }
 
 function getPosition(element: HTMLElement): Point {
-	let xPosition: number = 0;
-	let yPosition: number = 0;
-	
+	let position: Point = new Point(0, 0);
 	while (true) {
-		xPosition += element.offsetLeft - element.scrollLeft + element.clientLeft;
-		yPosition += element.offsetTop - element.scrollTop + element.clientTop;
+		position = position.plus(new Point(
+			element.offsetLeft - element.scrollLeft + element.clientLeft,
+			element.offsetTop - element.scrollTop + element.clientTop));
 		const parent = element.offsetParent;
 		if (parent === null)
-			break;
+			return position;
 		if (!(parent instanceof HTMLElement))
 			throw new TypeError();
 		element = parent;
 	}
-	return new Point(xPosition, yPosition);
 }
 
 function handleTouch(e: TouchEvent): void {
