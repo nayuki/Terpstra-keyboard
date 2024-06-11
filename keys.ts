@@ -1,13 +1,65 @@
 let volume: number = 1.4;
-window.addEventListener("keydown", (e: KeyboardEvent) => {
-	if (e.code == "ArrowDown") {//ctrl
-		e.preventDefault();
-		volume = Math.max(volume - 0.1, 0);
-	} else if (e.code == "ArrowUp") {
-		e.preventDefault();
-		volume = Math.max(volume + 0.1, 3);
+
+function initialize(): void {
+	window.addEventListener("keydown", (e: KeyboardEvent) => {
+		if (e.code == "ArrowDown") {//ctrl
+			e.preventDefault();
+			volume = Math.max(volume - 0.1, 0);
+		} else if (e.code == "ArrowUp") {
+			e.preventDefault();
+			volume = Math.max(volume + 0.1, 3);
+		}
+	});
+	
+	//check to see if we have params
+	let initKeyboardOnload: boolean = true;
+	if (decodeURIComponent(window.location.search) == "")
+		initKeyboardOnload = false;
+	
+	//check\set preset
+	checkPreset(16);
+	// fill in form
+	getHtmlById("settingsForm").onsubmit = goKeyboard;
+	
+	const getData: Map<string,string|Array<string>> = QueryData(location.search, true);
+	fundamentalInput.value = mapGetMaybe(getData, "fundamental").map(v => v.toString()).unwrapOr("440");
+	rStepsInput.value = mapGetMaybe(getData, "right").map(v => v.toString()).unwrapOr("3");
+	urStepsInput.value = mapGetMaybe(getData, "upright").map(v => v.toString()).unwrapOr("10");
+	hexSizeInput.value = mapGetMaybe(getData, "size").map(v => v.toString()).unwrapOr("60");
+	rotationInput.value = mapGetMaybe(getData, "rotation").map(v => v.toString()).unwrapOr("343.897886248");
+	instrumentSelect.value = mapGetMaybe(getData, "instrument").map(v => v.toString()).unwrapOr("rhodes");
+	enumInput.checked = mapGetMaybe(getData, "enum").map(v => JSON.parse(v.toString())).unwrapOr("false");
+	equivStepsInput.value = mapGetMaybe(getData, "equivSteps").map(v => v.toString()).unwrapOr("17");
+	spectrumColorsInput.checked = mapGetMaybe(getData, "spectrum_colors").map(v => JSON.parse(v.toString())).unwrapOr("false");
+	fundamentalColorInput.value = mapGetMaybe(getData, "fundamental_color").map(v => v.toString()).unwrapOr("#41ff2e");
+	noLabelsInput.checked = mapGetMaybe(getData, "no_labels").map(v => JSON.parse(v.toString())).unwrapOr("false");
+	
+	mapGetMaybe(getData, "scale").map(v => scaleTextarea.value = v[0]);
+	mapGetMaybe(getData, "names").map(v => namesTextarea.value = v[0]);
+	mapGetMaybe(getData, "note_colors").map(v => noteColorsTextarea.value = v[0]);
+	
+	hideRevealNames();
+	hideRevealColors();
+	hideRevealEnum();
+	
+	window.addEventListener("load", init, false);
+	
+	function init(): void {
+		try {
+			settings.audioContext = new AudioContext();
+		} catch (e) {
+			alert("Web Audio API is not supported in this browser");
+		}
 	}
-});
+	
+	//initialize keyboard on load
+	if (initKeyboardOnload) {
+		//hide landing page
+		setElemVisible("landing-page", false);
+		setTimeout(() => goKeyboard(), 1500);
+	}
+}
+
 
 
 class Point {
@@ -481,11 +533,6 @@ const codeToCoords_dell = {
 })();
 
 
-//check to see if we have params
-let initKeyboardOnload: boolean = true;
-if (decodeURIComponent(window.location.search) == "")
-	initKeyboardOnload = false;
-
 // HTML elements
 let fundamentalInput: HTMLInputElement = getInputById("fundamental");
 let rStepsInput: HTMLInputElement = getInputById("rSteps");
@@ -502,35 +549,9 @@ let scaleTextarea: HTMLTextAreaElement = getElemById("scale", HTMLTextAreaElemen
 let namesTextarea: HTMLTextAreaElement = getElemById("names", HTMLTextAreaElement);
 let noteColorsTextarea: HTMLTextAreaElement = getElemById("note_colors", HTMLTextAreaElement);
 
-//check\set preset
-checkPreset(16);
-// fill in form
-getHtmlById("settingsForm").onsubmit = goKeyboard;
-
-const getData: Map<string,string|Array<string>> = QueryData(location.search, true);
-fundamentalInput.value = mapGetMaybe(getData, "fundamental").map(v => v.toString()).unwrapOr("440");
-rStepsInput.value = mapGetMaybe(getData, "right").map(v => v.toString()).unwrapOr("3");
-urStepsInput.value = mapGetMaybe(getData, "upright").map(v => v.toString()).unwrapOr("10");
-hexSizeInput.value = mapGetMaybe(getData, "size").map(v => v.toString()).unwrapOr("60");
-rotationInput.value = mapGetMaybe(getData, "rotation").map(v => v.toString()).unwrapOr("343.897886248");
-instrumentSelect.value = mapGetMaybe(getData, "instrument").map(v => v.toString()).unwrapOr("rhodes");
-enumInput.checked = mapGetMaybe(getData, "enum").map(v => JSON.parse(v.toString())).unwrapOr("false");
-equivStepsInput.value = mapGetMaybe(getData, "equivSteps").map(v => v.toString()).unwrapOr("17");
-spectrumColorsInput.checked = mapGetMaybe(getData, "spectrum_colors").map(v => JSON.parse(v.toString())).unwrapOr("false");
-fundamentalColorInput.value = mapGetMaybe(getData, "fundamental_color").map(v => v.toString()).unwrapOr("#41ff2e");
-noLabelsInput.checked = mapGetMaybe(getData, "no_labels").map(v => JSON.parse(v.toString())).unwrapOr("false");
-
-
 let globalPressedInterval: number;
 let currentTextColor: Rgb8Color = new Rgb8Color(0, 0, 0);
 
-mapGetMaybe(getData, "scale").map(v => scaleTextarea.value = v[0]);
-mapGetMaybe(getData, "names").map(v => namesTextarea.value = v[0]);
-mapGetMaybe(getData, "note_colors").map(v => noteColorsTextarea.value = v[0]);
-
-hideRevealNames();
-hideRevealColors();
-hideRevealEnum();
 
 function hideRevealNames(): void {
 	const c: boolean = enumInput.checked;
@@ -1375,15 +1396,6 @@ function getHexCoordsAt(coords: Point): Point {
 	return closestHex;
 }
 
-window.addEventListener("load", init, false);
-
-function init(): void {
-	try {
-		settings.audioContext = new AudioContext();
-	} catch (e) {
-		alert("Web Audio API is not supported in this browser");
-	}
-}
 
 async function loadSamples(name: string): Promise<void> {
 	const sampleFreqs: Array<string> = ["110", "220", "440", "880"];
@@ -1473,9 +1485,4 @@ function notUndefined<T>(val: T|undefined): T {
 }
 
 
-//initialize keyboard on load
-if (initKeyboardOnload) {
-	//hide landing page
-	setElemVisible("landing-page", false);
-	setTimeout(() => goKeyboard(), 1500);
-}
+initialize();
