@@ -545,6 +545,13 @@ let namesTextarea: HTMLTextAreaElement = getElemById("names", HTMLTextAreaElemen
 let noteColorsTextarea: HTMLTextAreaElement = getElemById("note_colors", HTMLTextAreaElement);
 let canvas: HTMLCanvasElement = getElemById("keyboard", HTMLCanvasElement);
 
+let context: CanvasRenderingContext2D;
+{
+	const ctx = canvas.getContext("2d");
+	if (ctx === null)
+		throw new Error("Assertion error");
+	context = ctx;
+}
 let globalPressedInterval: number;
 let currentTextColor: Rgb8Color = new Rgb8Color(0, 0, 0);
 
@@ -615,7 +622,6 @@ function changeURL(): void {
 let settings: {
 	activeHexObjects?: Array<ActiveHex>,
 	centerpoint?: Point,
-	context?: CanvasRenderingContext2D,
 	enum?: boolean,
 	equivInterval?: number,
 	equivSteps?: number,
@@ -783,13 +789,13 @@ function resizeHandler(): void {
 	// Rotate about it
 	
 	if (settings.rotationMatrix)
-		notUndefined(settings.context).restore();
-	notUndefined(settings.context).save();
+		context.restore();
+	context.save();
 	
 	settings.rotationMatrix = calculateRotationMatrix(-notUndefined(settings.rotation), settings.centerpoint);
 	
 	const m: Array<number> = calculateRotationMatrix(notUndefined(settings.rotation), settings.centerpoint);
-	notUndefined(settings.context).setTransform(m[0], m[1], m[2], m[3], m[4], m[5]);
+	context.setTransform(m[0], m[1], m[2], m[3], m[4], m[5]);
 	
 	// Redraw Grid
 	
@@ -839,11 +845,6 @@ function goKeyboard() {
 	settings.names = namesTextarea.value.split("\n");
 	settings["enum"] = enumInput.checked;
 	settings.equivSteps = parseInt(equivStepsInput.value);
-	
-	const ctx = canvas.getContext("2d");
-	if (ctx === null)
-		throw new Error("Assertion error");
-	settings.context = ctx;
 	
 	settings.hexHeight = notUndefined(settings.hexSize) * 2;
 	settings.hexVert = settings.hexHeight * 3 / 4;
@@ -1238,7 +1239,6 @@ function drawHex(p: Point, c: string): void {
 	
 	// Draw filled hex
 	
-	let context = notUndefined(settings.context);
 	context.beginPath();
 	context.moveTo(x[0], y[0]);
 	for (let i = 1; i < 6; i++)
