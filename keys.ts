@@ -572,26 +572,26 @@ function hideRevealEnum(): void {
 
 
 function changeURL(): void {
-	let url: string = window.location.pathname + "?";
-	// add fundamental, right, upright, size
-	
-	url += "fundamental=" + fundamentalInput.value +
-		"&right=" + rStepsInput.value +
-		"&upright=" + urStepsInput.value +
-		"&size=" + hexSizeInput.value +
-		"&rotation=" + rotationInput.value +
-		"&instrument=" + instrumentSelect.value +
-		"&enum=" + enumInput.checked +
-		"&equivSteps=" + equivStepsInput.value +
-		"&spectrum_colors=" + spectrumColorsInput.checked +
-		"&fundamental_color=" + fundamentalColorInput.value +
-		"&no_labels=" + noLabelsInput.checked +
-		"&scale=" + encodeURIComponent(scaleTextarea.value) +
-		"&names=" + encodeURIComponent(namesTextarea.value) +
-		"&note_colors=" + encodeURIComponent(noteColorsTextarea.value);
-	
 	// Find scl file description for the page title
 	document.title = scaleTextarea.value.split("\n").find(line => !line.match(/^\!/) && line.match(/[a-zA-Z]+/)) ?? "Terpstra Keyboard WebApp";
+	
+	const params: Array<[string,string]> = [
+		["fundamental", fundamentalInput.value],
+		["right", rStepsInput.value],
+		["upright", urStepsInput.value],
+		["size", hexSizeInput.value],
+		["rotation", rotationInput.value],
+		["instrument", instrumentSelect.value],
+		["enum", enumInput.checked.toString()],
+		["equivSteps", equivStepsInput.value],
+		["spectrum_colors", spectrumColorsInput.checked.toString()],
+		["fundamental_color", fundamentalColorInput.value],
+		["no_labels", noLabelsInput.checked.toString()],
+		["scale", encodeURIComponent(scaleTextarea.value)],
+		["names", encodeURIComponent(namesTextarea.value)],
+		["note_colors", encodeURIComponent(noteColorsTextarea.value)],
+	];
+	const url: string = window.location.pathname + "?" + params.map(kv => kv.join("=")).join("&");
 	window.history.replaceState({}, "", url);
 }
 
