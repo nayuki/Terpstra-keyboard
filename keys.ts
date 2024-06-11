@@ -337,51 +337,6 @@ function nameToHex(color: string): string {
 }
 
 
-function centsToColor(cents: number, pressed: boolean): string {
-	if (settings.spectrum_colors) {
-		const fcolor: Rgb8Color = Rgb8Color.fromCssHex("#" + settings.fundamental_color);
-		let fcolor1 = rgb2hsv(fcolor);
-		
-		let h: number = fcolor1.h / 360;
-		let s: number = fcolor1.s / 100;
-		let v: number = fcolor1.v / 100;
-		//const h = 145 / 360; // green
-		let reduced: number = (cents / 1200) % 1;
-		if (reduced < 0)
-			reduced += 1;
-		h = (reduced + h) % 1;
-		if (pressed)
-			v /= 2;
-		
-		//setup text color
-		currentTextColor = HSVtoRGB(h, s, v);
-		return currentTextColor.toCssRgb();
-		
-	} else {
-		let colorStr: string;
-		if (typeof notUndefined(settings.keycolors)[globalPressedInterval] === "undefined")
-			colorStr = "#EDEDE4";
-		else
-			colorStr = notUndefined(settings.keycolors)[globalPressedInterval];
-		
-		//convert color name to hex
-		currentTextColor = Rgb8Color.fromCssHex(nameToHex(colorStr));
-		
-		//convert the hex to rgb
-		let {red, green, blue} = currentTextColor;
-		
-		//darken for pressed key
-		if (pressed) {
-			red -= 90;
-			green -= 90;
-		}
-		
-		return new Rgb8Color(red, green, blue).toCssRgb();
-	}
-}
-
-
-
 const keyCodeToCoords_mac: {[index:string]: Point} = {
 	27: new Point(-5, -3), // esc
 	112: new Point(-4, -3), // f1
@@ -619,36 +574,6 @@ function changeURL(): void {
 	window.history.replaceState({}, "", url);
 }
 
-let settings: {
-	activeHexObjects?: Array<ActiveHex>,
-	centerpoint?: Point,
-	enumerateScale?: boolean,
-	equivInterval?: number,
-	equivSteps?: number,
-	fundamental?: number,
-	fundamental_color?: string,
-	hexHeight?: number,
-	hexSize?: number,
-	hexVert?: number,
-	hexWidth?: number,
-	isMouseDown?: boolean,
-	isTouchDown?: boolean,
-	keyCodeToCoords?: {[index:string]: Point},
-	keycolors?: Array<string>,
-	names?: Array<string>,
-	no_labels?: boolean,
-	pressedKeys?: Array<number|string>,
-	rotation?: number,
-	rotationMatrix?: Array<number>,
-	rSteps?: number,
-	sampleBuffer?: Array<AudioBuffer|undefined>,
-	sampleFadeout?: number,
-	scale?: Array<number>,
-	spectrum_colors?: boolean,
-	sustain?: boolean,
-	sustainedNotes?: Array<ActiveHex>,
-	urSteps?: number,
-} = {};
 
 function calculateRotationMatrix(rotation: number, center: Point): Array<number> {
 	let m: Array<number> = [];
@@ -669,135 +594,8 @@ function applyMatrixToPoint(m: Array<number>, p: Point): Point {
 }
 
 
-
-class ActiveHex {
-	
-	public release: boolean = false;
-	public freq: number = 440;
-	private source: AudioBufferSourceNode|null = null;
-	private gainNode: GainNode|null = null;
-	
-	public constructor(
-		public coords: Point) {}
-	
-	
-	public noteOn(cents: number): void {
-		const freq: number = notUndefined(settings.fundamental) * Math.pow(2, cents / 1200);
-		let source = audioContext.createBufferSource(); // creates a sound source
-		// Choose sample
-		let sampleFreq: number;
-		let sampleNumber: number;
-		if (freq <= 155) {
-			sampleFreq = 110;
-			sampleNumber = 0;
-		} else if (freq <= 311) {
-			sampleFreq = 220;
-			sampleNumber = 1;
-		} else if (freq <= 622) {
-			sampleFreq = 440;
-			sampleNumber = 2;
-		} else {
-			sampleFreq = 880;
-			sampleNumber = 3;
-		}
-		
-		if (!notUndefined(settings.sampleBuffer)[sampleNumber]) // Sample not yet loaded
-			return;
-		
-		source.buffer = notUndefined(settings.sampleBuffer)[sampleNumber] ?? null; // tell the source which sound to play
-		source.playbackRate.value = freq / sampleFreq;
-		// Create a gain node.
-		let gainNode = audioContext.createGain();
-		// Connect the source to the gain node.
-		source.connect(gainNode);
-		// Connect the gain node to the destination.
-		gainNode.connect(audioContext.destination);
-		source.connect(gainNode); // connect the source to the context's destination (the speakers)
-		gainNode.gain.value = volume;
-		source.start(0); // play the source now
-		this.source = source;
-		this.gainNode = gainNode;
-	}
-	
-	
-	public noteOff(): void {
-		if (settings.sustain)
-			notUndefined(settings.sustainedNotes).push(this);
-		else {
-			const fadeout: number = audioContext.currentTime + notUndefined(settings.sampleFadeout);
-			if (this.gainNode !== null) {
-				this.gainNode.gain.setTargetAtTime(0, audioContext.currentTime,
-					notUndefined(settings.sampleFadeout));
-			}
-			if (this.source !== null) {
-				// This is a terrible fudge. Please forgive me - it's late, I'm tired, I
-				// have a deadline, I've got other shit to do
-				this.source.stop(fadeout + 4);
-			}
-		}
-	}
-	
-}
-
-
-
-function resizeHandler(): void {
-	// Resize Inner and outer coordinates of canvas to preserve aspect ratio
-	
-	const newWidth: number = window.innerWidth;
-	const newHeight: number = window.innerHeight;
-	
-	canvas.style.height = newHeight + "px";
-	canvas.style.width = newWidth + "px";
-	
-	canvas.style.marginTop = (-newHeight / 2) + "px";
-	canvas.style.marginLeft = (-newWidth / 2) + "px";
-	
-	canvas.width = newWidth;
-	canvas.height = newHeight;
-	
-	// Find new centerpoint
-	
-	const centerX: number = newWidth / 2;
-	const centerY: number = newHeight / 2;
-	settings.centerpoint = new Point(centerX, centerY);
-	
-	// Rotate about it
-	
-	if (settings.rotationMatrix)
-		context.restore();
-	context.save();
-	
-	settings.rotationMatrix = calculateRotationMatrix(-notUndefined(settings.rotation), settings.centerpoint);
-	
-	const m: Array<number> = calculateRotationMatrix(notUndefined(settings.rotation), settings.centerpoint);
-	context.setTransform(m[0], m[1], m[2], m[3], m[4], m[5]);
-	
-	// Redraw Grid
-	
-	drawGrid();
-}
-
 let isKeyEventAdded: boolean = false;
 
-function back(): void {
-	// Remove key listener
-	window.removeEventListener("keydown", onKeyDown);
-	window.removeEventListener("keyup", onKeyUp);
-	isKeyEventAdded = false;
-	// Stop all active notes
-	while (notUndefined(settings.activeHexObjects).length > 0) {
-		const coords: Point = notUndefined(settings.activeHexObjects)[0].coords;
-		notUndefined(settings.activeHexObjects)[0].noteOff();
-		drawHex(coords, centsToColor(hexCoordsToCents(coords), false));
-		notUndefined(settings.activeHexObjects).splice(0, 1);
-	}
-	// UI change
-	setElemVisible("keyboard", false);
-	setElemVisible("backButton", false);
-	setElemVisible("landing-page", true);
-	document.body.style.overflow = "scroll";
-}
 
 function goKeyboard() {
 	changeURL();
@@ -811,43 +609,43 @@ function goKeyboard() {
 	
 	// set up settings constants
 	
-	settings.fundamental = parseFloat(fundamentalInput.value);
-	settings.rSteps = parseFloat(rStepsInput.value);
-	settings.urSteps = settings.rSteps - parseFloat(urStepsInput.value); // Adjust to different coordinate system
-	settings.hexSize = parseFloat(hexSizeInput.value);
-	settings.rotation = (parseFloat(rotationInput.value) * 2 * Math.PI) / 360;
+	const fundamental: number = parseFloat(fundamentalInput.value);
+	const rSteps: number = parseFloat(rStepsInput.value);
+	const urSteps: number = rSteps - parseFloat(urStepsInput.value); // Adjust to different coordinate system
+	const hexSize: number = parseFloat(hexSizeInput.value);
+	const rotation: number = (parseFloat(rotationInput.value) * 2 * Math.PI) / 360;
 	
-	settings.scale = [];
+	let scale: Array<number> = [];
 	for (const line of scaleTextarea.value.split("\n")) {
 		if (line.match(/^[1234567890.\s/]+$/) && !line.match(/^\s+$/)) {
 			if (line.match(/\//)) {
 				// ratio
 				const nd: Array<string> = line.split("/");
 				const ratio: number = 1200 * Math.log(parseInt(nd[0]) / parseInt(nd[1])) / Math.log(2);
-				notUndefined(settings.scale).push(ratio);
+				scale.push(ratio);
 			} else {
 				if (line.match(/\./))
 				// cents
-					notUndefined(settings.scale).push(parseFloat(line));
+					scale.push(parseFloat(line));
 			}
 		}
 	}
-	settings.equivInterval = settings.scale.pop();
-	settings.scale.unshift(0);
+	const equivInterval: number = notUndefined(scale.pop());
+	scale.unshift(0);
 	
-	settings.keycolors = noteColorsTextarea.value.split("\n");
+	const keycolors: Array<string> = noteColorsTextarea.value.split("\n");
 	
-	settings.names = namesTextarea.value.split("\n");
-	settings.enumerateScale = enumInput.checked;
-	settings.equivSteps = parseInt(equivStepsInput.value);
+	const names: Array<string> = namesTextarea.value.split("\n");
+	const enumerateScale: boolean = enumInput.checked;
+	const equivSteps: number = parseInt(equivStepsInput.value);
 	
-	settings.hexHeight = notUndefined(settings.hexSize) * 2;
-	settings.hexVert = settings.hexHeight * 3 / 4;
-	settings.hexWidth = Math.sqrt(3) / 2 * settings.hexHeight;
+	const hexHeight: number = hexSize * 2;
+	const hexVert: number = hexHeight * 3 / 4;
+	const hexWidth: number = Math.sqrt(3) / 2 * hexHeight;
 	
-	settings.no_labels = noLabelsInput.checked;
-	settings.spectrum_colors = spectrumColorsInput.checked;
-	settings.fundamental_color = fundamentalColorInput.value;
+	const no_labels: boolean = noLabelsInput.checked;
+	const spectrum_colors: boolean = spectrumColorsInput.checked;
+	const fundamental_color: string = fundamentalColorInput.value;
 	
 	// Set up resize handler
 	
@@ -856,11 +654,13 @@ function goKeyboard() {
 	
 	//... and give it an initial call
 	
+	let rotationMatrix: Array<number> = [];
+	let centerpoint: Point = new Point(0, 0);
 	resizeHandler();
 	
 	// Set up synth
 	
-	settings.sampleBuffer = [undefined, undefined, undefined];
+	let sampleBuffer: Array<AudioBuffer|undefined> = [undefined, undefined, undefined];
 	const instrumentOption = instrumentSelect.selectedIndex;
 	const instruments: Array<{fileName:string, fade:number}> = [
 		{fileName: "piano", fade: 0.1},
@@ -889,19 +689,21 @@ function goKeyboard() {
 	//console.log(instruments[instrumentOption]);
 	
 	loadSamples(instruments[instrumentOption].fileName);
-	settings.sampleFadeout = instruments[instrumentOption].fade;
+	const sampleFadeout: number = instruments[instrumentOption].fade;
 	
 	// Set up keyboard, touch and mouse event handlers
 	
-	settings.sustain = false;
-	settings.sustainedNotes = [];
+	let sustain: boolean = false;
+	let sustainedNotes: Array<ActiveHex> = [];
 	//canvas.addEventListener("keydown", onKeyDown, false); // Firefox isn't firing :(
 	//canvas.addEventListener("keyup", onKeyUp, false);
 	
+	let pressedKeys: Array<number|string> = [];
+	
 	if (!isKeyEventAdded) {
 		isKeyEventAdded = true;
-		settings.pressedKeys = [];
-		settings.keyCodeToCoords = keyCodeToCoords; /*{
+		pressedKeys = [];
+		/*{
 			49: new Point(-5, -2), // 1
 			50: new Point(-4, -2), // 2
 			51: new Point(-3, -2), // 3
@@ -989,14 +791,14 @@ function goKeyboard() {
 				if (lastShakeCheck - lastShakeCount >= 3) {
 					lastShakeCount = lastShakeCheck;
 					
-					if (settings.sustain == true) {
-						settings.sustain = false;
-						for (let note of notUndefined(settings.sustainedNotes))
+					if (sustain == true) {
+						sustain = false;
+						for (let note of sustainedNotes)
 							note.noteOff();
-						settings.sustainedNotes = [];
+						sustainedNotes = [];
 						tempAlert("Sustain Off", 900);
 					} else {
-						settings.sustain = true;
+						sustain = true;
 						tempAlert("Sustain On", 900);
 					}
 				}
@@ -1011,128 +813,545 @@ function goKeyboard() {
 	
 	//
 	
-	settings.activeHexObjects = [];
-	settings.isTouchDown = false;
+	let activeHexObjects: Array<ActiveHex> = [];
+	let isTouchDown: boolean = false;
 	canvas.addEventListener("touchstart", handleTouch, false);
 	canvas.addEventListener("touchend", handleTouch, false);
 	canvas.addEventListener("touchmove", handleTouch, false);
 	
-	settings.isMouseDown = false;
+	let isMouseDown: boolean = false;
 	canvas.addEventListener("mousedown", (e) => {
-		if (notUndefined(settings.pressedKeys).length != 0 || settings.isTouchDown)
+		if (pressedKeys.length != 0 || isTouchDown)
 			return;
-		settings.isMouseDown = true;
+		isMouseDown = true;
 		canvas.addEventListener("mousemove", mouseActive, false);
 		mouseActive(e);
 	}, false);
 	
 	canvas.addEventListener("mouseup", (e) => {
-		settings.isMouseDown = false;
-		if (notUndefined(settings.pressedKeys).length != 0 || settings.isTouchDown)
+		isMouseDown = false;
+		if (pressedKeys.length != 0 || isTouchDown)
 			return;
 		canvas.removeEventListener("mousemove", mouseActive);
-		if (notUndefined(settings.activeHexObjects).length > 0) {
-			const coords: Point = notUndefined(settings.activeHexObjects)[0].coords;
-			notUndefined(settings.activeHexObjects)[0].noteOff();
+		if (activeHexObjects.length > 0) {
+			const coords: Point = activeHexObjects[0].coords;
+			activeHexObjects[0].noteOff();
 			drawHex(coords, centsToColor(hexCoordsToCents(coords), false));
-			notUndefined(settings.activeHexObjects).pop();
+			activeHexObjects.pop();
 		}
 	}, false);
+	
+	
+	function centsToColor(cents: number, pressed: boolean): string {
+		if (spectrum_colors) {
+			const fcolor: Rgb8Color = Rgb8Color.fromCssHex("#" + fundamental_color);
+			let fcolor1 = rgb2hsv(fcolor);
+			
+			let h: number = fcolor1.h / 360;
+			let s: number = fcolor1.s / 100;
+			let v: number = fcolor1.v / 100;
+			//const h = 145 / 360; // green
+			let reduced: number = (cents / 1200) % 1;
+			if (reduced < 0)
+				reduced += 1;
+			h = (reduced + h) % 1;
+			if (pressed)
+				v /= 2;
+			
+			//setup text color
+			currentTextColor = HSVtoRGB(h, s, v);
+			return currentTextColor.toCssRgb();
+			
+		} else {
+			let colorStr: string;
+			if (typeof keycolors[globalPressedInterval] === "undefined")
+				colorStr = "#EDEDE4";
+			else
+				colorStr = keycolors[globalPressedInterval];
+			
+			//convert color name to hex
+			currentTextColor = Rgb8Color.fromCssHex(nameToHex(colorStr));
+			
+			//convert the hex to rgb
+			let {red, green, blue} = currentTextColor;
+			
+			//darken for pressed key
+			if (pressed) {
+				red -= 90;
+				green -= 90;
+			}
+			
+			return new Rgb8Color(red, green, blue).toCssRgb();
+		}
+	}
+	
+	
+	
+	class ActiveHex {
+		
+		public release: boolean = false;
+		public freq: number = 440;
+		private source: AudioBufferSourceNode|null = null;
+		private gainNode: GainNode|null = null;
+		
+		public constructor(
+			public coords: Point) {}
+		
+		
+		public noteOn(cents: number): void {
+			const freq: number = fundamental * Math.pow(2, cents / 1200);
+			let source = audioContext.createBufferSource(); // creates a sound source
+			// Choose sample
+			let sampleFreq: number;
+			let sampleNumber: number;
+			if (freq <= 155) {
+				sampleFreq = 110;
+				sampleNumber = 0;
+			} else if (freq <= 311) {
+				sampleFreq = 220;
+				sampleNumber = 1;
+			} else if (freq <= 622) {
+				sampleFreq = 440;
+				sampleNumber = 2;
+			} else {
+				sampleFreq = 880;
+				sampleNumber = 3;
+			}
+			
+			if (!sampleBuffer[sampleNumber]) // Sample not yet loaded
+				return;
+			
+			source.buffer = sampleBuffer[sampleNumber] ?? null; // tell the source which sound to play
+			source.playbackRate.value = freq / sampleFreq;
+			// Create a gain node.
+			let gainNode = audioContext.createGain();
+			// Connect the source to the gain node.
+			source.connect(gainNode);
+			// Connect the gain node to the destination.
+			gainNode.connect(audioContext.destination);
+			source.connect(gainNode); // connect the source to the context's destination (the speakers)
+			gainNode.gain.value = volume;
+			source.start(0); // play the source now
+			this.source = source;
+			this.gainNode = gainNode;
+		}
+		
+		
+		public noteOff(): void {
+			if (sustain)
+				sustainedNotes.push(this);
+			else {
+				const fadeout: number = audioContext.currentTime + sampleFadeout;
+				if (this.gainNode !== null) {
+					this.gainNode.gain.setTargetAtTime(0, audioContext.currentTime,
+						sampleFadeout);
+				}
+				if (this.source !== null) {
+					// This is a terrible fudge. Please forgive me - it's late, I'm tired, I
+					// have a deadline, I've got other shit to do
+					this.source.stop(fadeout + 4);
+				}
+			}
+		}
+		
+	}
+	
+	
+	
+	function resizeHandler(): void {
+		// Resize Inner and outer coordinates of canvas to preserve aspect ratio
+		
+		const newWidth: number = window.innerWidth;
+		const newHeight: number = window.innerHeight;
+		
+		canvas.style.height = newHeight + "px";
+		canvas.style.width = newWidth + "px";
+		
+		canvas.style.marginTop = (-newHeight / 2) + "px";
+		canvas.style.marginLeft = (-newWidth / 2) + "px";
+		
+		canvas.width = newWidth;
+		canvas.height = newHeight;
+		
+		// Find new centerpoint
+		
+		const centerX: number = newWidth / 2;
+		const centerY: number = newHeight / 2;
+		centerpoint = new Point(centerX, centerY);
+		
+		// Rotate about it
+		
+		if (rotationMatrix)
+			context.restore();
+		context.save();
+		
+		rotationMatrix = calculateRotationMatrix(-rotation, centerpoint);
+		
+		const m: Array<number> = calculateRotationMatrix(rotation, centerpoint);
+		context.setTransform(m[0], m[1], m[2], m[3], m[4], m[5]);
+		
+		// Redraw Grid
+		
+		drawGrid();
+	}
+	
+	
+	function back(): void {
+		// Remove key listener
+		window.removeEventListener("keydown", onKeyDown);
+		window.removeEventListener("keyup", onKeyUp);
+		isKeyEventAdded = false;
+		// Stop all active notes
+		while (activeHexObjects.length > 0) {
+			const coords: Point = activeHexObjects[0].coords;
+			activeHexObjects[0].noteOff();
+			drawHex(coords, centsToColor(hexCoordsToCents(coords), false));
+			activeHexObjects.splice(0, 1);
+		}
+		// UI change
+		setElemVisible("keyboard", false);
+		setElemVisible("backButton", false);
+		setElemVisible("landing-page", true);
+		document.body.style.overflow = "scroll";
+	}
+	
+	
+	function onKeyDown(e: KeyboardEvent): void {
+		e.preventDefault();//
+		
+		if (e.keyCode == 32) // Spacebar
+			sustain = true;
+		else if (!isMouseDown && !isTouchDown
+				&& e.keyCode in keyCodeToCoords
+				&& pressedKeys.indexOf(e.keyCode) == -1) {
+			pressedKeys.push(e.keyCode);
+			const coords: Point = keyCodeToCoords[e.keyCode];
+			const hex: ActiveHex = new ActiveHex(coords);
+			activeHexObjects.push(hex);
+			const cents: number = hexCoordsToCents(coords);
+			drawHex(coords, centsToColor(cents, true));
+			hex.noteOn(cents);
+		}
+		
+		//Hatsevich:
+		else if (!isMouseDown && !isTouchDown
+				&& e.code in codeToCoords
+				&& pressedKeys.indexOf(e.code) == -1) {
+			pressedKeys.push(e.code);
+			const coords: Point = codeToCoords[e.code];
+			const hex: ActiveHex = new ActiveHex(coords);
+			activeHexObjects.push(hex);
+			const cents: number = hexCoordsToCents(coords);
+			drawHex(coords, centsToColor(cents, true));
+			hex.noteOn(cents);
+		}
+	}
+	
+	function onKeyUp(e: KeyboardEvent): void {
+		if (e.keyCode == 32) { // Spacebar
+			sustain = false;
+			for (let note of sustainedNotes)
+				note.noteOff();
+			sustainedNotes = [];
+		} else if (!isMouseDown && !isTouchDown
+				&& e.keyCode in keyCodeToCoords) {
+			const keyIndex = pressedKeys.indexOf(e.keyCode);
+			if (keyIndex != -1) {
+				pressedKeys.splice(keyIndex, 1);
+				const coords: Point = keyCodeToCoords[e.keyCode];
+				drawHex(coords, centsToColor(hexCoordsToCents(coords), false));
+				const hexIndex: number = activeHexObjects.findIndex(
+					(hex: ActiveHex) => coords.equals(hex.coords));
+				if (hexIndex != -1) {
+					activeHexObjects[hexIndex].noteOff();
+					activeHexObjects.splice(hexIndex, 1);
+				}
+			}
+		}
+		
+		//Hatsevich:
+		else if (!isMouseDown && !isTouchDown
+				&& e.code in codeToCoords) {
+			const keyIndex: number = pressedKeys.indexOf(e.code);
+			if (keyIndex != -1) {
+				pressedKeys.splice(keyIndex, 1);
+				const coords: Point = codeToCoords[e.code];
+				drawHex(coords, centsToColor(hexCoordsToCents(coords), false));
+				const hexIndex: number = activeHexObjects.findIndex(
+					(hex: ActiveHex) => coords.equals(hex.coords));
+				if (hexIndex != -1) {
+					activeHexObjects[hexIndex].noteOff();
+					activeHexObjects.splice(hexIndex, 1);
+				}
+			}
+		}
+	}
+	
+	function mouseActive(e: MouseEvent): void {
+		let coords: Point = getPointerPosition(e);
+		
+		coords = getHexCoordsAt(coords);
+		
+		if (activeHexObjects.length == 0) {
+			activeHexObjects[0] = new ActiveHex(coords);
+			const cents: number = hexCoordsToCents(coords);
+			activeHexObjects[0].noteOn(cents);
+			drawHex(coords, centsToColor(cents, true));
+		} else if (!coords.equals(activeHexObjects[0].coords)) {
+			activeHexObjects[0].noteOff();
+			drawHex(activeHexObjects[0].coords,
+				centsToColor(hexCoordsToCents(activeHexObjects[0].coords), false));
+			
+			activeHexObjects[0] = new ActiveHex(coords);
+			const cents: number = hexCoordsToCents(coords);
+			activeHexObjects[0].noteOn(cents);
+			drawHex(coords, centsToColor(cents, true));
+		}
+	}
+	
+	
+	function handleTouch(e: TouchEvent): void {
+		e.preventDefault();
+		if (pressedKeys.length != 0 || isMouseDown) {
+			isTouchDown = false;
+			return;
+		}
+		isTouchDown = e.targetTouches.length != 0;
+		
+		for (let hex of activeHexObjects)
+			hex.release = true;
+		
+		for (let i = 0; i < e.targetTouches.length; i++) {
+			const coords: Point = getHexCoordsAt(new Point(e.targetTouches[i].pageX - canvas.offsetLeft,
+				e.targetTouches[i].pageY - canvas.offsetTop));
+			let found: boolean = false;
+			
+			for (let hex of activeHexObjects) {
+				if (coords.equals(hex.coords)) {
+					hex.release = false;
+					found = true;
+				}
+			}
+			if (!found) {
+				let newHex: ActiveHex = new ActiveHex(coords);
+				const cents: number = hexCoordsToCents(coords);
+				newHex.noteOn(cents);
+				const c: string = centsToColor(cents, true);
+				drawHex(coords, c);
+				activeHexObjects.push(newHex);
+			}
+		}
+		
+		for (let i = activeHexObjects.length - 1; i >= 0; i--) {
+			if (activeHexObjects[i].release) {
+				activeHexObjects[i].noteOff();
+				const coords: Point = activeHexObjects[i].coords;
+				const c: string = centsToColor(hexCoordsToCents(coords), false);
+				drawHex(coords, c);
+				activeHexObjects.splice(i, 1);
+			}
+		}
+	}
+	
+	function drawGrid(): void {
+		let max: number = centerpoint.x > centerpoint.y ?
+			centerpoint.x / hexSize :
+			centerpoint.y / hexSize;
+		max = Math.floor(max);
+		for (let r = -max; r < max; r++) {
+			for (let ur = -max; ur < max; ur++) {
+				const coords: Point = new Point(r, ur);
+				const c: string = centsToColor(hexCoordsToCents(coords), false);
+				drawHex(coords, c);
+			}
+		}
+	}
+	
+	function hexCoordsToScreen(hex: Point): Point {
+		const screenX: number = centerpoint.x + hex.x * hexWidth + hex.y * hexWidth / 2;
+		const screenY: number = centerpoint.y + hex.y * hexVert;
+		return new Point(screenX, screenY);
+	}
+	
+	function drawHex(p: Point, c: string): void {
+		const hexCenter: Point = hexCoordsToScreen(p);
+		
+		// Calculate hex vertices
+		
+		let x: Array<number> = [];
+		let y: Array<number> = [];
+		for (let i = 0; i < 6; i++) {
+			const angle: number = 2 * Math.PI / 6 * (i + 0.5);
+			x[i] = hexCenter.x + hexSize * Math.cos(angle);
+			y[i] = hexCenter.y + hexSize * Math.sin(angle);
+		}
+		
+		// Draw filled hex
+		
+		context.beginPath();
+		context.moveTo(x[0], y[0]);
+		for (let i = 1; i < 6; i++)
+			context.lineTo(x[i], y[i]);
+		context.closePath();
+		context.fillStyle = c;
+		context.fill();
+		
+		// Save context and create a hex shaped clip
+		
+		context.save();
+		context.beginPath();
+		context.moveTo(x[0], y[0]);
+		for (let i = 1; i < 6; i++)
+			context.lineTo(x[i], y[i]);
+		context.closePath();
+		context.clip();
+		
+		// Calculate hex vertices outside clipped path
+		
+		let x2: Array<number> = [];
+		let y2: Array<number> = [];
+		for (let i = 0; i < 6; i++) {
+			const angle: number = 2 * Math.PI / 6 * (i + 0.5);
+			x2[i] = hexCenter.x + (hexSize + 3) * Math.cos(angle);
+			y2[i] = hexCenter.y + (hexSize + 3) * Math.sin(angle);
+		}
+		
+		// Draw shadowed stroke outside clip to create pseudo-3d effect
+		
+		context.beginPath();
+		context.moveTo(x2[0], y2[0]);
+		for (let i = 1; i < 6; i++)
+			context.lineTo(x2[i], y2[i]);
+		context.closePath();
+		context.strokeStyle = "black";
+		context.lineWidth = 5;
+		context.shadowBlur = 15;
+		context.shadowColor = "black";
+		context.shadowOffsetX = 0;
+		context.shadowOffsetY = 0;
+		context.stroke();
+		context.restore();
+		
+		// Add a clean stroke around hex
+		
+		context.beginPath();
+		context.moveTo(x[0], y[0]);
+		for (let i = 1; i < 6; i++)
+			context.lineTo(x[i], y[i]);
+		context.closePath();
+		context.lineWidth = 2;
+		context.lineJoin = "round";
+		context.strokeStyle = "black";
+		context.stroke();
+		
+		// Add note name and equivalence interval multiple
+		
+		context.save();
+		context.translate(hexCenter.x, hexCenter.y);
+		context.rotate(-rotation);
+		// hexcoords = p and screenCoords = hexCenter
+		
+		//context.fillStyle = "black"; //bdl_04062016
+		context.fillStyle = getContrastYIQ(currentTextColor);
+		context.font = "22pt Arial";
+		context.textAlign = "center";
+		context.textBaseline = "middle";
+		
+		const note: number = p.x * rSteps + p.y * urSteps;
+		const equivSteps1: number = enumerateScale ? equivSteps : scale.length;
+		const equivMultiple: number = Math.floor(note / equivSteps1);
+		let reducedNote: number = note % equivSteps1;
+		if (reducedNote < 0)
+			reducedNote += equivSteps1;
+		
+		if (!no_labels) {
+			const name: string = enumerateScale ? "" + reducedNote : names[reducedNote];
+			if (name) {
+				context.save();
+				let scaleFactor: number = name.length > 3 ? 3 / name.length : 1;
+				scaleFactor *= hexSize / 50;
+				context.scale(scaleFactor, scaleFactor);
+				context.fillText(name, 0, 0);
+				context.restore();
+			}
+			
+			const scaleFactor: number = hexSize / 50;
+			context.scale(scaleFactor, scaleFactor);
+			context.translate(10, -25);
+			context.fillStyle = "white";
+			context.font = "12pt Arial";
+			context.textAlign = "center";
+			context.textBaseline = "middle";
+			context.fillText(((equivMultiple > 0 ? "+" : "") + equivMultiple).replace(/-/, "\u2212"), 0, 0);
+		}
+		
+		context.restore();
+	}
+	
+	
+	function hexCoordsToCents(coords: Point): number {
+		const distance: number = coords.x * rSteps + coords.y * urSteps;
+		let octs: number = roundTowardZero(distance / scale.length);
+		let reducedSteps = distance % scale.length;
+		if (reducedSteps < 0) {
+			reducedSteps += scale.length;
+			octs -= 1;
+		}
+		const cents: number = octs * equivInterval + scale[reducedSteps];
+		globalPressedInterval = reducedSteps;
+		return cents;
+	}
+	
+	function getHexCoordsAt(coords: Point): Point {
+		coords = applyMatrixToPoint(rotationMatrix, coords);
+		const x: number = coords.x - centerpoint.x;
+		const y: number = coords.y - centerpoint.y;
+		
+		let q: number = (x * Math.sqrt(3) / 3 - y / 3) / hexSize;
+		let r: number = y * 2 / 3 / hexSize;
+		
+		q = Math.round(q);
+		r = Math.round(r);
+		
+		// This gets an approximation; now check neighbors for minimum distance
+		
+		let minimum: number = 100000;
+		let closestHex: Point = new Point(q, r);
+		for (let qOffset = -1; qOffset < 2; qOffset++) {
+			for (let rOffset = -1; rOffset < 2; rOffset++) {
+				const neigbor: Point = new Point(q + qOffset, r + rOffset);
+				const diff: Point = hexCoordsToScreen(neigbor).minus(coords);
+				const distance: number = Math.hypot(diff.x, diff.y);
+				if (distance < minimum) {
+					minimum = distance;
+					closestHex = neigbor;
+				}
+			}
+		}
+		
+		return closestHex;
+	}
+	
+	
+	async function loadSamples(name: string): Promise<void> {
+		const sampleFreqs: Array<string> = ["110", "220", "440", "880"];
+		const responses: Array<Promise<Response>> = sampleFreqs.map(freq => fetch(`sounds/${name}${freq}.mp3`));
+		// It seems audioContext doesn't cope with simultaneous decodeAudioData calls ):
+		for (let i = 0; i < responses.length; i++) {
+			const arrayBuf: ArrayBuffer = await (await responses[i]).arrayBuffer();
+			try {
+				const audioBuf: AudioBuffer = await audioContext.decodeAudioData(arrayBuf);
+				sampleBuffer[i] = audioBuf;
+			} catch (e) {
+				alert("Couldn't load sample");
+			}
+		}
+	}
+	
+	
 	return false;
 }
 
-function onKeyDown(e: KeyboardEvent): void {
-	e.preventDefault();//
-	
-	if (e.keyCode == 32) // Spacebar
-		settings.sustain = true;
-	else if (!settings.isMouseDown && !settings.isTouchDown
-			&& e.keyCode in notUndefined(settings.keyCodeToCoords)
-			&& notUndefined(settings.pressedKeys).indexOf(e.keyCode) == -1) {
-		notUndefined(settings.pressedKeys).push(e.keyCode);
-		const coords: Point = notUndefined(settings.keyCodeToCoords)[e.keyCode];
-		const hex: ActiveHex = new ActiveHex(coords);
-		notUndefined(settings.activeHexObjects).push(hex);
-		const cents: number = hexCoordsToCents(coords);
-		drawHex(coords, centsToColor(cents, true));
-		hex.noteOn(cents);
-	}
-	
-	//Hatsevich:
-	else if (!settings.isMouseDown && !settings.isTouchDown
-			&& e.code in codeToCoords
-			&& notUndefined(settings.pressedKeys).indexOf(e.code) == -1) {
-		notUndefined(settings.pressedKeys).push(e.code);
-		const coords: Point = codeToCoords[e.code];
-		const hex: ActiveHex = new ActiveHex(coords);
-		notUndefined(settings.activeHexObjects).push(hex);
-		const cents: number = hexCoordsToCents(coords);
-		drawHex(coords, centsToColor(cents, true));
-		hex.noteOn(cents);
-	}
-}
-
-function onKeyUp(e: KeyboardEvent): void {
-	if (e.keyCode == 32) { // Spacebar
-		settings.sustain = false;
-		for (let note of notUndefined(settings.sustainedNotes))
-			note.noteOff();
-		settings.sustainedNotes = [];
-	} else if (!settings.isMouseDown && !settings.isTouchDown
-			&& e.keyCode in notUndefined(settings.keyCodeToCoords)) {
-		const keyIndex = notUndefined(settings.pressedKeys).indexOf(e.keyCode);
-		if (keyIndex != -1) {
-			notUndefined(settings.pressedKeys).splice(keyIndex, 1);
-			const coords: Point = notUndefined(settings.keyCodeToCoords)[e.keyCode];
-			drawHex(coords, centsToColor(hexCoordsToCents(coords), false));
-			const hexIndex: number = notUndefined(settings.activeHexObjects).findIndex(
-				(hex: ActiveHex) => coords.equals(hex.coords));
-			if (hexIndex != -1) {
-				notUndefined(settings.activeHexObjects)[hexIndex].noteOff();
-				notUndefined(settings.activeHexObjects).splice(hexIndex, 1);
-			}
-		}
-	}
-	
-	//Hatsevich:
-	else if (!settings.isMouseDown && !settings.isTouchDown
-			&& e.code in codeToCoords) {
-		const keyIndex: number = notUndefined(settings.pressedKeys).indexOf(e.code);
-		if (keyIndex != -1) {
-			notUndefined(settings.pressedKeys).splice(keyIndex, 1);
-			const coords: Point = codeToCoords[e.code];
-			drawHex(coords, centsToColor(hexCoordsToCents(coords), false));
-			const hexIndex: number = notUndefined(settings.activeHexObjects).findIndex(
-				(hex: ActiveHex) => coords.equals(hex.coords));
-			if (hexIndex != -1) {
-				notUndefined(settings.activeHexObjects)[hexIndex].noteOff();
-				notUndefined(settings.activeHexObjects).splice(hexIndex, 1);
-			}
-		}
-	}
-}
-
-function mouseActive(e: MouseEvent): void {
-	let coords: Point = getPointerPosition(e);
-	
-	coords = getHexCoordsAt(coords);
-	
-	if (notUndefined(settings.activeHexObjects).length == 0) {
-		notUndefined(settings.activeHexObjects)[0] = new ActiveHex(coords);
-		const cents: number = hexCoordsToCents(coords);
-		notUndefined(settings.activeHexObjects)[0].noteOn(cents);
-		drawHex(coords, centsToColor(cents, true));
-	} else if (!coords.equals(notUndefined(settings.activeHexObjects)[0].coords)) {
-		notUndefined(settings.activeHexObjects)[0].noteOff();
-		drawHex(notUndefined(settings.activeHexObjects)[0].coords,
-			centsToColor(hexCoordsToCents(notUndefined(settings.activeHexObjects)[0].coords), false));
-		
-		notUndefined(settings.activeHexObjects)[0] = new ActiveHex(coords);
-		const cents: number = hexCoordsToCents(coords);
-		notUndefined(settings.activeHexObjects)[0].noteOn(cents);
-		drawHex(coords, centsToColor(cents, true));
-	}
-}
 
 function getPointerPosition(e: MouseEvent): Point {
 	const target = e.currentTarget;
@@ -1156,247 +1375,11 @@ function getPosition(element: HTMLElement): Point {
 	}
 }
 
-function handleTouch(e: TouchEvent): void {
-	e.preventDefault();
-	if (notUndefined(settings.pressedKeys).length != 0 || settings.isMouseDown) {
-		settings.isTouchDown = false;
-		return;
-	}
-	settings.isTouchDown = e.targetTouches.length != 0;
-	
-	for (let hex of notUndefined(settings.activeHexObjects))
-		hex.release = true;
-	
-	for (let i = 0; i < e.targetTouches.length; i++) {
-		const coords: Point = getHexCoordsAt(new Point(e.targetTouches[i].pageX - canvas.offsetLeft,
-			e.targetTouches[i].pageY - canvas.offsetTop));
-		let found: boolean = false;
-		
-		for (let hex of notUndefined(settings.activeHexObjects)) {
-			if (coords.equals(hex.coords)) {
-				hex.release = false;
-				found = true;
-			}
-		}
-		if (!found) {
-			let newHex: ActiveHex = new ActiveHex(coords);
-			const cents: number = hexCoordsToCents(coords);
-			newHex.noteOn(cents);
-			const c: string = centsToColor(cents, true);
-			drawHex(coords, c);
-			notUndefined(settings.activeHexObjects).push(newHex);
-		}
-	}
-	
-	for (let i = notUndefined(settings.activeHexObjects).length - 1; i >= 0; i--) {
-		if (notUndefined(settings.activeHexObjects)[i].release) {
-			notUndefined(settings.activeHexObjects)[i].noteOff();
-			const coords: Point = notUndefined(settings.activeHexObjects)[i].coords;
-			const c: string = centsToColor(hexCoordsToCents(coords), false);
-			drawHex(coords, c);
-			notUndefined(settings.activeHexObjects).splice(i, 1);
-		}
-	}
-}
-
-function drawGrid(): void {
-	let max: number = notUndefined(settings.centerpoint).x > notUndefined(settings.centerpoint).y ?
-		notUndefined(settings.centerpoint).x / notUndefined(settings.hexSize) :
-		notUndefined(settings.centerpoint).y / notUndefined(settings.hexSize);
-	max = Math.floor(max);
-	for (let r = -max; r < max; r++) {
-		for (let ur = -max; ur < max; ur++) {
-			const coords: Point = new Point(r, ur);
-			const c: string = centsToColor(hexCoordsToCents(coords), false);
-			drawHex(coords, c);
-		}
-	}
-}
-
-function hexCoordsToScreen(hex: Point): Point {
-	const screenX: number = notUndefined(settings.centerpoint).x + hex.x * notUndefined(settings.hexWidth) + hex.y * notUndefined(settings.hexWidth) / 2;
-	const screenY: number = notUndefined(settings.centerpoint).y + hex.y * notUndefined(settings.hexVert);
-	return new Point(screenX, screenY);
-}
-
-function drawHex(p: Point, c: string): void {
-	const hexCenter: Point = hexCoordsToScreen(p);
-	
-	// Calculate hex vertices
-	
-	let x: Array<number> = [];
-	let y: Array<number> = [];
-	for (let i = 0; i < 6; i++) {
-		const angle: number = 2 * Math.PI / 6 * (i + 0.5);
-		x[i] = hexCenter.x + notUndefined(settings.hexSize) * Math.cos(angle);
-		y[i] = hexCenter.y + notUndefined(settings.hexSize) * Math.sin(angle);
-	}
-	
-	// Draw filled hex
-	
-	context.beginPath();
-	context.moveTo(x[0], y[0]);
-	for (let i = 1; i < 6; i++)
-		context.lineTo(x[i], y[i]);
-	context.closePath();
-	context.fillStyle = c;
-	context.fill();
-	
-	// Save context and create a hex shaped clip
-	
-	context.save();
-	context.beginPath();
-	context.moveTo(x[0], y[0]);
-	for (let i = 1; i < 6; i++)
-		context.lineTo(x[i], y[i]);
-	context.closePath();
-	context.clip();
-	
-	// Calculate hex vertices outside clipped path
-	
-	let x2: Array<number> = [];
-	let y2: Array<number> = [];
-	for (let i = 0; i < 6; i++) {
-		const angle: number = 2 * Math.PI / 6 * (i + 0.5);
-		x2[i] = hexCenter.x + (notUndefined(settings.hexSize) + 3) * Math.cos(angle);
-		y2[i] = hexCenter.y + (notUndefined(settings.hexSize) + 3) * Math.sin(angle);
-	}
-	
-	// Draw shadowed stroke outside clip to create pseudo-3d effect
-	
-	context.beginPath();
-	context.moveTo(x2[0], y2[0]);
-	for (let i = 1; i < 6; i++)
-		context.lineTo(x2[i], y2[i]);
-	context.closePath();
-	context.strokeStyle = "black";
-	context.lineWidth = 5;
-	context.shadowBlur = 15;
-	context.shadowColor = "black";
-	context.shadowOffsetX = 0;
-	context.shadowOffsetY = 0;
-	context.stroke();
-	context.restore();
-	
-	// Add a clean stroke around hex
-	
-	context.beginPath();
-	context.moveTo(x[0], y[0]);
-	for (let i = 1; i < 6; i++)
-		context.lineTo(x[i], y[i]);
-	context.closePath();
-	context.lineWidth = 2;
-	context.lineJoin = "round";
-	context.strokeStyle = "black";
-	context.stroke();
-	
-	// Add note name and equivalence interval multiple
-	
-	context.save();
-	context.translate(hexCenter.x, hexCenter.y);
-	context.rotate(-notUndefined(settings.rotation));
-	// hexcoords = p and screenCoords = hexCenter
-	
-	//context.fillStyle = "black"; //bdl_04062016
-	context.fillStyle = getContrastYIQ(currentTextColor);
-	context.font = "22pt Arial";
-	context.textAlign = "center";
-	context.textBaseline = "middle";
-	
-	const note: number = p.x * notUndefined(settings.rSteps) + p.y * notUndefined(settings.urSteps);
-	const equivSteps: number = settings.enumerateScale ? notUndefined(settings.equivSteps) : notUndefined(settings.scale).length;
-	const equivMultiple: number = Math.floor(note / equivSteps);
-	let reducedNote: number = note % equivSteps;
-	if (reducedNote < 0)
-		reducedNote += equivSteps;
-	
-	if (!settings.no_labels) {
-		const name: string = settings.enumerateScale ? "" + reducedNote : notUndefined(settings.names)[reducedNote];
-		if (name) {
-			context.save();
-			let scaleFactor: number = name.length > 3 ? 3 / name.length : 1;
-			scaleFactor *= notUndefined(settings.hexSize) / 50;
-			context.scale(scaleFactor, scaleFactor);
-			context.fillText(name, 0, 0);
-			context.restore();
-		}
-		
-		const scaleFactor: number = notUndefined(settings.hexSize) / 50;
-		context.scale(scaleFactor, scaleFactor);
-		context.translate(10, -25);
-		context.fillStyle = "white";
-		context.font = "12pt Arial";
-		context.textAlign = "center";
-		context.textBaseline = "middle";
-		context.fillText(((equivMultiple > 0 ? "+" : "") + equivMultiple).replace(/-/, "\u2212"), 0, 0);
-	}
-	
-	context.restore();
-}
 
 function roundTowardZero(val: number): number {
 	if (val < 0)
 		return Math.ceil(val);
 	return Math.floor(val);
-}
-
-function hexCoordsToCents(coords: Point): number {
-	const distance: number = coords.x * notUndefined(settings.rSteps) + coords.y * notUndefined(settings.urSteps);
-	let octs: number = roundTowardZero(distance / notUndefined(settings.scale).length);
-	let reducedSteps = distance % notUndefined(settings.scale).length;
-	if (reducedSteps < 0) {
-		reducedSteps += notUndefined(settings.scale).length;
-		octs -= 1;
-	}
-	const cents: number = octs * notUndefined(settings.equivInterval) + notUndefined(settings.scale)[reducedSteps];
-	globalPressedInterval = reducedSteps;
-	return cents;
-}
-
-function getHexCoordsAt(coords: Point): Point {
-	coords = applyMatrixToPoint(notUndefined(settings.rotationMatrix), coords);
-	const x: number = coords.x - notUndefined(settings.centerpoint).x;
-	const y: number = coords.y - notUndefined(settings.centerpoint).y;
-	
-	let q: number = (x * Math.sqrt(3) / 3 - y / 3) / notUndefined(settings.hexSize);
-	let r: number = y * 2 / 3 / notUndefined(settings.hexSize);
-	
-	q = Math.round(q);
-	r = Math.round(r);
-	
-	// This gets an approximation; now check neighbors for minimum distance
-	
-	let minimum: number = 100000;
-	let closestHex: Point = new Point(q, r);
-	for (let qOffset = -1; qOffset < 2; qOffset++) {
-		for (let rOffset = -1; rOffset < 2; rOffset++) {
-			const neigbor: Point = new Point(q + qOffset, r + rOffset);
-			const diff: Point = hexCoordsToScreen(neigbor).minus(coords);
-			const distance: number = Math.hypot(diff.x, diff.y);
-			if (distance < minimum) {
-				minimum = distance;
-				closestHex = neigbor;
-			}
-		}
-	}
-	
-	return closestHex;
-}
-
-
-async function loadSamples(name: string): Promise<void> {
-	const sampleFreqs: Array<string> = ["110", "220", "440", "880"];
-	const responses: Array<Promise<Response>> = sampleFreqs.map(freq => fetch(`sounds/${name}${freq}.mp3`));
-	// It seems audioContext doesn't cope with simultaneous decodeAudioData calls ):
-	for (let i = 0; i < responses.length; i++) {
-		const arrayBuf: ArrayBuffer = await (await responses[i]).arrayBuffer();
-		try {
-			const audioBuf: AudioBuffer = await audioContext.decodeAudioData(arrayBuf);
-			notUndefined(settings.sampleBuffer)[i] = audioBuf;
-		} catch (e) {
-			alert("Couldn't load sample");
-		}
-	}
 }
 
 
