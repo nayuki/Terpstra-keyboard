@@ -42,22 +42,21 @@ function initialize(): void {
 	hideRevealColors();
 	hideRevealEnum();
 	
-	window.addEventListener("load", init, false);
-	
-	function init(): void {
-		try {
-			settings.audioContext = new AudioContext();
-		} catch (e) {
-			alert("Web Audio API is not supported in this browser");
-		}
-	}
-	
 	//initialize keyboard on load
 	if (initKeyboardOnload) {
 		//hide landing page
 		setElemVisible("landing-page", false);
 		setTimeout(() => goKeyboard(), 1500);
 	}
+}
+
+
+let audioContext: AudioContext;
+try {
+	audioContext = new AudioContext();
+} catch (e) {
+	alert("Web Audio API is not supported in this browser");
+	throw e;
 }
 
 
@@ -618,7 +617,6 @@ function changeURL(): void {
 
 let settings: {
 	activeHexObjects?: Array<ActiveHex>,
-	audioContext?: AudioContext,
 	canvas?: HTMLCanvasElement,
 	centerpoint?: Point,
 	context?: CanvasRenderingContext2D,
@@ -707,7 +705,7 @@ class ActiveHex {
 	
 	public noteOn(cents: number): void {
 		const freq: number = notUndefined(settings.fundamental) * Math.pow(2, cents / 1200);
-		let source = notUndefined(settings.audioContext).createBufferSource(); // creates a sound source
+		let source = audioContext.createBufferSource(); // creates a sound source
 		// Choose sample
 		let sampleFreq: number;
 		let sampleNumber: number;
@@ -731,11 +729,11 @@ class ActiveHex {
 		source.buffer = notUndefined(settings.sampleBuffer)[sampleNumber] ?? null; // tell the source which sound to play
 		source.playbackRate.value = freq / sampleFreq;
 		// Create a gain node.
-		let gainNode = notUndefined(settings.audioContext).createGain();
+		let gainNode = audioContext.createGain();
 		// Connect the source to the gain node.
 		source.connect(gainNode);
 		// Connect the gain node to the destination.
-		gainNode.connect(notUndefined(settings.audioContext).destination);
+		gainNode.connect(audioContext.destination);
 		source.connect(gainNode); // connect the source to the context's destination (the speakers)
 		gainNode.gain.value = volume;
 		source.start(0); // play the source now
@@ -748,9 +746,9 @@ class ActiveHex {
 		if (settings.sustain)
 			notUndefined(settings.sustainedNotes).push(this);
 		else {
-			const fadeout: number = notUndefined(settings.audioContext).currentTime + notUndefined(settings.sampleFadeout);
+			const fadeout: number = audioContext.currentTime + notUndefined(settings.sampleFadeout);
 			if (this.gainNode !== null) {
-				this.gainNode.gain.setTargetAtTime(0, notUndefined(settings.audioContext).currentTime,
+				this.gainNode.gain.setTargetAtTime(0, audioContext.currentTime,
 					notUndefined(settings.sampleFadeout));
 			}
 			if (this.source !== null) {
@@ -1404,7 +1402,7 @@ async function loadSamples(name: string): Promise<void> {
 	for (let i = 0; i < responses.length; i++) {
 		const arrayBuf: ArrayBuffer = await (await responses[i]).arrayBuffer();
 		try {
-			const audioBuf: AudioBuffer = await notUndefined(settings.audioContext).decodeAudioData(arrayBuf);
+			const audioBuf: AudioBuffer = await audioContext.decodeAudioData(arrayBuf);
 			notUndefined(settings.sampleBuffer)[i] = audioBuf;
 		} catch (e) {
 			alert("Couldn't load sample");
