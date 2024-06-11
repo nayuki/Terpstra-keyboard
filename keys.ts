@@ -543,6 +543,7 @@ let noLabelsInput: HTMLInputElement = getInputById("no_labels");
 let scaleTextarea: HTMLTextAreaElement = getElemById("scale", HTMLTextAreaElement);
 let namesTextarea: HTMLTextAreaElement = getElemById("names", HTMLTextAreaElement);
 let noteColorsTextarea: HTMLTextAreaElement = getElemById("note_colors", HTMLTextAreaElement);
+let canvas: HTMLCanvasElement = getElemById("keyboard", HTMLCanvasElement);
 
 let globalPressedInterval: number;
 let currentTextColor: Rgb8Color = new Rgb8Color(0, 0, 0);
@@ -613,7 +614,6 @@ function changeURL(): void {
 
 let settings: {
 	activeHexObjects?: Array<ActiveHex>,
-	canvas?: HTMLCanvasElement,
 	centerpoint?: Point,
 	context?: CanvasRenderingContext2D,
 	enum?: boolean,
@@ -765,7 +765,6 @@ function resizeHandler(): void {
 	const newWidth: number = window.innerWidth;
 	const newHeight: number = window.innerHeight;
 	
-	let canvas = notUndefined(settings.canvas);
 	canvas.style.height = newHeight + "px";
 	canvas.style.width = newWidth + "px";
 	
@@ -841,8 +840,7 @@ function goKeyboard() {
 	settings["enum"] = enumInput.checked;
 	settings.equivSteps = parseInt(equivStepsInput.value);
 	
-	settings.canvas = getElemById("keyboard", HTMLCanvasElement);
-	const ctx = settings.canvas.getContext("2d");
+	const ctx = canvas.getContext("2d");
 	if (ctx === null)
 		throw new Error("Assertion error");
 	settings.context = ctx;
@@ -901,8 +899,8 @@ function goKeyboard() {
 	
 	settings.sustain = false;
 	settings.sustainedNotes = [];
-	//settings.canvas.addEventListener("keydown", onKeyDown, false); // Firefox isn't firing :(
-	//settings.canvas.addEventListener("keyup", onKeyUp, false);
+	//canvas.addEventListener("keydown", onKeyDown, false); // Firefox isn't firing :(
+	//canvas.addEventListener("keyup", onKeyUp, false);
 	
 	if (!isKeyEventAdded) {
 		isKeyEventAdded = true;
@@ -1019,24 +1017,24 @@ function goKeyboard() {
 	
 	settings.activeHexObjects = [];
 	settings.isTouchDown = false;
-	settings.canvas.addEventListener("touchstart", handleTouch, false);
-	settings.canvas.addEventListener("touchend", handleTouch, false);
-	settings.canvas.addEventListener("touchmove", handleTouch, false);
+	canvas.addEventListener("touchstart", handleTouch, false);
+	canvas.addEventListener("touchend", handleTouch, false);
+	canvas.addEventListener("touchmove", handleTouch, false);
 	
 	settings.isMouseDown = false;
-	settings.canvas.addEventListener("mousedown", (e) => {
+	canvas.addEventListener("mousedown", (e) => {
 		if (notUndefined(settings.pressedKeys).length != 0 || settings.isTouchDown)
 			return;
 		settings.isMouseDown = true;
-		notUndefined(settings.canvas).addEventListener("mousemove", mouseActive, false);
+		canvas.addEventListener("mousemove", mouseActive, false);
 		mouseActive(e);
 	}, false);
 	
-	settings.canvas.addEventListener("mouseup", (e) => {
+	canvas.addEventListener("mouseup", (e) => {
 		settings.isMouseDown = false;
 		if (notUndefined(settings.pressedKeys).length != 0 || settings.isTouchDown)
 			return;
-		notUndefined(settings.canvas).removeEventListener("mousemove", mouseActive);
+		canvas.removeEventListener("mousemove", mouseActive);
 		if (notUndefined(settings.activeHexObjects).length > 0) {
 			const coords: Point = notUndefined(settings.activeHexObjects)[0].coords;
 			notUndefined(settings.activeHexObjects)[0].noteOff();
@@ -1174,8 +1172,8 @@ function handleTouch(e: TouchEvent): void {
 		hex.release = true;
 	
 	for (let i = 0; i < e.targetTouches.length; i++) {
-		const coords: Point = getHexCoordsAt(new Point(e.targetTouches[i].pageX - notUndefined(settings.canvas).offsetLeft,
-			e.targetTouches[i].pageY - notUndefined(settings.canvas).offsetTop));
+		const coords: Point = getHexCoordsAt(new Point(e.targetTouches[i].pageX - canvas.offsetLeft,
+			e.targetTouches[i].pageY - canvas.offsetTop));
 		let found: boolean = false;
 		
 		for (let hex of notUndefined(settings.activeHexObjects)) {
