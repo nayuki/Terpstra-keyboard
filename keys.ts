@@ -1129,13 +1129,13 @@ function getPointerPosition(e: MouseEvent): Point {
 	const target = e.currentTarget;
 	if (!(target instanceof HTMLElement))
 		throw new TypeError();
-	const parentPosition = getPosition(target);
+	const parentPosition: Point = getPosition(target);
 	const xPosition: number = e.clientX - parentPosition.x;
 	const yPosition: number = e.clientY - parentPosition.y;
 	return new Point(xPosition, yPosition);
 }
 
-function getPosition(element: HTMLElement): {x:number, y:number} {
+function getPosition(element: HTMLElement): Point {
 	let xPosition: number = 0;
 	let yPosition: number = 0;
 	
@@ -1149,10 +1149,7 @@ function getPosition(element: HTMLElement): {x:number, y:number} {
 			throw new TypeError();
 		element = parent;
 	}
-	return {
-		x: xPosition,
-		y: yPosition,
-	};
+	return new Point(xPosition, yPosition);
 }
 
 function handleTouch(e: TouchEvent): void {
