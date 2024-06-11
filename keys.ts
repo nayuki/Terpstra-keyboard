@@ -33,7 +33,7 @@ class Point {
 class Rgb8Color {
 	
 	public static fromCssHex(s: string): Rgb8Color {
-		if (s.startsWith("#"))
+		while (s.startsWith("#"))
 			s = s.substring(1);
 		return new Rgb8Color(
 			parseInt(s.substring(0, 2), 16),
