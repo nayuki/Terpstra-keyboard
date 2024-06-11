@@ -591,19 +591,7 @@ function changeURL(): void {
 		"&note_colors=" + encodeURIComponent(noteColorsTextarea.value);
 	
 	// Find scl file description for the page title
-	
-	const scaleLines: Array<string> = scaleTextarea.value.split("\n");
-	let foundDescription: boolean = false;
-	let description: string = "Terpstra Keyboard WebApp";
-	
-	scaleLines.forEach((line: string) => {
-		if (!foundDescription && !line.match(/^\!/) && line.match(/[a-zA-Z]+/)) {
-			foundDescription = true;
-			description = line;
-		}
-	});
-	
-	document.title = description;
+	document.title = scaleTextarea.value.split("\n").find(line => !line.match(/^\!/) && line.match(/[a-zA-Z]+/)) ?? "Terpstra Keyboard WebApp";
 	window.history.replaceState({}, "", url);
 }
 
@@ -643,8 +631,7 @@ let settings: {
 
 function parseScale(): void {
 	settings.scale = [];
-	const scaleLines: Array<string> = scaleTextarea.value.split("\n");
-	scaleLines.forEach((line: string) => {
+	for (const line of scaleTextarea.value.split("\n")) {
 		if (line.match(/^[1234567890.\s/]+$/) && !line.match(/^\s+$/)) {
 			if (line.match(/\//)) {
 				// ratio
@@ -657,15 +644,13 @@ function parseScale(): void {
 					notUndefined(settings.scale).push(parseFloat(line));
 			}
 		}
-	});
+	}
 	settings.equivInterval = settings.scale.pop();
 	settings.scale.unshift(0);
 }
 
 function parseScaleColors(): void {
-	settings.keycolors = [];
-	const colorsArray: Array<string> = noteColorsTextarea.value.split("\n");
-	colorsArray.forEach((line: string) => notUndefined(settings.keycolors).push(line));
+	settings.keycolors = noteColorsTextarea.value.split("\n");
 }
 
 function calculateRotationMatrix(rotation: number, center: Point): Array<number> {
