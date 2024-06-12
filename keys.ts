@@ -774,11 +774,13 @@ function goKeyboard() {
 			z2: number = 0;
 		
 		// Listen to motion events and update the position
-		window.addEventListener("devicemotion", (e) => {
+		window.addEventListener("devicemotion", deviceMotion, false);
+		
+		function deviceMotion(e: DeviceMotionEvent): void {
 			x1 = e.accelerationIncludingGravity.x;
 			y1 = e.accelerationIncludingGravity.y;
 			z1 = e.accelerationIncludingGravity.z;
-		}, false);
+		}
 		
 		// Periodically check the position and fire
 		// if the change is greater than the sensitivity
@@ -820,26 +822,8 @@ function goKeyboard() {
 	canvas.addEventListener("touchmove", handleTouch, false);
 	
 	let isMouseDown: boolean = false;
-	canvas.addEventListener("mousedown", (e) => {
-		if (pressedKeys.length != 0 || isTouchDown)
-			return;
-		isMouseDown = true;
-		canvas.addEventListener("mousemove", mouseActive, false);
-		mouseActive(e);
-	}, false);
-	
-	canvas.addEventListener("mouseup", (e) => {
-		isMouseDown = false;
-		if (pressedKeys.length != 0 || isTouchDown)
-			return;
-		canvas.removeEventListener("mousemove", mouseActive);
-		if (activeHexObjects.length > 0) {
-			const coords: Point = activeHexObjects[0].coords;
-			activeHexObjects[0].noteOff();
-			drawHex(coords, centsToColor(hexCoordsToCents(coords), false));
-			activeHexObjects.pop();
-		}
-	}, false);
+	canvas.addEventListener("mousedown", mouseDown, false);
+	canvas.addEventListener("mouseup", mouseUp, false);
 	
 	
 	function centsToColor(cents: number, pressed: boolean): string {
@@ -1086,6 +1070,30 @@ function goKeyboard() {
 			}
 		}
 	}
+	
+	
+	function mouseDown(e: MouseEvent): void {
+		if (pressedKeys.length != 0 || isTouchDown)
+			return;
+		isMouseDown = true;
+		canvas.addEventListener("mousemove", mouseActive, false);
+		mouseActive(e);
+	}
+	
+	
+	function mouseUp(e: MouseEvent): void {
+		isMouseDown = false;
+		if (pressedKeys.length != 0 || isTouchDown)
+			return;
+		canvas.removeEventListener("mousemove", mouseActive);
+		if (activeHexObjects.length > 0) {
+			const coords: Point = activeHexObjects[0].coords;
+			activeHexObjects[0].noteOff();
+			drawHex(coords, centsToColor(hexCoordsToCents(coords), false));
+			activeHexObjects.pop();
+		}
+	}
+	
 	
 	function mouseActive(e: MouseEvent): void {
 		let coords: Point = getPointerPosition(e);
