@@ -23,11 +23,11 @@ function initialize(): void {
 	hexSizeInput.value = mapGetMaybe(getData, "size").map(v => v.toString()).unwrapOr("60");
 	rotationInput.value = mapGetMaybe(getData, "rotation").map(v => v.toString()).unwrapOr("343.897886248");
 	instrumentSelect.value = mapGetMaybe(getData, "instrument").map(v => v.toString()).unwrapOr("rhodes");
-	enumInput.checked = mapGetMaybe(getData, "enum").map(v => JSON.parse(v.toString())).unwrapOr("false");
+	enumInput.checked = mapGetMaybe(getData, "enum").map(v => v == "true").unwrapOr(false);
 	equivStepsInput.value = mapGetMaybe(getData, "equivSteps").map(v => v.toString()).unwrapOr("17");
-	spectrumColorsInput.checked = mapGetMaybe(getData, "spectrum_colors").map(v => JSON.parse(v.toString())).unwrapOr("false");
+	spectrumColorsInput.checked = mapGetMaybe(getData, "spectrum_colors").map(v => v == "true").unwrapOr(false);
 	fundamentalColorInput.value = mapGetMaybe(getData, "fundamental_color").map(v => v.toString()).unwrapOr("#41ff2e");
-	noLabelsInput.checked = mapGetMaybe(getData, "no_labels").map(v => JSON.parse(v.toString())).unwrapOr("false");
+	noLabelsInput.checked = mapGetMaybe(getData, "no_labels").map(v => v == "true").unwrapOr(false);
 	
 	mapGetMaybe(getData, "scale").map(v => scaleTextarea.value = v[0]);
 	mapGetMaybe(getData, "names").map(v => namesTextarea.value = v[0]);
