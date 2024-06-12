@@ -2,7 +2,7 @@ let volume: number = 1.4;
 
 function initialize(): void {
 	window.addEventListener("keydown", (e: KeyboardEvent) => {
-		if (e.code == "ArrowDown") {//ctrl
+		if (e.code == "ArrowDown") {
 			e.preventDefault();
 			volume = Math.max(volume - 0.1, 0);
 		} else if (e.code == "ArrowUp") {
@@ -13,9 +13,7 @@ function initialize(): void {
 	
 	const initKeyboardOnload: boolean = window.location.search != "";
 	
-	//check\set preset
 	checkPreset(16);
-	// fill in form
 	getHtmlById("settingsForm").onsubmit = goKeyboard;
 	
 	{
@@ -53,10 +51,7 @@ function initialize(): void {
 	hideRevealColors();
 	hideRevealEnum();
 	
-	//check to see if we have params
 	if (initKeyboardOnload) {
-		//initialize keyboard on load
-		//hide landing page
 		setElemVisible("landing-page", false);
 		setTimeout(goKeyboard, 1500);
 	}
@@ -349,7 +344,7 @@ function nameToHex(color: string): string {
 	else if (color.length == 6 && color.indexOf("#") == -1)
 		return "#" + color;
 	
-	return "#EDEDE4"; //default button color!
+	return "#EDEDE4";
 }
 
 
@@ -432,7 +427,7 @@ const codeToCoords_mac = {
 	"IntlBackslash": new Point(-6, 1),
 	"ShiftLeft": new Point(-7, 1),
 	"Backquote": new Point(-6, -2),
-	"BracketRight": new Point(6, -1), // ]
+	"BracketRight": new Point(6, -1),
 };
 let codeToCoords: {[index:string]: Point} = {};
 const keyCodeToCoords: {[index:number]: Point} = {};
@@ -702,8 +697,6 @@ function goKeyboard() {
 		{fileName: "WMRIByzantineST", fade: 0.1},
 	];
 	
-	//console.log(instruments[instrumentOption]);
-	
 	loadSamples(instruments[instrumentOption].fileName);
 	const sampleFadeout: number = instruments[instrumentOption].fade;
 	
@@ -830,8 +823,6 @@ function goKeyboard() {
 		}, 300);
 	}
 	
-	//
-	
 	let activeHexObjects: Array<ActiveHex> = [];
 	let isTouchDown: boolean = false;
 	canvas.addEventListener("touchstart", handleTouch, false);
@@ -870,10 +861,8 @@ function goKeyboard() {
 			else
 				colorStr = keycolors[globalPressedInterval];
 			
-			//convert color name to hex
 			currentTextColor = Rgb8Color.fromCssHex(nameToHex(colorStr));
 			
-			//convert the hex to rgb
 			let {red, green, blue} = currentTextColor;
 			
 			//darken for pressed key
@@ -924,11 +913,8 @@ function goKeyboard() {
 			
 			source.buffer = sampleBuffer[sampleNumber] ?? null; // tell the source which sound to play
 			source.playbackRate.value = freq / sampleFreq;
-			// Create a gain node.
 			let gainNode = audioContext.createGain();
-			// Connect the source to the gain node.
 			source.connect(gainNode);
-			// Connect the gain node to the destination.
 			gainNode.connect(audioContext.destination);
 			source.connect(gainNode); // connect the source to the context's destination (the speakers)
 			gainNode.gain.value = volume;
@@ -948,8 +934,7 @@ function goKeyboard() {
 						sampleFadeout);
 				}
 				if (this.source !== null) {
-					// This is a terrible fudge. Please forgive me - it's late, I'm tired, I
-					// have a deadline, I've got other shit to do
+					// This is a hack
 					this.source.stop(fadeout + 4);
 				}
 			}
@@ -998,7 +983,6 @@ function goKeyboard() {
 	
 	
 	function back(): void {
-		// Remove key listener
 		window.removeEventListener("resize", resizeHandler, false);
 		window.removeEventListener("orientationchange", resizeHandler, false);
 		window.removeEventListener("keydown", onKeyDown);
@@ -1029,7 +1013,7 @@ function goKeyboard() {
 	
 	
 	function onKeyDown(e: KeyboardEvent): void {
-		e.preventDefault();//
+		e.preventDefault();
 		
 		if (e.keyCode == 32) // Spacebar
 			sustain = true;
