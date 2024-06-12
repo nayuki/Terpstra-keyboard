@@ -1,0 +1,491 @@
+/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ */
+
+html {
+	font-family: sans-serif; /* 1 */
+	-ms-text-size-adjust: 100%; /* 2 */
+	-webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/**
+ * Remove default margin.
+ */
+
+body {
+	margin: 0;
+}
+
+/* HTML5 display definitions
+   ========================================================================== */
+
+/**
+ * 1. Correct `inline-block` display not defined in IE 8/9.
+ * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
+ */
+
+canvas {
+	display: inline-block; /* 1 */
+	vertical-align: baseline; /* 2 */
+}
+
+/* Links
+   ========================================================================== */
+
+/**
+ * Remove the gray background color from active links in IE 10.
+ */
+
+a {
+	background-color: transparent;
+}
+
+/**
+ * Improve readability when focused and also mouse hovered in all browsers.
+ */
+
+a:active,
+a:hover {
+	outline: 0;
+}
+
+/* Text-level semantics
+   ========================================================================== */
+
+/**
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari, and Chrome.
+ */
+
+h1 {
+	font-size: 2em;
+	margin: 0.67em 0;
+}
+
+/* Embedded content
+   ========================================================================== */
+
+/**
+ * Remove border when inside `a` element in IE 8/9/10.
+ */
+
+img {
+	border: 0;
+}
+
+/* Forms
+   ========================================================================== */
+
+/**
+ * Known limitation: by default, Chrome and Safari on OS X allow very limited
+ * styling of `select`, unless a `border` property is set.
+ */
+
+/**
+ * 1. Correct color not being inherited.
+ *    Known issue: affects color of disabled elements.
+ * 2. Correct font properties not being inherited.
+ * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
+ */
+
+button,
+input,
+optgroup,
+select,
+textarea {
+	color: inherit; /* 1 */
+	font: inherit; /* 2 */
+	margin: 0; /* 3 */
+}
+
+/**
+ * Address `overflow` set to `hidden` in IE 8/9/10/11.
+ */
+
+button {
+	overflow: visible;
+}
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
+ * Correct `select` style inheritance in Firefox.
+ */
+
+button,
+select {
+	text-transform: none;
+}
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+
+button,
+html input[type="button"], /* 1 */
+input[type="reset"],
+input[type="submit"] {
+	-webkit-appearance: button; /* 2 */
+	cursor: pointer; /* 3 */
+}
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+
+button[disabled],
+html input[disabled] {
+	cursor: default;
+}
+
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+	border: 0;
+	padding: 0;
+}
+
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+
+input {
+	line-height: normal;
+}
+
+/**
+ * It's recommended that you don't attempt to style these elements.
+ * Firefox's implementation doesn't respect box-sizing, padding, or width.
+ *
+ * 1. Address box sizing set to `content-box` in IE 8/9/10.
+ * 2. Remove excess padding in IE 8/9/10.
+ */
+
+input[type="checkbox"],
+input[type="radio"] {
+	box-sizing: border-box; /* 1 */
+	padding: 0; /* 2 */
+}
+
+/**
+ * Fix the cursor style for Chrome's increment/decrement buttons. For certain
+ * `font-size` values of the `input`, it causes the cursor style of the
+ * decrement button to change from `default` to `text`.
+ */
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+	height: auto;
+}
+
+/**
+ * 1. Correct `color` not being inherited in IE 8/9/10/11.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ */
+
+legend {
+	border: 0; /* 1 */
+	padding: 0; /* 2 */
+}
+
+/**
+ * Remove default vertical scrollbar in IE 8/9/10/11.
+ */
+
+textarea {
+	overflow: auto;
+}
+
+
+/*
+* Skeleton V2.0.4
+* Copyright 2014, Dave Gamache
+* www.getskeleton.com
+* Free to use under the MIT license.
+* http://www.opensource.org/licenses/mit-license.php
+* 12/29/2014
+*/
+
+/* Grid
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.container {
+	position: relative;
+	width: 100%;
+	max-width: 960px;
+	margin: 0 auto;
+	padding: 0 20px;
+	box-sizing: border-box; }
+.column {
+	width: 100%;
+	float: left;
+	box-sizing: border-box; }
+
+/* For devices larger than 400px */
+@media (min-width: 400px) {
+	.container {
+		width: 85%;
+		padding: 0; }
+}
+
+/* For devices larger than 550px */
+@media (min-width: 550px) {
+	.container {
+		width: 80%; }
+	.column {
+		margin-left: 4%; }
+	.column:first-child {
+		margin-left: 0; }
+	
+	.one-half.column                { width: 48%; }
+}
+
+
+/* Base Styles
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* NOTE
+html is set to 62.5% so that all the REM measurements throughout Skeleton
+are based on 10px sizing. So basically 1.5rem = 15px :) */
+html {
+	font-size: 62.5%; }
+body {
+	font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
+	line-height: 1.6;
+	font-weight: 400;
+	font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #222; }
+
+
+/* Typography
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+h1, h2 {
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	font-weight: 300;
+	text-align:center; }
+h1 { font-size: 4.0rem; line-height: 1.2;  letter-spacing: -.1rem;}
+h2 { font-size: 3.6rem; line-height: 1.25; letter-spacing: -.1rem; }
+
+/* Larger than phablet */
+@media (min-width: 550px) {
+	h1 { font-size: 5.0rem; }
+	h2 { font-size: 4.2rem; }
+}
+
+p {
+	margin-top: 0; }
+
+
+/* Links
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+a {
+	color: #1EAEDB; }
+a:hover {
+	color: #0FA0CE; }
+h2 a {
+	color: #222;
+	text-decoration: none; }
+
+/* Buttons
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+input[type="submit"] {
+	display: block;
+	height: 38px;
+	padding: 0 30px;
+	color: #555;
+	text-align: center;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 38px;
+	letter-spacing: .1rem;
+	text-transform: uppercase;
+	text-decoration: none;
+	white-space: nowrap;
+	background-color: #fff /*transparent*/;
+	border-radius: 4px;
+	border: 1px solid #bbb;
+	cursor: pointer;
+	box-sizing: border-box;
+	margin-right: auto;
+	margin-left: auto;
+}
+input[type="submit"]:hover,
+input[type="submit"]:focus {
+	color: #333;
+	border-color: #888;
+	outline: 0; }
+input[type="submit"].button-primary {
+	color: #FFF;
+	background-color: #33C3F0;
+	border-color: #33C3F0; }
+input[type="submit"].button-primary:hover,
+input[type="submit"].button-primary:focus {
+	color: #FFF;
+	background-color: #1EAEDB;
+	border-color: #1EAEDB; }
+
+
+/* Forms
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+input[type="number"],
+input[type="text"],
+textarea,
+select {
+	height: 38px;
+	padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
+	background-color: #fff;
+	border: 1px solid #D1D1D1;
+	border-radius: 4px;
+	box-shadow: none;
+	box-sizing: border-box; }
+/* Removes awkward default styles on some inputs for iOS */
+input[type="number"],
+input[type="text"],
+textarea {
+	-webkit-appearance: none;
+	   -moz-appearance: none;
+	        appearance: none; }
+textarea {
+	min-height: 65px;
+	padding-top: 6px;
+	padding-bottom: 6px; }
+input[type="number"]:focus,
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+	border: 1px solid #33C3F0;
+	outline: 0; }
+label,
+legend {
+	display: block;
+	margin-bottom: .5rem;
+	font-weight: 600; }
+input[type="checkbox"] {
+	display: inline;
+	margin-bottom: 0;}
+input[type="radio"] {
+	display: inline; }
+label > .label-body {
+	display: inline-block;
+	margin-left: .5rem;
+	font-weight: normal; }
+
+
+/* Spacing
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+button {
+	margin-bottom: 1rem; }
+input,
+textarea,
+select {
+	margin-bottom: 1.5rem; }
+p,
+form {
+	margin-bottom: 2.5rem; }
+
+
+/* Utilities
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.u-full-width {
+	width: 100%;
+	box-sizing: border-box; }
+
+
+/* Clearing
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+/* Self Clearing Goodness */
+.container:after,
+.row:after {
+	content: "";
+	display: table;
+	clear: both; }
+
+
+/*
+* Terpstra Keyboard WebApp
+* http://terpstrakeyboard.com/play-it-now/keys.htm
+*/
+body {
+	background-image: url(Pattern3D_06.png);
+	background-repeat: repeat;
+	background-position: top left;
+	background-attachment: fixed;
+}
+#fullscreen-setter {
+	background: black;
+	color: white;
+	border-radius: 1em;
+	padding: 1em;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-right: -50%;
+	transform: translate(-50%, -50%);
+	cursor: pointer
+}
+#keyboard {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 50%;
+	left: 50%;
+	display: none;
+}
+#backButton {
+	position: absolute;
+	left: 0;
+	top: 50%;
+	display: none;
+	z-index: 100;
+}
+.iosscrollable {
+	height: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+.u-half-width {
+	width: 47.5%;
+	box-sizing: border-box;
+	float: left;
+}
+
+.rpad{
+	margin-right: 5%;
+}
+
+select#quicklinks {
+	max-width: 100%;
+}
+
+.button, button, input[type="submit"], input[type="reset"], input[type="button"]
+{
+	max-width: 100%;
+}
+
+@media screen and (max-width: 550px) {
+	input[type="number"] {
+		width: 100%;
+	}
+	select#instrument {
+		width: 100%;
+	}
+}
+@media screen and (max-width: 350px) {
+	.button, button, input[type="submit"], input[type="reset"], input[type="button"]
+	{
+		padding: 0 10px;
+	}
+}
