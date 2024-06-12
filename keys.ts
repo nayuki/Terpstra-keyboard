@@ -16,22 +16,36 @@ function initialize(): void {
 	// fill in form
 	getHtmlById("settingsForm").onsubmit = goKeyboard;
 	
-	const getData: URLSearchParams = new URL(window.location.href).searchParams;
-	fundamentalInput.value = uspGetMaybe(getData, "fundamental").unwrapOr("440");
-	rStepsInput.value = uspGetMaybe(getData, "right").unwrapOr("3");
-	urStepsInput.value = uspGetMaybe(getData, "upright").unwrapOr("10");
-	hexSizeInput.value = uspGetMaybe(getData, "size").unwrapOr("60");
-	rotationInput.value = uspGetMaybe(getData, "rotation").unwrapOr("343.897886248");
-	instrumentSelect.value = uspGetMaybe(getData, "instrument").unwrapOr("rhodes");
-	enumInput.checked = uspGetMaybe(getData, "enum").map(v => v == "true").unwrapOr(false);
-	equivStepsInput.value = uspGetMaybe(getData, "equivSteps").unwrapOr("17");
-	spectrumColorsInput.checked = uspGetMaybe(getData, "spectrum_colors").map(v => v == "true").unwrapOr(false);
-	fundamentalColorInput.value = uspGetMaybe(getData, "fundamental_color").unwrapOr("#41ff2e");
-	noLabelsInput.checked = uspGetMaybe(getData, "no_labels").map(v => v == "true").unwrapOr(false);
-	
-	uspGetMaybe(getData, "scale").map(v => scaleTextarea.value = v);
-	uspGetMaybe(getData, "names").map(v => namesTextarea.value = v);
-	uspGetMaybe(getData, "note_colors").map(v => noteColorsTextarea.value = v);
+	{
+		const params: URLSearchParams = new URL(window.location.href).searchParams;
+		
+		function getOr(key: string, defaultVal: string): string {
+			const val: string|null = params.get(key);
+			return val !== null ? val : defaultVal;
+		}
+		
+		function doIfPresent(key: string, func: (val:string)=>void): void {
+			const val: string|null = params.get(key);
+			if (val !== null)
+				func(val);
+		}
+		
+		fundamentalInput.value = getOr("fundamental", "440");
+		rStepsInput.value = getOr("right", "3");
+		urStepsInput.value = getOr("upright", "10");
+		hexSizeInput.value = getOr("size", "60");
+		rotationInput.value = getOr("rotation", "343.897886248");
+		instrumentSelect.value = getOr("instrument", "rhodes");
+		enumInput.checked = getOr("enum", "false") == "true";
+		equivStepsInput.value = getOr("equivSteps", "17");
+		spectrumColorsInput.checked = getOr("spectrum_colors", "false") == "true";
+		fundamentalColorInput.value = getOr("fundamental_color", "#41ff2e");
+		noLabelsInput.checked = getOr("no_labels", "false") == "true";
+		
+		doIfPresent("scale", v => scaleTextarea.value = v);
+		doIfPresent("names", v => namesTextarea.value = v);
+		doIfPresent("note_colors", v => noteColorsTextarea.value = v);
+	}
 	
 	hideRevealNames();
 	hideRevealColors();
