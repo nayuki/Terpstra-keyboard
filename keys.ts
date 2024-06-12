@@ -758,6 +758,7 @@ function goKeyboard() {
 	}
 	
 	//iPad Shake to toggle sustain
+	let deviceMotion: any = undefined;
 	if (typeof window.DeviceMotionEvent != "undefined") {
 		let lastShakeCheck: number = 0;
 		let lastShakeCount: number = 0;
@@ -776,11 +777,11 @@ function goKeyboard() {
 		// Listen to motion events and update the position
 		window.addEventListener("devicemotion", deviceMotion, false);
 		
-		function deviceMotion(e: DeviceMotionEvent): void {
+		deviceMotion = function(e: DeviceMotionEvent): void {
 			x1 = e.accelerationIncludingGravity.x;
 			y1 = e.accelerationIncludingGravity.y;
 			z1 = e.accelerationIncludingGravity.z;
-		}
+		};
 		
 		// Periodically check the position and fire
 		// if the change is greater than the sensitivity
@@ -982,8 +983,17 @@ function goKeyboard() {
 	
 	function back(): void {
 		// Remove key listener
+		window.removeEventListener("resize", resizeHandler, false);
+		window.removeEventListener("orientationchange", resizeHandler, false);
 		window.removeEventListener("keydown", onKeyDown);
 		window.removeEventListener("keyup", onKeyUp);
+		if (deviceMotion !== undefined)
+			window.removeEventListener("devicemotion", deviceMotion, false);
+		canvas.removeEventListener("touchstart", handleTouch, false);
+		canvas.removeEventListener("touchend", handleTouch, false);
+		canvas.removeEventListener("touchmove", handleTouch, false);
+		canvas.removeEventListener("mousedown", mouseDown, false);
+		canvas.removeEventListener("mouseup", mouseUp, false);
 		isKeyEventAdded = false;
 		// Stop all active notes
 		while (activeHexObjects.length > 0) {
@@ -998,6 +1008,8 @@ function goKeyboard() {
 		setElemVisible("landing-page", true);
 		document.body.style.overflow = "scroll";
 	}
+	
+	getHtmlById("backButton").onclick = back;
 	
 	
 	function onKeyDown(e: KeyboardEvent): void {
