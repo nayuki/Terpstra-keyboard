@@ -11,6 +11,8 @@ function initialize(): void {
 		}
 	});
 	
+	const initKeyboardOnload: boolean = window.location.search != "";
+	
 	//check\set preset
 	checkPreset(16);
 	// fill in form
@@ -52,7 +54,7 @@ function initialize(): void {
 	hideRevealEnum();
 	
 	//check to see if we have params
-	if (decodeURIComponent(window.location.search) != "") {
+	if (initKeyboardOnload) {
 		//initialize keyboard on load
 		//hide landing page
 		setElemVisible("landing-page", false);
