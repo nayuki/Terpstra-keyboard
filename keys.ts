@@ -16,22 +16,22 @@ function initialize(): void {
 	// fill in form
 	getHtmlById("settingsForm").onsubmit = goKeyboard;
 	
-	const getData: Map<string,string|Array<string>> = QueryData(location.search, true);
-	fundamentalInput.value = mapGetMaybe(getData, "fundamental").map(v => v.toString()).unwrapOr("440");
-	rStepsInput.value = mapGetMaybe(getData, "right").map(v => v.toString()).unwrapOr("3");
-	urStepsInput.value = mapGetMaybe(getData, "upright").map(v => v.toString()).unwrapOr("10");
-	hexSizeInput.value = mapGetMaybe(getData, "size").map(v => v.toString()).unwrapOr("60");
-	rotationInput.value = mapGetMaybe(getData, "rotation").map(v => v.toString()).unwrapOr("343.897886248");
-	instrumentSelect.value = mapGetMaybe(getData, "instrument").map(v => v.toString()).unwrapOr("rhodes");
-	enumInput.checked = mapGetMaybe(getData, "enum").map(v => v == "true").unwrapOr(false);
-	equivStepsInput.value = mapGetMaybe(getData, "equivSteps").map(v => v.toString()).unwrapOr("17");
-	spectrumColorsInput.checked = mapGetMaybe(getData, "spectrum_colors").map(v => v == "true").unwrapOr(false);
-	fundamentalColorInput.value = mapGetMaybe(getData, "fundamental_color").map(v => v.toString()).unwrapOr("#41ff2e");
-	noLabelsInput.checked = mapGetMaybe(getData, "no_labels").map(v => v == "true").unwrapOr(false);
+	const getData: URLSearchParams = new URL(window.location.href).searchParams;
+	fundamentalInput.value = uspGetMaybe(getData, "fundamental").unwrapOr("440");
+	rStepsInput.value = uspGetMaybe(getData, "right").unwrapOr("3");
+	urStepsInput.value = uspGetMaybe(getData, "upright").unwrapOr("10");
+	hexSizeInput.value = uspGetMaybe(getData, "size").unwrapOr("60");
+	rotationInput.value = uspGetMaybe(getData, "rotation").unwrapOr("343.897886248");
+	instrumentSelect.value = uspGetMaybe(getData, "instrument").unwrapOr("rhodes");
+	enumInput.checked = uspGetMaybe(getData, "enum").map(v => v == "true").unwrapOr(false);
+	equivStepsInput.value = uspGetMaybe(getData, "equivSteps").unwrapOr("17");
+	spectrumColorsInput.checked = uspGetMaybe(getData, "spectrum_colors").map(v => v == "true").unwrapOr(false);
+	fundamentalColorInput.value = uspGetMaybe(getData, "fundamental_color").unwrapOr("#41ff2e");
+	noLabelsInput.checked = uspGetMaybe(getData, "no_labels").map(v => v == "true").unwrapOr(false);
 	
-	mapGetMaybe(getData, "scale").map(v => scaleTextarea.value = v[0]);
-	mapGetMaybe(getData, "names").map(v => namesTextarea.value = v[0]);
-	mapGetMaybe(getData, "note_colors").map(v => noteColorsTextarea.value = v[0]);
+	uspGetMaybe(getData, "scale").map(v => scaleTextarea.value = v);
+	uspGetMaybe(getData, "names").map(v => namesTextarea.value = v);
+	uspGetMaybe(getData, "note_colors").map(v => noteColorsTextarea.value = v);
 	
 	hideRevealNames();
 	hideRevealColors();
