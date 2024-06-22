@@ -475,6 +475,10 @@ select#quicklinks {
 	max-width: 100%;
 }
 
+input[type=number] {
+	text-align: right;
+}
+
 @media screen and (max-width: 550px) {
 	input[type="number"] {
 		width: 100%;
