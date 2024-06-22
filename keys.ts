@@ -34,7 +34,7 @@ function initialize(): void {
 		rStepsInput.value = getOr("right", "3");
 		urStepsInput.value = getOr("upright", "10");
 		hexSizeInput.value = getOr("size", "60");
-		rotationInput.value = getOr("rotation", "343.897886248");
+		rotationInput.value = getOr("rotation", "343.9");
 		instrumentSelect.value = getOr("instrument", "rhodes");
 		enumInput.checked = getOr("enum", "false") == "true";
 		equivStepsInput.value = getOr("equivSteps", "17");
