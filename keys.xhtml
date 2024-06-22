@@ -63,28 +63,28 @@
 								</select>
 								
 								<label>Fundamental (Hz)</label>
-								<input id="fundamental" type="number" step="any" min="0.015625" max="16384" value="256" onchange="changeURL();noPreset();" class="u-full-width"/>
+								<input id="fundamental" type="number" step="any" min="0.015625" max="16384" value="256" onchange="noPreset();" class="u-full-width"/>
 							</div>
 							
 							<div class="u-half-width">
 								<label>Right Facing Steps</label>
-								<input id="rSteps" type="number" min="-1220" max="1220" value="4" onchange="changeURL();noPreset();" class="u-full-width"/>
+								<input id="rSteps" type="number" min="-1220" max="1220" value="4" onchange="noPreset();" class="u-full-width"/>
 								<label>Up/Right Facing Steps</label>
-								<input id="urSteps" type="number" min="-1220" max="1220" value="7" onchange="changeURL();noPreset();" class="u-full-width"/>
+								<input id="urSteps" type="number" min="-1220" max="1220" value="7" onchange="noPreset();" class="u-full-width"/>
 							</div>
 						</div>
 						
 						<div class="one-half column thincol-parent">
 							<div class="u-half-width rpad">
 								<label>Hex Size (pixels)</label>
-								<input id="hexSize" type="number" step="any" min="20" max="1000" value="50" onchange="changeURL();noPreset();" class="u-full-width"/>
+								<input id="hexSize" type="number" step="any" min="20" max="1000" value="50" onchange="noPreset();" class="u-full-width"/>
 								<label>Rotation (degrees)</label>
-								<input id="rotation" type="number" step="any" min="0" max="360" value="343.897886248" onchange="changeURL();noPreset();" class="u-full-width"/>
+								<input id="rotation" type="number" step="any" min="0" max="360" value="343.897886248" onchange="noPreset();" class="u-full-width"/>
 							</div>
 							
 							<div class="u-half-width">
 								<label>Instrument</label>
-								<select id="instrument" onchange="changeURL();noPreset();"  class="u-full-width">
+								<select id="instrument" onchange="noPreset();"  class="u-full-width">
 									<optgroup label="Regular">
 										<option value="piano">Piano</option>
 										<option value="harpsichord">Harpsichord</option>
@@ -130,7 +130,7 @@
 					<div class="row">
 						<div class="one-half column pushrow-mobile">
 							<label>Scale (<a href="http://www.huygens-fokker.org/scala/scl_format.html" target="new" style="color: #222; text-decoration: none;">Scala format</a>)</label>
-							<textarea id="scale" onchange="changeURL();noPreset();" class="iosscrollable u-full-width" rows="12">! wilcent17.scl
+							<textarea id="scale" onchange="noPreset();" class="iosscrollable u-full-width" rows="12">! wilcent17.scl
 !
 11-limit 17 tone scale by Erv Wilson
 ! Fokblock([64/63, 56/55, 968/945, 36/35], [5, 6, 11, 6]) =
@@ -160,9 +160,9 @@
 						<div class="one-half column thincol-parent">
 							<div class="u-half-width rpad">
 								<label id="numberLabel" style="display: block;">Steps To Equivalence Interval</label>
-								<input id="equivSteps" type="number" min="1" max="999" value="" onchange="changeURL();noPreset();" style="display: block;" class="u-full-width"/>
+								<input id="equivSteps" type="number" min="1" max="999" value="" onchange="noPreset();" style="display: block;" class="u-full-width"/>
 								<label id="namesLabel" style="display: none;">Note Names</label>
-								<textarea id="names" onchange="changeURL();noPreset();" class="iosscrollable u-full-width" rows="12" style="display: none;">R
+								<textarea id="names" onchange="noPreset();" class="iosscrollable u-full-width" rows="12" style="display: none;">R
 22/21
 11/10
 9/8
@@ -185,7 +185,7 @@
 								<label id="fundamental_colorLabel" style="display: none;">Fundamental Color</label>
 								<input type="text" id="fundamental_color" style="display: none;" class="jscolor u-full-width" value="#55ff55"/>
 								<label id="note_colorsLabel">Color Layout</label>
-								<textarea id="note_colors" onchange="changeURL();noPreset();" class="iosscrollable u-full-width" rows="12">47A2FF
+								<textarea id="note_colors" onchange="noPreset();" class="iosscrollable u-full-width" rows="12">47A2FF
 FFE496
 FFC37D
 47A2FF
