@@ -621,20 +621,19 @@ function goKeyboard() {
 	const rSteps: number = parseFloat(rStepsInput.value);
 	const urSteps: number = rSteps - parseFloat(urStepsInput.value); // Adjust to different coordinate system
 	const hexSize: number = parseFloat(hexSizeInput.value);
-	const rotation: number = (parseFloat(rotationInput.value) * 2 * Math.PI) / 360;
+	const rotation: number = parseFloat(rotationInput.value) * Math.PI / 180;
 	
 	let scale: Array<number> = [];
 	for (const line of scaleTextarea.value.split("\n")) {
 		if (line.match(/^[1234567890.\s/]+$/) && !line.match(/^\s+$/)) {
 			if (line.match(/\//)) {
 				// ratio
-				const nd: Array<string> = line.split("/");
-				const ratio: number = 1200 * Math.log(parseInt(nd[0]) / parseInt(nd[1])) / Math.log(2);
+				const [numer, denom] = line.split("/");
+				const ratio: number = 1200 * Math.log(parseInt(numer) / parseInt(denom)) / Math.log(2);
 				scale.push(ratio);
-			} else {
-				if (line.match(/\./))
+			} else if (line.match(/\./)) {
 				// cents
-					scale.push(parseFloat(line));
+				scale.push(parseFloat(line));
 			}
 		}
 	}
