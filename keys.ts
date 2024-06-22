@@ -999,6 +999,7 @@ function goKeyboard() {
 			drawHex(coords, centsToColor(hexCoordsToCents(coords), false));
 			activeHexObjects.splice(0, 1);
 		}
+		window.history.replaceState({}, "", window.location.pathname);
 		// UI change
 		setElemVisible("keyboard", false);
 		setElemVisible("backButton", false);
