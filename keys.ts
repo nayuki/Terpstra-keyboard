@@ -528,7 +528,6 @@ function hideRevealNames(): void {
 	setElemVisible("names", !c);
 	setElemVisible("numberLabel", c);
 	setElemVisible("namesLabel", !c);
-	changeURL();
 }
 
 function hideRevealColors(): void {
@@ -537,7 +536,6 @@ function hideRevealColors(): void {
 	setElemVisible("fundamental_colorLabel", c);
 	setElemVisible("note_colors", !c);
 	setElemVisible("note_colorsLabel", !c);
-	changeURL();
 }
 
 function hideRevealEnum(): void {
@@ -557,7 +555,6 @@ function hideRevealEnum(): void {
 			setElemVisible("numberLabel", true);
 		}
 	}
-	changeURL();
 }
 
 
