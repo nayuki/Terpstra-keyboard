@@ -5,7 +5,6 @@
  * 2. Prevent iOS text size adjust after orientation change, without disabling
  *    user zoom.
  */
-
 html {
 	height: 100%;
 	background-color: #000000;
@@ -17,7 +16,6 @@ html {
 /**
  * Remove default margin.
  */
-
 body {
 	height: 100%;
 	margin: 0;
@@ -31,7 +29,6 @@ body {
 /**
  * Remove the gray background color from active links in IE 10.
  */
-
 a {
 	background-color: transparent;
 }
@@ -39,7 +36,6 @@ a {
 /**
  * Improve readability when focused and also mouse hovered in all browsers.
  */
-
 a:active,
 a:hover {
 	outline: 0;
@@ -52,7 +48,6 @@ a:hover {
  * Address variable `h1` font-size and margin within `section` and `article`
  * contexts in Firefox 4+, Safari, and Chrome.
  */
-
 h1 {
 	font-size: 2em;
 	margin: 0.67em 0;
@@ -72,7 +67,6 @@ h1 {
  * 2. Correct font properties not being inherited.
  * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
  */
-
 button,
 input,
 optgroup,
@@ -86,7 +80,6 @@ textarea {
 /**
  * Address `overflow` set to `hidden` in IE 8/9/10/11.
  */
-
 button {
 	overflow: visible;
 }
@@ -97,7 +90,6 @@ button {
  * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
  * Correct `select` style inheritance in Firefox.
  */
-
 button,
 select {
 	text-transform: none;
@@ -110,7 +102,6 @@ select {
  * 3. Improve usability and consistency of cursor style between image-type
  *    `input` and others.
  */
-
 button {
 	-webkit-appearance: button; /* 2 */
 	cursor: pointer; /* 3 */
@@ -119,7 +110,6 @@ button {
 /**
  * Remove inner padding and border in Firefox 4+.
  */
-
 button::-moz-focus-inner,
 input::-moz-focus-inner {
 	border: 0;
@@ -130,7 +120,6 @@ input::-moz-focus-inner {
  * Address Firefox 4+ setting `line-height` on `input` using `!important` in
  * the UA stylesheet.
  */
-
 input {
 	line-height: normal;
 }
@@ -142,7 +131,6 @@ input {
  * 1. Address box sizing set to `content-box` in IE 8/9/10.
  * 2. Remove excess padding in IE 8/9/10.
  */
-
 input[type="radio"] {
 	box-sizing: border-box; /* 1 */
 	padding: 0; /* 2 */
@@ -153,7 +141,6 @@ input[type="radio"] {
  * `font-size` values of the `input`, it causes the cursor style of the
  * decrement button to change from `default` to `text`.
  */
-
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
 	height: auto;
@@ -162,7 +149,6 @@ input[type="number"]::-webkit-outer-spin-button {
 /**
  * Remove default vertical scrollbar in IE 8/9/10/11.
  */
-
 textarea {
 	overflow: auto;
 }
@@ -179,6 +165,7 @@ textarea {
 
 /* Grid
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 #landing-page {
 	position: relative;
 	width: 100%;
@@ -186,6 +173,7 @@ textarea {
 	margin: 0 auto;
 	padding: 0 20px;
 }
+
 .column {
 	width: 100%;
 	float: left;
@@ -226,6 +214,7 @@ are based on 10px sizing. So basically 1.5rem = 15px :) */
 html {
 	font-size: 62.5%;
 }
+
 body {
 	font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
 	line-height: 1.6;
@@ -243,11 +232,17 @@ h1, h2 {
 	font-weight: 300;
 	text-align:center;
 }
+
 h1 {
-	font-size: 4.0rem; line-height: 1.2;  letter-spacing: -.1rem;
+	font-size: 4.0rem;
+	line-height: 1.2;
+	letter-spacing: -.1rem;
 }
+
 h2 {
-	font-size: 3.6rem; line-height: 1.25; letter-spacing: -.1rem;
+	font-size: 3.6rem;
+	line-height: 1.25;
+	letter-spacing: -.1rem;
 }
 
 /* Larger than phablet */
@@ -270,9 +265,11 @@ p {
 a {
 	color: #1EAEDB;
 }
+
 a:hover {
 	color: #0FA0CE;
 }
+
 h2 a {
 	color: #222;
 	text-decoration: none;
@@ -301,17 +298,20 @@ button {
 	margin-right: auto;
 	margin-left: auto;
 }
+
 button:hover,
 button:focus {
 	color: #333;
 	border-color: #888;
 	outline: 0;
 }
+
 button.button-primary {
 	color: #FFF;
 	background-color: #33C3F0;
 	border-color: #33C3F0;
 }
+
 button.button-primary:hover,
 button.button-primary:focus {
 	color: #FFF;
@@ -334,6 +334,7 @@ select {
 	box-shadow: none;
 	box-sizing: border-box;
 }
+
 /* Removes awkward default styles on some inputs for iOS */
 input[type="number"],
 input[type="text"],
@@ -342,11 +343,13 @@ textarea {
 	   -moz-appearance: none;
 	        appearance: none;
 }
+
 textarea {
 	min-height: 65px;
 	padding-top: 6px;
 	padding-bottom: 6px;
 }
+
 input[type="number"]:focus,
 input[type="text"]:focus,
 textarea:focus,
@@ -354,11 +357,13 @@ select:focus {
 	border: 1px solid #33C3F0;
 	outline: 0;
 }
+
 label {
 	display: block;
 	margin-bottom: .5rem;
 	font-weight: 600;
 }
+
 input[type="radio"] {
 	display: inline;
 	margin-bottom: 0;
@@ -370,11 +375,13 @@ input[type="radio"] {
 button {
 	margin-bottom: 1rem;
 }
+
 input,
 textarea,
 select {
 	margin-bottom: 1.5rem;
 }
+
 p,
 form {
 	margin-bottom: 2.5rem;
@@ -501,6 +508,7 @@ div.radio-group > label > span {
 		width: 100%;
 	}
 }
+
 @media screen and (max-width: 350px) {
 	button {
 		padding: 0 10px;
