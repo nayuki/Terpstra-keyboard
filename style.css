@@ -8,6 +8,7 @@
 
 html {
 	height: 100%;
+	background-color: #000000;
 	font-family: sans-serif; /* 1 */
 	-ms-text-size-adjust: 100%; /* 2 */
 	-webkit-text-size-adjust: 100%; /* 2 */
@@ -424,8 +425,10 @@ form {
 	padding: 3em 5em;
 	border: 0.1em solid #D1D1D1;
 	border-radius: 3em;
+	background-color: #FFFFFF;
 	background-image: url(Pattern3D_06.png);
 	background-repeat: repeat;
+	z-index: 1;
 }
 
 h2 {
@@ -441,6 +444,11 @@ h2 {
 	left: 0;
 	top: 0;
 }
+
+#keyboard.inactive {
+	opacity: 0.3;
+}
+
 #backButton {
 	position: absolute;
 	left: 0;

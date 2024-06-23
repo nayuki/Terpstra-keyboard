@@ -608,7 +608,7 @@ function goKeyboard() {
 	// Set up screen
 	
 	setElemVisible("landing-page", false);
-	setElemVisible("keyboard", true);
+	canvas.classList.remove("inactive");
 	setElemVisible("backButton", true);
 	
 	// set up settings constants
@@ -985,7 +985,7 @@ function goKeyboard() {
 		}
 		window.history.replaceState({}, "", window.location.pathname);
 		// UI change
-		setElemVisible("keyboard", false);
+		canvas.classList.add("inactive");
 		setElemVisible("backButton", false);
 		setElemVisible("landing-page", true);
 	}
