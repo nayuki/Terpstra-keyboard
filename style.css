@@ -184,29 +184,37 @@ textarea {
 	width: 100%;
 	max-width: 960px;
 	margin: 0 auto;
-	padding: 0 20px; }
+	padding: 0 20px;
+}
 .column {
 	width: 100%;
 	float: left;
-	box-sizing: border-box; }
+	box-sizing: border-box;
+}
 
 /* For devices larger than 400px */
 @media (min-width: 400px) {
 	#landing-page {
 		width: 85%;
-		padding: 0; }
+		padding: 0;
+	}
 }
 
 /* For devices larger than 550px */
 @media (min-width: 550px) {
 	#landing-page {
-		width: 80%; }
+		width: 80%;
+	}
 	.column {
-		margin-left: 4%; }
+		margin-left: 4%;
+	}
 	.column:first-child {
-		margin-left: 0; }
+		margin-left: 0;
+	}
 	
-	.one-half.column                { width: 48%; }
+	.one-half.column {
+		width: 48%;
+	}
 }
 
 
@@ -216,13 +224,15 @@ textarea {
 html is set to 62.5% so that all the REM measurements throughout Skeleton
 are based on 10px sizing. So basically 1.5rem = 15px :) */
 html {
-	font-size: 62.5%; }
+	font-size: 62.5%;
+}
 body {
 	font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
 	line-height: 1.6;
 	font-weight: 400;
 	font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-	color: #222; }
+	color: #222;
+}
 
 
 /* Typography
@@ -231,29 +241,42 @@ h1, h2 {
 	margin-top: 2rem;
 	margin-bottom: 2rem;
 	font-weight: 300;
-	text-align:center; }
-h1 { font-size: 4.0rem; line-height: 1.2;  letter-spacing: -.1rem;}
-h2 { font-size: 3.6rem; line-height: 1.25; letter-spacing: -.1rem; }
+	text-align:center;
+}
+h1 {
+	font-size: 4.0rem; line-height: 1.2;  letter-spacing: -.1rem;
+}
+h2 {
+	font-size: 3.6rem; line-height: 1.25; letter-spacing: -.1rem;
+}
 
 /* Larger than phablet */
 @media (min-width: 550px) {
-	h1 { font-size: 5.0rem; }
-	h2 { font-size: 4.2rem; }
+	h1 {
+		font-size: 5.0rem;
+	}
+	h2 {
+		font-size: 4.2rem;
+	}
 }
 
 p {
-	margin-top: 0; }
+	margin-top: 0;
+}
 
 
 /* Links
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 a {
-	color: #1EAEDB; }
+	color: #1EAEDB;
+}
 a:hover {
-	color: #0FA0CE; }
+	color: #0FA0CE;
+}
 h2 a {
 	color: #222;
-	text-decoration: none; }
+	text-decoration: none;
+}
 
 /* Buttons
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -282,16 +305,19 @@ button:hover,
 button:focus {
 	color: #333;
 	border-color: #888;
-	outline: 0; }
+	outline: 0;
+}
 button.button-primary {
 	color: #FFF;
 	background-color: #33C3F0;
-	border-color: #33C3F0; }
+	border-color: #33C3F0;
+}
 button.button-primary:hover,
 button.button-primary:focus {
 	color: #FFF;
 	background-color: #1EAEDB;
-	border-color: #1EAEDB; }
+	border-color: #1EAEDB;
+}
 
 
 /* Forms
@@ -306,51 +332,61 @@ select {
 	border: 1px solid #D1D1D1;
 	border-radius: 4px;
 	box-shadow: none;
-	box-sizing: border-box; }
+	box-sizing: border-box;
+}
 /* Removes awkward default styles on some inputs for iOS */
 input[type="number"],
 input[type="text"],
 textarea {
 	-webkit-appearance: none;
 	   -moz-appearance: none;
-	        appearance: none; }
+	        appearance: none;
+}
 textarea {
 	min-height: 65px;
 	padding-top: 6px;
-	padding-bottom: 6px; }
+	padding-bottom: 6px;
+}
 input[type="number"]:focus,
 input[type="text"]:focus,
 textarea:focus,
 select:focus {
 	border: 1px solid #33C3F0;
-	outline: 0; }
+	outline: 0;
+}
 label {
 	display: block;
 	margin-bottom: .5rem;
-	font-weight: 600; }
+	font-weight: 600;
+}
 input[type="radio"] {
 	display: inline;
-	margin-bottom: 0;}
+	margin-bottom: 0;
+}
 
 
 /* Spacing
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 button {
-	margin-bottom: 1rem; }
+	margin-bottom: 1rem;
+}
 input,
 textarea,
 select {
-	margin-bottom: 1.5rem; }
+	margin-bottom: 1.5rem;
+}
 p,
 form {
-	margin-bottom: 2.5rem; }
+	margin-bottom: 2.5rem;
+}
 
 
 /* Utilities
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .u-full-width {
 	width: 100%;
-	box-sizing: border-box; }
+	box-sizing: border-box;
+}
 
 
 /* Clearing
@@ -361,7 +397,8 @@ form {
 .row:after {
 	content: "";
 	display: table;
-	clear: both; }
+	clear: both;
+}
 
 
 /*
@@ -425,7 +462,7 @@ h2 {
 	float: left;
 }
 
-.rpad{
+.rpad {
 	margin-right: 5%;
 }
 
@@ -433,8 +470,7 @@ select#quicklinks {
 	max-width: 100%;
 }
 
-button
-{
+button {
 	max-width: 100%;
 }
 
@@ -466,8 +502,7 @@ div.radio-group > label > span {
 	}
 }
 @media screen and (max-width: 350px) {
-	button
-	{
+	button {
 		padding: 0 10px;
 	}
 }
