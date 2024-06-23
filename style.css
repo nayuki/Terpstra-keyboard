@@ -58,17 +58,6 @@ h1 {
 	margin: 0.67em 0;
 }
 
-/* Embedded content
-   ========================================================================== */
-
-/**
- * Remove border when inside `a` element in IE 8/9/10.
- */
-
-img {
-	border: 0;
-}
-
 /* Forms
    ========================================================================== */
 
@@ -128,15 +117,6 @@ button {
 }
 
 /**
- * Re-set default cursor for disabled elements.
- */
-
-button[disabled],
-html input[disabled] {
-	cursor: default;
-}
-
-/**
  * Remove inner padding and border in Firefox 4+.
  */
 
@@ -177,16 +157,6 @@ input[type="radio"] {
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
 	height: auto;
-}
-
-/**
- * 1. Correct `color` not being inherited in IE 8/9/10/11.
- * 2. Remove padding so people aren't caught out if they zero out fieldsets.
- */
-
-legend {
-	border: 0; /* 1 */
-	padding: 0; /* 2 */
 }
 
 /**
@@ -354,8 +324,7 @@ textarea:focus,
 select:focus {
 	border: 1px solid #33C3F0;
 	outline: 0; }
-label,
-legend {
+label {
 	display: block;
 	margin-bottom: .5rem;
 	font-weight: 600; }
