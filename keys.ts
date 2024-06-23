@@ -1289,6 +1289,7 @@ function goKeyboard() {
 			const scaleFactor: number = hexSize / 50;
 			context.scale(scaleFactor, scaleFactor);
 			context.translate(10, -25);
+			context.fillStyle = getContrastYIQ(currentTextColor) == "black" ? "#505050" : "#E0E0E0";
 			context.font = "12pt Arial";
 			context.textAlign = "center";
 			context.textBaseline = "middle";
