@@ -641,7 +641,7 @@ function goKeyboard() {
 			volume = Math.max(volume - 0.1, 0);
 		} else if (e.code == "ArrowUp") {
 			e.preventDefault();
-			volume = Math.max(volume + 0.1, 3);
+			volume = Math.min(volume + 0.1, 3);
 		}
 	};
 	window.addEventListener("keydown", handleVolume);
