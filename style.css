@@ -298,19 +298,6 @@ button:focus {
 	outline: 0;
 }
 
-button.button-primary {
-	color: #FFF;
-	background-color: #33C3F0;
-	border-color: #33C3F0;
-}
-
-button.button-primary:hover,
-button.button-primary:focus {
-	color: #FFF;
-	background-color: #1EAEDB;
-	border-color: #1EAEDB;
-}
-
 
 /* ---- Forms ---- */
 input[type="number"],
