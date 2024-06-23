@@ -23,8 +23,7 @@ body {
 	flex-direction: row;
 }
 
-/* Links
-   ========================================================================== */
+/* ---- Links ---- */
 
 /**
  * Remove the gray background color from active links in IE 10.
@@ -41,8 +40,7 @@ a:hover {
 	outline: 0;
 }
 
-/* Text-level semantics
-   ========================================================================== */
+/* ---- Text-level semantics ---- */
 
 /**
  * Address variable `h1` font-size and margin within `section` and `article`
@@ -53,8 +51,7 @@ h1 {
 	margin: 0.67em 0;
 }
 
-/* Forms
-   ========================================================================== */
+/* ---- Forms ---- */
 
 /**
  * Known limitation: by default, Chrome and Safari on OS X allow very limited
@@ -163,8 +160,7 @@ textarea {
 * 12/29/2014
 */
 
-/* Grid
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* ---- Grid ---- */
 
 #landing-page {
 	position: relative;
@@ -206,8 +202,7 @@ textarea {
 }
 
 
-/* Base Styles
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* ---- Base Styles ---- */
 /* NOTE
 html is set to 62.5% so that all the REM measurements throughout Skeleton
 are based on 10px sizing. So basically 1.5rem = 15px :) */
@@ -224,8 +219,7 @@ body {
 }
 
 
-/* Typography
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* ---- Typography ---- */
 h1, h2 {
 	margin-top: 2rem;
 	margin-bottom: 2rem;
@@ -260,8 +254,7 @@ p {
 }
 
 
-/* Links
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* ---- Links ---- */
 a {
 	color: #1EAEDB;
 }
@@ -275,8 +268,7 @@ h2 a {
 	text-decoration: none;
 }
 
-/* Buttons
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* ---- Buttons ---- */
 button {
 	display: block;
 	height: 38px;
@@ -320,8 +312,7 @@ button.button-primary:focus {
 }
 
 
-/* Forms
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* ---- Forms ---- */
 input[type="number"],
 input[type="text"],
 textarea,
@@ -370,8 +361,7 @@ input[type="radio"] {
 }
 
 
-/* Spacing
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* ---- Spacing ---- */
 button {
 	margin-bottom: 1rem;
 }
@@ -388,16 +378,14 @@ form {
 }
 
 
-/* Utilities
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* ---- Utilities ---- */
 .u-full-width {
 	width: 100%;
 	box-sizing: border-box;
 }
 
 
-/* Clearing
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* ---- Clearing ---- */
 
 /* Self Clearing Goodness */
 #landing-page:after,
