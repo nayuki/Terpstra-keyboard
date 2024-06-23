@@ -347,13 +347,6 @@ form {
 }
 
 
-/* ---- Utilities ---- */
-.u-full-width {
-	width: 100%;
-	box-sizing: border-box;
-}
-
-
 /*
  * Terpstra Keyboard WebApp
  * http://terpstrakeyboard.com/play-it-now/keys.htm
@@ -371,6 +364,11 @@ form {
 
 h2 {
 	margin-top: 0em;
+}
+
+#landing-page input[type=number], #landing-page select, #landing-page textarea {
+	width: 100%;
+	box-sizing: border-box;
 }
 
 #landing-page > *:last-child {

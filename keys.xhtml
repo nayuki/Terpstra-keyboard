@@ -20,7 +20,7 @@
 				<div class="grid">
 					<div>
 						<label>Tuning/layout quick presets:</label>
-						<select id="quicklinks" onchange="presetChanged();" class="u-full-width">
+						<select id="quicklinks" onchange="presetChanged();">
 							<option selected="selected" disabled="disabled">Custom</option>
 							<optgroup label="Isomorphic Layouts for 12-ET">
 								<option value="?fundamental=261.63&amp;right=2&amp;upright=1&amp;size=50&amp;rotation=-16.1&amp;instrument=piano&amp;enum=false&amp;equivSteps=12&amp;piano_colors=true&amp;spectrum_colors=false&amp;no_labels=false&amp;scale=!%2012-ed2%20Jank%C3%B3%206-6%20Balanced%20Symmetric%20Bilinear%20Uniform%20Keyboard%20~Halberstadt.scl%0A!%2012-tone%20equal%20tempered%20scale%20consisting%20of%2012%20sonically%20equal%20divisions%20per%20frequency%20halving%2Fdoubling%2C%20mapped%20on%20a%20(hexagonal)%20tilted%20Jank%C3%B3%20layout%20which%20can%20be%20regarded%20as%20a%20stacked%206-6%2FBalanced%2FSymmetric%2FBilinear%2FUniform%20Keyboard%2C%20and%20which%20approximates%20the%207-white%2F5-black%20Halberstadt%20organ%20layout%20(the%20classic%20piano%20keyboard).%0A!%0ATerpstra%20Keyboard%20WebApp%20%7C%2012-ed2%20Jank%C3%B3%20%2F%206-6%2FBalanced%2FSymmetric%2FBilinear%2FUniform%20Keyboard%20%2F%20~Halberstadt%0A12%0A!%0A100.0%0A200.0%0A300.0%0A400.0%0A500.0%0A600.0%0A700.0%0A800.0%0A900.0%0A1000.0%0A1100.0%0A1200.0&amp;names=C%0AD%E2%99%AD%2FC%E2%99%AF%0AD%0AE%E2%99%AD%2FD%E2%99%AF%0AE%0AF%0AG%E2%99%AD%2FF%E2%99%AF%0AG%0AA%E2%99%AD%2FG%E2%99%AF%0AA%0AB%E2%99%AD%2FA%E2%99%AF%0AB&amp;note_colors=ffffff%0A7b7b7b%0Affffff%0A7b7b7b%0Affffff%0Affffff%0A7b7b7b%0Affffff%0A7b7b7b%0Affffff%0A7b7b7b%0Affffff">Jankó / 6-6/Balanced/Symmetric/Bilinear/Uniform</option>
@@ -61,26 +61,26 @@
 						</select>
 						
 						<label>Fundamental frequency (Hz):</label>
-						<input id="fundamental" type="number" step="0.01" min="0.01" max="16384" value="256" onchange="noPreset();" class="u-full-width"/>
+						<input id="fundamental" type="number" step="0.01" min="0.01" max="16384" value="256" onchange="noPreset();"/>
 					</div>
 					
 					<div>
 						<label>Right-facing steps:</label>
-						<input id="rSteps" type="number" min="-1220" max="1220" value="4" onchange="noPreset();" class="u-full-width"/>
+						<input id="rSteps" type="number" min="-1220" max="1220" value="4" onchange="noPreset();"/>
 						<label>Up-right-facing steps:</label>
-						<input id="urSteps" type="number" min="-1220" max="1220" value="7" onchange="noPreset();" class="u-full-width"/>
+						<input id="urSteps" type="number" min="-1220" max="1220" value="7" onchange="noPreset();"/>
 					</div>
 					
 					<div>
 						<label>Hexagon size (pixels):</label>
-						<input id="hexSize" type="number" step="any" min="20" max="1000" value="50" onchange="noPreset();" class="u-full-width"/>
+						<input id="hexSize" type="number" step="any" min="20" max="1000" value="50" onchange="noPreset();"/>
 						<label>Rotation (degrees clockwise):</label>
-						<input id="rotation" type="number" step="0.1" min="-30" max="30" value="-16.1" onchange="noPreset();" class="u-full-width"/>
+						<input id="rotation" type="number" step="0.1" min="-30" max="30" value="-16.1" onchange="noPreset();"/>
 					</div>
 					
 					<div>
 						<label>Instrument:</label>
-						<select id="instrument" onchange="noPreset();"  class="u-full-width">
+						<select id="instrument" onchange="noPreset();">
 							<optgroup label="Regular">
 								<option value="piano">Piano</option>
 								<option value="harpsichord">Harpsichord</option>
@@ -111,7 +111,7 @@
 					
 					<div style="grid-column-end:span 2">
 						<label>Scale (<a href="https://www.huygens-fokker.org/scala/scl_format.html" target="_blank" style="color:#222222; text-decoration:none;">Scala format</a>):</label>
-						<textarea id="scale" onchange="noPreset();" class="iosscrollable u-full-width" rows="12" spellcheck="false">! wilcent17.scl
+						<textarea id="scale" onchange="noPreset();" class="iosscrollable" rows="12" spellcheck="false">! wilcent17.scl
 !
 11-limit 17 tone scale by Erv Wilson
 ! Fokblock([64/63, 56/55, 968/945, 36/35], [5, 6, 11, 6]) =
@@ -155,9 +155,9 @@
 							</label>
 						</div>
 						<label id="numberLabel">Steps to equivalence interval:</label>
-						<input id="equivSteps" type="number" min="1" max="999" value="" onchange="noPreset();" class="u-full-width"/>
+						<input id="equivSteps" type="number" min="1" max="999" value="" onchange="noPreset();"/>
 						<label id="namesLabel">Note names:</label>
-						<textarea id="names" onchange="noPreset();" class="iosscrollable u-full-width" rows="12" spellcheck="false">R
+						<textarea id="names" onchange="noPreset();" class="iosscrollable" rows="12" spellcheck="false">R
 22/21
 11/10
 9/8
@@ -189,9 +189,9 @@
 							</label>
 						</div>
 						<label id="fundamental_colorLabel">Fundamental color:</label>
-						<input type="text" id="fundamental_color" class="jscolor u-full-width" value="#55ff55"/>
+						<input type="text" id="fundamental_color" class="jscolor" value="#55ff55"/>
 						<label id="note_colorsLabel">Color layout:</label>
-						<textarea id="note_colors" onchange="noPreset();" class="iosscrollable u-full-width" rows="12" spellcheck="false">47A2FF
+						<textarea id="note_colors" onchange="noPreset();" class="iosscrollable" rows="12" spellcheck="false">47A2FF
 FFE496
 FFC37D
 47A2FF
