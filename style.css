@@ -152,13 +152,13 @@ textarea {
 
 
 /*
-* Skeleton V2.0.4
-* Copyright 2014, Dave Gamache
-* www.getskeleton.com
-* Free to use under the MIT license.
-* http://www.opensource.org/licenses/mit-license.php
-* 12/29/2014
-*/
+ * Skeleton V2.0.4
+ * Copyright 2014, Dave Gamache
+ * www.getskeleton.com
+ * Free to use under the MIT license.
+ * http://www.opensource.org/licenses/mit-license.php
+ * 12/29/2014
+ */
 
 /* ---- Grid ---- */
 
@@ -224,7 +224,7 @@ h1, h2 {
 	margin-top: 2rem;
 	margin-bottom: 2rem;
 	font-weight: 300;
-	text-align:center;
+	text-align: center;
 }
 
 h1 {
@@ -397,9 +397,9 @@ form {
 
 
 /*
-* Terpstra Keyboard WebApp
-* http://terpstrakeyboard.com/play-it-now/keys.htm
-*/
+ * Terpstra Keyboard WebApp
+ * http://terpstrakeyboard.com/play-it-now/keys.htm
+ */
 #landing-page {
 	margin: auto;
 	padding: 3em 5em;
