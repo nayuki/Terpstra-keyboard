@@ -372,11 +372,9 @@ legend {
 	display: block;
 	margin-bottom: .5rem;
 	font-weight: 600; }
-input[type="checkbox"] {
+input[type="checkbox"], input[type="radio"] {
 	display: inline;
 	margin-bottom: 0;}
-input[type="radio"] {
-	display: inline; }
 label > .label-body {
 	display: inline-block;
 	margin-left: .5rem;

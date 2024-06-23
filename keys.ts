@@ -28,6 +28,7 @@ function initialize(): void {
 		enumInput.checked = getOr("enum", "false") == "true";
 		equivStepsInput.value = getOr("equivSteps", "17");
 		spectrumColorsInput.checked = getOr("spectrum_colors", "false") == "true";
+		getInputById("custom_colors").checked = !spectrumColorsInput.checked;
 		fundamentalColorInput.value = getOr("fundamental_color", "#41ff2e");
 		noLabelsInput.checked = getOr("no_labels", "false") == "true";
 		
@@ -1482,6 +1483,7 @@ function presetChanged(): void {
 	enumInput.checked = getOr("enum", "false") == "true";
 	equivStepsInput.value = getOr("equivSteps", "17");
 	spectrumColorsInput.checked = getOr("spectrum_colors", "false") == "true";
+	getInputById("custom_colors").checked = !spectrumColorsInput.checked;
 	fundamentalColorInput.value = getOr("fundamental_color", "#41ff2e");
 	noLabelsInput.checked = getOr("no_labels", "false") == "true";
 	

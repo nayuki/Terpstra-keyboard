@@ -178,9 +178,14 @@
 							</div>
 							
 							<div class="u-half-width">
+								<label>Key Colors</label>
 								<label>
-									<input id="spectrum_colors" type="checkbox" name="spectrum_colors" value="fnord" onchange="hideRevealColors();noPreset();"/>
-									<span class="label-body">Use Spectrum Colors</span>
+									<input id="spectrum_colors" type="radio" name="key_colors" onchange="hideRevealColors();noPreset();"/>
+									<span class="label-body">Rainbow Spectrum</span>
+								</label>
+								<label>
+									<input id="custom_colors" type="radio" name="key_colors" onchange="hideRevealColors();noPreset();"/>
+									<span class="label-body">Custom</span>
 								</label>
 								<label id="fundamental_colorLabel" style="display: none;">Fundamental Color</label>
 								<input type="text" id="fundamental_color" style="display: none;" class="jscolor u-full-width" value="#55ff55"/>
