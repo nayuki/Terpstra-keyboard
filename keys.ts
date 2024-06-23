@@ -609,7 +609,6 @@ function goKeyboard() {
 	
 	setElemVisible("landing-page", false);
 	setElemVisible("keyboard", true);
-	document.body.style.overflow = "hidden";
 	setElemVisible("backButton", true);
 	
 	// set up settings constants
@@ -989,7 +988,6 @@ function goKeyboard() {
 		setElemVisible("keyboard", false);
 		setElemVisible("backButton", false);
 		setElemVisible("landing-page", true);
-		document.body.style.overflow = "scroll";
 	}
 	
 	getHtmlById("backButton").onclick = back;
