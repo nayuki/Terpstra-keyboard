@@ -454,6 +454,10 @@ h2 {
 	left: 0;
 	top: 50%;
 	display: none;
+	padding: 8px;
+	background-color: #FFFFFF;
+	border: 2px solid #A0A0A0;
+	border-radius: 50%;
 	z-index: 100;
 }
 .iosscrollable {
