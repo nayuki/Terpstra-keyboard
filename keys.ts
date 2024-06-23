@@ -560,7 +560,14 @@ function hideRevealEnum(): void {
 
 function changeURL(): void {
 	// Find scl file description for the page title
-	document.title = scaleTextarea.value.split("\n").find(line => !line.match(/^\!/) && line.match(/[a-zA-Z]+/)) ?? "Terpstra Keyboard WebApp";
+	try {
+		const scl: ScalaScale = new ScalaScale(scaleTextarea.value);
+		if (scl.description == "")
+			throw new RangeError("Empty description");
+		document.title = scl.description;
+	} catch (e) {
+		document.title = "Terpstra Keyboard WebApp";
+	}
 	
 	const params: Array<[string,string]> = [
 		["fundamental", fundamentalInput.value],
@@ -623,22 +630,8 @@ function goKeyboard() {
 	const hexSize: number = parseFloat(hexSizeInput.value);
 	const rotationRad: number = parseFloat(rotationInput.value) * Math.PI / 180;
 	
-	let scaleCents: Array<number> = [];
-	for (const line of scaleTextarea.value.split("\n")) {
-		if (line.match(/^[1234567890.\s/]+$/) && !line.match(/^\s+$/)) {
-			if (line.match(/\//)) {
-				// ratio
-				const [numer, denom] = line.split("/");
-				const ratio: number = 1200 * Math.log(parseInt(numer) / parseInt(denom)) / Math.log(2);
-				scaleCents.push(ratio);
-			} else if (line.match(/\./)) {
-				// cents
-				scaleCents.push(parseFloat(line));
-			}
-		}
-	}
-	const equivIntervalCents: number = notUndefined(scaleCents.pop());
-	scaleCents.unshift(0);
+	const scale: ScalaScale = new ScalaScale(scaleTextarea.value);
+	const equivIntervalCents: number = scale.pitchesCents[scale.pitchesCents.length - 1];
 	
 	const keycolors: Array<string> = noteColorsTextarea.value.split("\n");
 	
@@ -1275,7 +1268,7 @@ function goKeyboard() {
 		context.textBaseline = "middle";
 		
 		const note: number = p.x * rSteps + p.y * urSteps;
-		const equivSteps1: number = enumerateScale ? equivSteps : scaleCents.length;
+		const equivSteps1: number = enumerateScale ? equivSteps : scale.pitchesCents.length - 1;
 		const equivMultiple: number = Math.floor(note / equivSteps1);
 		let reducedNote: number = note % equivSteps1;
 		if (reducedNote < 0)
@@ -1308,13 +1301,14 @@ function goKeyboard() {
 	
 	function hexCoordsToCents(coords: Point): number {
 		const distance: number = coords.x * rSteps + coords.y * urSteps;
-		let octs: number = roundTowardZero(distance / scaleCents.length);
-		let reducedSteps = distance % scaleCents.length;
+		const numPitches: number = scale.pitchesCents.length - 1;
+		let octs: number = roundTowardZero(distance / numPitches);
+		let reducedSteps = distance % numPitches;
 		if (reducedSteps < 0) {
-			reducedSteps += scaleCents.length;
+			reducedSteps += numPitches;
 			octs -= 1;
 		}
-		const cents: number = octs * equivIntervalCents + scaleCents[reducedSteps];
+		const cents: number = octs * equivIntervalCents + scale.pitchesCents[reducedSteps];
 		globalPressedInterval = reducedSteps;
 		return cents;
 	}
@@ -1368,6 +1362,56 @@ function goKeyboard() {
 	
 	return false;
 }
+
+
+
+class ScalaScale {
+	
+	public readonly description: string;
+	public readonly pitchesCents: Readonly<Array<number>>;
+	
+	
+	public constructor(text: string) {
+		let lines: Array<string> = text.split("\n").filter(line => !line.startsWith("!"));
+		{
+			const head: string|undefined = lines.shift();
+			if (head === undefined)
+				throw new RangeError("Missing description");
+			this.description = head;
+		}
+		
+		lines = lines.filter(line => !/^\s*$/.test(line));
+		let numPitches: number;
+		{
+			const head: string|undefined = lines.shift();
+			if (head === undefined)
+				throw new RangeError("Missing number of pitches");
+			const mat: Array<string>|null = head.match(/^\s*(\d+)\s*$/);
+			if (mat === null)
+				throw new RangeError("Invalid number of pitches"+head);
+			numPitches = parseInt(mat[1], 10);
+		}
+		
+		if (lines.length != numPitches)
+			throw new RangeError("Mismatched number of pitches");
+		let pitches: Array<number> = [0];
+		for (const line of lines) {
+			const numStr = line.replace(/^\s+/, "").replace(/\s.*$/, "");
+			if (numStr.match(/^\d+\.\d*$/) !== null)
+				pitches.push(parseFloat(numStr));
+			else if (numStr.match(/^\d+$/) !== null)
+				pitches.push(Math.log(parseInt(numStr, 10)) / Math.log(2) * 1200);
+			else if (numStr.match(/^\d+\/\d+$/) !== null) {
+				const [numer, denom] = numStr.split("/");
+				pitches.push(Math.log(parseInt(numer, 10) / parseInt(denom, 10)) / Math.log(2) * 1200);
+			} else
+				throw new RangeError("Invalid pitch value: " + numStr);
+		}
+		this.pitchesCents = pitches;
+	}
+	
+}
+
 
 
 function getPointerPosition(e: MouseEvent): Point {
