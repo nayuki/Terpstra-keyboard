@@ -147,18 +147,20 @@
 					<div class="one-half column thincol-parent">
 						<div class="u-half-width rpad">
 							<label>Key labels:</label>
-							<label>
-								<input id="no_labels" type="radio" name="note_labels" onchange="hideRevealEnum();noPreset();"/>
-								<span class="label-body">Blank</span>
-							</label>
-							<label>
-								<input id="enum" type="radio" name="note_labels" onchange="hideRevealNames();noPreset();"/>
-								<span class="label-body">Integers</span>
-							</label>
-							<label>
-								<input id="custom_labels" type="radio" name="note_labels" onchange="hideRevealNames();noPreset();"/>
-								<span class="label-body">Custom</span>
-							</label>
+							<div class="radio-group">
+								<label>
+									<input id="no_labels" type="radio" name="note_labels" onchange="hideRevealEnum();noPreset();"/>
+									<span>Blank</span>
+								</label>
+								<label>
+									<input id="enum" type="radio" name="note_labels" onchange="hideRevealNames();noPreset();"/>
+									<span>Integers</span>
+								</label>
+								<label>
+									<input id="custom_labels" type="radio" name="note_labels" onchange="hideRevealNames();noPreset();"/>
+									<span>Custom</span>
+								</label>
+							</div>
 							<label id="numberLabel" style="display: block;">Steps to equivalence interval:</label>
 							<input id="equivSteps" type="number" min="1" max="999" value="" onchange="noPreset();" style="display: block;" class="u-full-width"/>
 							<label id="namesLabel" style="display: none;">Note names:</label>
@@ -183,14 +185,16 @@
 						
 						<div class="u-half-width">
 							<label>Key colors:</label>
-							<label>
-								<input id="spectrum_colors" type="radio" name="key_colors" onchange="hideRevealColors();noPreset();"/>
-								<span class="label-body">Rainbow spectrum</span>
-							</label>
-							<label>
-								<input id="custom_colors" type="radio" name="key_colors" onchange="hideRevealColors();noPreset();"/>
-								<span class="label-body">Custom</span>
-							</label>
+							<div class="radio-group">
+								<label>
+									<input id="spectrum_colors" type="radio" name="key_colors" onchange="hideRevealColors();noPreset();"/>
+									<span>Rainbow spectrum</span>
+								</label>
+								<label>
+									<input id="custom_colors" type="radio" name="key_colors" onchange="hideRevealColors();noPreset();"/>
+									<span>Custom</span>
+								</label>
+							</div>
 							<label id="fundamental_colorLabel" style="display: none;">Fundamental color:</label>
 							<input type="text" id="fundamental_color" style="display: none;" class="jscolor u-full-width" value="#55ff55"/>
 							<label id="note_colorsLabel">Color layout:</label>

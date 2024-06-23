@@ -362,10 +362,6 @@ legend {
 input[type="radio"] {
 	display: inline;
 	margin-bottom: 0;}
-label > .label-body {
-	display: inline-block;
-	margin-left: .5rem;
-	font-weight: normal; }
 
 
 /* Spacing
@@ -475,6 +471,21 @@ button
 
 input[type=number] {
 	text-align: right;
+}
+
+div.radio-group {
+	display: table;
+}
+
+div.radio-group > label {
+	display: table-row;
+}
+
+div.radio-group > label > span {
+	display: table-cell;
+	padding-left: 0.6em;
+	padding-bottom: 0.3em;
+	font-weight: normal;
 }
 
 @media screen and (max-width: 550px) {
