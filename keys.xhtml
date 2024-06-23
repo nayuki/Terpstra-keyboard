@@ -147,13 +147,18 @@
 						
 						<div class="one-half column thincol-parent">
 							<div class="u-half-width rpad">
+								<label>Note Labels</label>
 								<label>
-									<input id="no_labels" type="checkbox" name="no_labels" value="fnord" onchange="hideRevealEnum();noPreset();"/>
-									<span class="label-body">Blank Keys (No labels)</span>
+									<input id="no_labels" type="radio" name="note_labels" onchange="hideRevealEnum();noPreset();"/>
+									<span class="label-body">Blank</span>
 								</label>
 								<label>
-									<input id="enum" type="checkbox" name="number_or_name" value="fnord" onchange="hideRevealNames();noPreset();"/>
-									<span class="label-body">Enumerate Scale</span>
+									<input id="enum" type="radio" name="note_labels" onchange="hideRevealNames();noPreset();"/>
+									<span class="label-body">Integers</span>
+								</label>
+								<label>
+									<input id="custom_labels" type="radio" name="note_labels" onchange="hideRevealNames();noPreset();"/>
+									<span class="label-body">Custom</span>
 								</label>
 								<label id="numberLabel" style="display: block;">Steps To Equivalence Interval</label>
 								<input id="equivSteps" type="number" min="1" max="999" value="" onchange="noPreset();" style="display: block;" class="u-full-width"/>

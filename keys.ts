@@ -29,8 +29,10 @@ function initialize(): void {
 		equivStepsInput.value = getOr("equivSteps", "17");
 		spectrumColorsInput.checked = getOr("spectrum_colors", "false") == "true";
 		getInputById("custom_colors").checked = !spectrumColorsInput.checked;
+		
 		fundamentalColorInput.value = getOr("fundamental_color", "#41ff2e");
 		noLabelsInput.checked = getOr("no_labels", "false") == "true";
+		getInputById("custom_labels").checked = !noLabelsInput.checked && !enumInput.checked;
 		
 		doIfPresent("scale", v => scaleTextarea.value = v);
 		doIfPresent("names", v => namesTextarea.value = v);
@@ -530,13 +532,11 @@ function hideRevealColors(): void {
 
 function hideRevealEnum(): void {
 	if (noLabelsInput.checked) {
-		enumInput.disabled = true;
 		setElemVisible("equivSteps", false);
 		setElemVisible("names", false);
 		setElemVisible("numberLabel", false);
 		setElemVisible("namesLabel", false);
 	} else {
-		enumInput.disabled = false;
 		if (!enumInput.checked) {
 			setElemVisible("namesLabel", true);
 			setElemVisible("names", true);
@@ -1486,6 +1486,7 @@ function presetChanged(): void {
 	getInputById("custom_colors").checked = !spectrumColorsInput.checked;
 	fundamentalColorInput.value = getOr("fundamental_color", "#41ff2e");
 	noLabelsInput.checked = getOr("no_labels", "false") == "true";
+	getInputById("custom_labels").checked = !noLabelsInput.checked && !enumInput.checked;
 	
 	doIfPresent("scale", v => scaleTextarea.value = v);
 	doIfPresent("names", v => namesTextarea.value = v);
