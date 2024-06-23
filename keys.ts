@@ -607,9 +607,12 @@ function goKeyboard() {
 		window.addEventListener("devicemotion", deviceMotion, false);
 		
 		deviceMotion = function(e: DeviceMotionEvent): void {
-			x1 = e.accelerationIncludingGravity.x;
-			y1 = e.accelerationIncludingGravity.y;
-			z1 = e.accelerationIncludingGravity.z;
+			const accel: DeviceMotionEventAcceleration|null = e.accelerationIncludingGravity;
+			if (accel === null)
+				return;
+			if (accel.x !== null) x1 = accel.x;
+			if (accel.y !== null) y1 = accel.y;
+			if (accel.z !== null) z1 = accel.z;
 		};
 		
 		// Periodically check the position and fire
