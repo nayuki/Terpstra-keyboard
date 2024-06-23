@@ -8,9 +8,9 @@
 html {
 	height: 100%;
 	background-color: #000000;
-	font-family: sans-serif; /* 1 */
-	-ms-text-size-adjust: 100%; /* 2 */
-	-webkit-text-size-adjust: 100%; /* 2 */
+	font-family: sans-serif;  /* 1 */
+	-ms-text-size-adjust: 100%;  /* 2 */
+	-webkit-text-size-adjust: 100%;  /* 2 */
 }
 
 /**
@@ -69,9 +69,9 @@ input,
 optgroup,
 select,
 textarea {
-	color: inherit; /* 1 */
-	font: inherit; /* 2 */
-	margin: 0; /* 3 */
+	color: inherit;  /* 1 */
+	font: inherit;  /* 2 */
+	margin: 0;  /* 3 */
 }
 
 /**
@@ -100,8 +100,8 @@ select {
  *    `input` and others.
  */
 button {
-	-webkit-appearance: button; /* 2 */
-	cursor: pointer; /* 3 */
+	-webkit-appearance: button;  /* 2 */
+	cursor: pointer;  /* 3 */
 }
 
 /**
@@ -129,8 +129,8 @@ input {
  * 2. Remove excess padding in IE 8/9/10.
  */
 input[type="radio"] {
-	box-sizing: border-box; /* 1 */
-	padding: 0; /* 2 */
+	box-sizing: border-box;  /* 1 */
+	padding: 0;  /* 2 */
 }
 
 /**
@@ -211,7 +211,7 @@ html {
 }
 
 body {
-	font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
+	font-size: 1.5em;  /* currently ems cause chrome bug misinterpreting rems on body element */
 	line-height: 1.6;
 	font-weight: 400;
 	font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -318,7 +318,7 @@ input[type="text"],
 textarea,
 select {
 	height: 38px;
-	padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
+	padding: 6px 10px;  /* The 6px vertically centers text on FF, ignored by Webkit */
 	background-color: #fff;
 	border: 1px solid #D1D1D1;
 	border-radius: 4px;

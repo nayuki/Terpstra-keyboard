@@ -502,7 +502,7 @@ function goKeyboard() {
 	
 	const fundamental: number = parseFloat(fundamentalInput.value);
 	const rSteps: number = parseFloat(rStepsInput.value);
-	const urSteps: number = rSteps - parseFloat(urStepsInput.value); // Adjust to different coordinate system
+	const urSteps: number = rSteps - parseFloat(urStepsInput.value);  // Adjust to different coordinate system
 	const hexSize: number = parseFloat(hexSizeInput.value);
 	const rotationRad: number = parseFloat(rotationInput.value) * Math.PI / 180;
 	
@@ -580,7 +580,7 @@ function goKeyboard() {
 	
 	let sustain: boolean = false;
 	let sustainedNotes: Array<ActiveHex> = [];
-	//canvas.addEventListener("keydown", onKeyDown, false); // Firefox isn't firing :(
+	//canvas.addEventListener("keydown", onKeyDown, false);  // Firefox isn't firing :(
 	//canvas.addEventListener("keyup", onKeyUp, false);
 	
 	let pressedKeys: Array<number|string> = [];
@@ -668,7 +668,7 @@ function goKeyboard() {
 			let h: number = fcolor1.h / 360;
 			let s: number = fcolor1.s / 100;
 			let v: number = fcolor1.v / 100;
-			//const h = 145 / 360; // green
+			//const h = 145 / 360;  // green
 			let reduced: number = (cents / 1200) % 1;
 			if (reduced < 0)
 				reduced += 1;
@@ -716,7 +716,7 @@ function goKeyboard() {
 		
 		public noteOn(cents: number): void {
 			const freq: number = fundamental * Math.pow(2, cents / 1200);
-			let source = audioContext.createBufferSource(); // creates a sound source
+			let source = audioContext.createBufferSource();  // creates a sound source
 			// Choose sample
 			let sampleFreq: number;
 			let sampleNumber: number;
@@ -734,17 +734,17 @@ function goKeyboard() {
 				sampleNumber = 3;
 			}
 			
-			if (!sampleBuffer[sampleNumber]) // Sample not yet loaded
+			if (!sampleBuffer[sampleNumber])  // Sample not yet loaded
 				return;
 			
-			source.buffer = sampleBuffer[sampleNumber] ?? null; // tell the source which sound to play
+			source.buffer = sampleBuffer[sampleNumber] ?? null;  // tell the source which sound to play
 			source.playbackRate.value = freq / sampleFreq;
 			let gainNode = audioContext.createGain();
 			source.connect(gainNode);
 			gainNode.connect(audioContext.destination);
-			source.connect(gainNode); // connect the source to the context's destination (the speakers)
+			source.connect(gainNode);  // connect the source to the context's destination (the speakers)
 			gainNode.gain.value = Math.pow(10, volume / 12);
-			source.start(0); // play the source now
+			source.start(0);  // play the source now
 			this.source = source;
 			this.gainNode = gainNode;
 		}
@@ -832,7 +832,7 @@ function goKeyboard() {
 	function onKeyDown(e: KeyboardEvent): void {
 		e.preventDefault();
 		
-		if (e.keyCode == 32) // Spacebar
+		if (e.keyCode == 32)  // Spacebar
 			sustain = true;
 		else if (!isMouseDown && !isTouchDown
 				&& e.keyCode in keyCodeToCoords
@@ -861,7 +861,7 @@ function goKeyboard() {
 	}
 	
 	function onKeyUp(e: KeyboardEvent): void {
-		if (e.keyCode == 32) { // Spacebar
+		if (e.keyCode == 32) {  // Spacebar
 			sustain = false;
 			for (let note of sustainedNotes)
 				note.noteOff();
@@ -1088,7 +1088,7 @@ function goKeyboard() {
 		context.rotate(-rotationRad);
 		// hexcoords = p and screenCoords = hexCenter
 		
-		//context.fillStyle = "black"; //bdl_04062016
+		//context.fillStyle = "black";  //bdl_04062016
 		context.fillStyle = getContrastYIQ(currentTextColor);
 		context.font = "22pt Arial";
 		context.textAlign = "center";
