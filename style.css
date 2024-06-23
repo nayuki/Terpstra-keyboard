@@ -431,7 +431,7 @@ h2 {
 	top: 0;
 }
 
-#keyboard.inactive {
+#keyboard-container.inactive #keyboard {
 	opacity: 0.3;
 }
 
@@ -447,6 +447,11 @@ h2 {
 	border: 2px solid #A0A0A0;
 	border-radius: 50%;
 }
+
+#keyboard-container.inactive #backButton {
+	display: none;
+}
+
 .iosscrollable {
 	height: auto;
 	-webkit-overflow-scrolling: touch;
