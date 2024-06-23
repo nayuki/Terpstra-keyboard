@@ -539,7 +539,7 @@ function goKeyboard() {
 	window.addEventListener("resize", resizeHandler, false);
 	window.addEventListener("orientationchange", resizeHandler, false);
 	
-	//... and give it an initial call
+	// ... and give it an initial call
 	
 	let rotationMatrix: Array<number> = [];
 	let centerpoint: Point = new Point(0, 0);
@@ -592,7 +592,7 @@ function goKeyboard() {
 		window.addEventListener("keyup", onKeyUp, false);
 	}
 	
-	//iPad Shake to toggle sustain
+	// iPad Shake to toggle sustain
 	let deviceMotion: any = undefined;
 	if (typeof window.DeviceMotionEvent != "undefined") {
 		let lastShakeCheck: number = 0;
@@ -676,7 +676,7 @@ function goKeyboard() {
 			if (pressed)
 				v /= 2;
 			
-			//setup text color
+			// setup text color
 			currentTextColor = HSVtoRGB(h, s, v);
 			return currentTextColor.toCssRgb();
 			
@@ -691,7 +691,7 @@ function goKeyboard() {
 			
 			let {red, green, blue} = currentTextColor;
 			
-			//darken for pressed key
+			// darken for pressed key
 			if (pressed) {
 				red -= 90;
 				green -= 90;
@@ -846,7 +846,7 @@ function goKeyboard() {
 			hex.noteOn(cents);
 		}
 		
-		//Hatsevich:
+		// Hatsevich:
 		else if (!isMouseDown && !isTouchDown
 				&& e.code in codeToCoords
 				&& pressedKeys.indexOf(e.code) == -1) {
@@ -882,7 +882,7 @@ function goKeyboard() {
 			}
 		}
 		
-		//Hatsevich:
+		// Hatsevich:
 		else if (!isMouseDown && !isTouchDown
 				&& e.code in codeToCoords) {
 			const keyIndex: number = pressedKeys.indexOf(e.code);
@@ -1088,7 +1088,7 @@ function goKeyboard() {
 		context.rotate(-rotationRad);
 		// hexcoords = p and screenCoords = hexCenter
 		
-		//context.fillStyle = "black";  //bdl_04062016
+		//context.fillStyle = "black";  // bdl_04062016
 		context.fillStyle = getContrastYIQ(currentTextColor);
 		context.font = "22pt Arial";
 		context.textAlign = "center";
