@@ -166,7 +166,6 @@ input {
  * 2. Remove excess padding in IE 8/9/10.
  */
 
-input[type="checkbox"],
 input[type="radio"] {
 	box-sizing: border-box; /* 1 */
 	padding: 0; /* 2 */
@@ -363,7 +362,7 @@ legend {
 	display: block;
 	margin-bottom: .5rem;
 	font-weight: 600; }
-input[type="checkbox"], input[type="radio"] {
+input[type="radio"] {
 	display: inline;
 	margin-bottom: 0;}
 label > .label-body {
@@ -407,19 +406,6 @@ form {
 * Terpstra Keyboard WebApp
 * http://terpstrakeyboard.com/play-it-now/keys.htm
 */
-#fullscreen-setter {
-	background: black;
-	color: white;
-	border-radius: 1em;
-	padding: 1em;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-right: -50%;
-	transform: translate(-50%, -50%);
-	cursor: pointer
-}
-
 #landing-page {
 	margin: auto;
 	padding: 3em 5em;
@@ -456,12 +442,10 @@ h2 {
 	bottom: 0;
 	margin-top: auto;
 	margin-bottom: auto;
-	display: none;
 	padding: 8px;
 	background-color: #FFFFFF;
 	border: 2px solid #A0A0A0;
 	border-radius: 50%;
-	z-index: 100;
 }
 .iosscrollable {
 	height: auto;
