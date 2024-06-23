@@ -1139,12 +1139,12 @@ function goKeyboard() {
 		let closestHex: Point = new Point(q, r);
 		for (let qOffset = -1; qOffset <= 1; qOffset++) {
 			for (let rOffset = -1; rOffset <= 1; rOffset++) {
-				const neigbor: Point = new Point(q + qOffset, r + rOffset);
-				const diff: Point = hexCoordsToScreen(neigbor).minus(coords);
+				const neighbor: Point = new Point(q + qOffset, r + rOffset);
+				const diff: Point = hexCoordsToScreen(neighbor).minus(coords);
 				const distance: number = Math.hypot(diff.x, diff.y);
 				if (distance < minimum) {
 					minimum = distance;
-					closestHex = neigbor;
+					closestHex = neighbor;
 				}
 			}
 		}
