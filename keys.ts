@@ -3,7 +3,6 @@ let volume: number = 1.4;
 function initialize(): void {
 	const initKeyboardOnload: boolean = window.location.search != "";
 	
-	checkPreset(16);
 	getHtmlById("settingsForm").onsubmit = goKeyboard;
 	
 	{
@@ -1459,19 +1458,43 @@ function tempAlert(msg: string, durationMs: number): void {
 }
 
 
-function checkPreset(init: number): void {
-	let mselect: HTMLSelectElement = getElemById("quicklinks", HTMLSelectElement);
-	const url_str: string = window.location.href;
+function presetChanged(): void {
+	window.history.replaceState({}, "", getElemById("quicklinks", HTMLSelectElement).value);
+	const params: URLSearchParams = new URL(window.location.href).searchParams;
 	
-	//first check for .htm as end of url and set the default preset (31ET)
-	if (url_str.substring(url_str.length - 4) == ".htm")
-		mselect.value = mselect.options[init].value;
-	for (let i = 0; i < mselect.length; i++) {
-		if (url_str.indexOf(mselect.options[i].value) != -1) {
-			//this is the correct preset
-			mselect.value = mselect.options[i].value;
-		}
+	function getOr(key: string, defaultVal: string): string {
+		const val: string|null = params.get(key);
+		return val !== null ? val : defaultVal;
 	}
+	
+	function doIfPresent(key: string, func: (val:string)=>void): void {
+		const val: string|null = params.get(key);
+		if (val !== null)
+			func(val);
+	}
+	
+	fundamentalInput.value = getOr("fundamental", "440");
+	rStepsInput.value = getOr("right", "3");
+	urStepsInput.value = getOr("upright", "10");
+	hexSizeInput.value = getOr("size", "60");
+	rotationInput.value = getOr("rotation", "-16.1");
+	instrumentSelect.value = getOr("instrument", "rhodes");
+	enumInput.checked = getOr("enum", "false") == "true";
+	equivStepsInput.value = getOr("equivSteps", "17");
+	spectrumColorsInput.checked = getOr("spectrum_colors", "false") == "true";
+	fundamentalColorInput.value = getOr("fundamental_color", "#41ff2e");
+	noLabelsInput.checked = getOr("no_labels", "false") == "true";
+	
+	doIfPresent("scale", v => scaleTextarea.value = v);
+	doIfPresent("names", v => namesTextarea.value = v);
+	doIfPresent("note_colors", v => noteColorsTextarea.value = v);
+	
+	hideRevealNames();
+	hideRevealColors();
+	hideRevealEnum();
+	
+	setElemVisible("landing-page", false);
+	goKeyboard();
 }
 
 
