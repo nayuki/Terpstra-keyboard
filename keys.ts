@@ -624,21 +624,18 @@ function goKeyboard() {
 			lastShakeCheck++;
 			const change: number = Math.abs(x1 - x2 + y1 - y2 + z1 - z2);
 			
-			if (change > sensitivity) {
+			if (change > sensitivity && lastShakeCheck - lastShakeCount >= 3) {
+				lastShakeCount = lastShakeCheck;
 				
-				if (lastShakeCheck - lastShakeCount >= 3) {
-					lastShakeCount = lastShakeCheck;
-					
-					if (sustain == true) {
-						sustain = false;
-						for (let note of sustainedNotes)
-							note.noteOff();
-						sustainedNotes = [];
-						tempAlert("Sustain Off", 900);
-					} else {
-						sustain = true;
-						tempAlert("Sustain On", 900);
-					}
+				if (sustain == true) {
+					sustain = false;
+					for (let note of sustainedNotes)
+						note.noteOff();
+					sustainedNotes = [];
+					tempAlert("Sustain Off", 900);
+				} else {
+					sustain = true;
+					tempAlert("Sustain On", 900);
 				}
 			}
 			
