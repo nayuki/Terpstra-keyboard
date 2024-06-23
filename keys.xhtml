@@ -17,9 +17,9 @@
 			<h2><a href="http://terpstrakeyboard.com/">Terpstra Keyboard</a> <a href="http://terpstrakeyboard.com/play-it-now/">WebApp</a></h2>
 			
 			<form id="settingsForm">
-				<div class="row" style="margin-top:3.0em; margin-bottom:2.5em">
-					<div class="one-half column">
-						<div class="u-half-width">
+				<div class="outer-grid">
+					<div class="inner-grid">
+						<div>
 							<label>Tuning/layout quick presets:</label>
 							<select id="quicklinks" onchange="presetChanged();" class="u-full-width">
 								<option selected="selected" disabled="disabled">Custom</option>
@@ -65,7 +65,7 @@
 							<input id="fundamental" type="number" step="0.01" min="0.01" max="16384" value="256" onchange="noPreset();" class="u-full-width"/>
 						</div>
 						
-						<div class="u-half-width">
+						<div>
 							<label>Right-facing steps:</label>
 							<input id="rSteps" type="number" min="-1220" max="1220" value="4" onchange="noPreset();" class="u-full-width"/>
 							<label>Up-right-facing steps:</label>
@@ -73,15 +73,15 @@
 						</div>
 					</div>
 					
-					<div class="one-half column">
-						<div class="u-half-width">
+					<div class="inner-grid">
+						<div>
 							<label>Hexagon size (pixels):</label>
 							<input id="hexSize" type="number" step="any" min="20" max="1000" value="50" onchange="noPreset();" class="u-full-width"/>
 							<label>Rotation (degrees clockwise):</label>
 							<input id="rotation" type="number" step="0.1" min="-30" max="30" value="-16.1" onchange="noPreset();" class="u-full-width"/>
 						</div>
 						
-						<div class="u-half-width">
+						<div>
 							<label>Instrument:</label>
 							<select id="instrument" onchange="noPreset();"  class="u-full-width">
 								<optgroup label="Regular">
@@ -112,10 +112,8 @@
 							</select>
 						</div>
 					</div>
-				</div>
-				
-				<div class="row">
-					<div class="one-half column pushrow-mobile">
+					
+					<div>
 						<label>Scale (<a href="https://www.huygens-fokker.org/scala/scl_format.html" target="_blank" style="color:#222; text-decoration:none;">Scala format</a>):</label>
 						<textarea id="scale" onchange="noPreset();" class="iosscrollable u-full-width" rows="12" spellcheck="false">! wilcent17.scl
 !
@@ -144,8 +142,8 @@
 2/1</textarea>
 					</div>
 					
-					<div class="one-half column">
-						<div class="u-half-width">
+					<div class="inner-grid">
+						<div>
 							<label>Key labels:</label>
 							<div class="radio-group">
 								<label>
@@ -183,7 +181,7 @@
 15/8</textarea>
 						</div>
 						
-						<div class="u-half-width">
+						<div>
 							<label>Key colors:</label>
 							<div class="radio-group">
 								<label>

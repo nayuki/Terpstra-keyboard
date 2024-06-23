@@ -160,20 +160,12 @@ textarea {
  * 12/29/2014
  */
 
-/* ---- Grid ---- */
-
 #landing-page {
 	position: relative;
 	width: 100%;
 	max-width: 960px;
 	margin: 0 auto;
 	padding: 0 20px;
-}
-
-.column {
-	width: 100%;
-	float: left;
-	box-sizing: border-box;
 }
 
 /* For devices larger than 400px */
@@ -188,16 +180,6 @@ textarea {
 @media (min-width: 550px) {
 	#landing-page {
 		width: 80%;
-	}
-	.column {
-		margin-left: 4%;
-	}
-	.column:first-child {
-		margin-left: 0;
-	}
-	
-	.one-half.column {
-		width: 48%;
 	}
 }
 
@@ -372,17 +354,6 @@ form {
 }
 
 
-/* ---- Clearing ---- */
-
-/* Self Clearing Goodness */
-#landing-page:after,
-.row:after {
-	content: "";
-	display: table;
-	clear: both;
-}
-
-
 /*
  * Terpstra Keyboard WebApp
  * http://terpstrakeyboard.com/play-it-now/keys.htm
@@ -404,6 +375,34 @@ h2 {
 
 #landing-page > *:last-child {
 	margin-bottom: 0em;
+}
+
+#landing-page .outer-grid {
+	display: grid;
+	grid-template-columns: repeat(1, 1fr);
+	margin-top: 3.0em;
+	column-gap: 4%;
+}
+
+#landing-page .outer-grid > *:nth-child(2) {
+	margin-bottom: 2.5em;
+}
+
+@media (min-width: 550px) {
+	#landing-page .outer-grid {
+		grid-template-columns: repeat(2, 1fr);
+		row-gap: 2.5em;
+	}
+	
+	#landing-page .outer-grid > *:nth-child(2) {
+		margin-bottom: 0em;
+	}
+}
+
+#landing-page .inner-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	column-gap: 5%;
 }
 
 #keyboard {
@@ -436,16 +435,6 @@ h2 {
 .iosscrollable {
 	height: auto;
 	-webkit-overflow-scrolling: touch;
-}
-
-.u-half-width {
-	width: 47.5%;
-	box-sizing: border-box;
-	float: left;
-}
-
-.u-half-width + .u-half-width {
-	margin-left: 5%;
 }
 
 select#quicklinks {
