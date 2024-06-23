@@ -1,16 +1,6 @@
 let volume: number = 1.4;
 
 function initialize(): void {
-	window.addEventListener("keydown", (e: KeyboardEvent) => {
-		if (e.code == "ArrowDown") {
-			e.preventDefault();
-			volume = Math.max(volume - 0.1, 0);
-		} else if (e.code == "ArrowUp") {
-			e.preventDefault();
-			volume = Math.max(volume + 0.1, 3);
-		}
-	});
-	
 	const initKeyboardOnload: boolean = window.location.search != "";
 	
 	checkPreset(16);
@@ -647,6 +637,17 @@ function goKeyboard() {
 	const spectrum_colors: boolean = spectrumColorsInput.checked;
 	const fundamental_color: string = fundamentalColorInput.value;
 	
+	function handleVolume(e: KeyboardEvent): void {
+		if (e.code == "ArrowDown") {
+			e.preventDefault();
+			volume = Math.max(volume - 0.1, 0);
+		} else if (e.code == "ArrowUp") {
+			e.preventDefault();
+			volume = Math.max(volume + 0.1, 3);
+		}
+	};
+	window.addEventListener("keydown", handleVolume);
+	
 	// Set up resize handler
 	
 	window.addEventListener("resize", resizeHandler, false);
@@ -974,6 +975,7 @@ function goKeyboard() {
 	function back(): void {
 		window.removeEventListener("resize", resizeHandler, false);
 		window.removeEventListener("orientationchange", resizeHandler, false);
+		window.removeEventListener("keydown", handleVolume);
 		window.removeEventListener("keydown", onKeyDown);
 		window.removeEventListener("keyup", onKeyUp);
 		if (deviceMotion !== undefined)
