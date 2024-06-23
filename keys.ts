@@ -1,4 +1,4 @@
-let volume: number = 1.4;
+let volume: number = 0;
 
 function initialize(): void {
 	const initKeyboardOnload: boolean = window.location.search != "";
@@ -638,10 +638,10 @@ function goKeyboard() {
 	function handleVolume(e: KeyboardEvent): void {
 		if (e.code == "ArrowDown") {
 			e.preventDefault();
-			volume = Math.max(volume - 0.1, 0);
+			volume = Math.max(volume - 1, -16);
 		} else if (e.code == "ArrowUp") {
 			e.preventDefault();
-			volume = Math.min(volume + 0.1, 3);
+			volume = Math.min(volume + 1, 6);
 		}
 	};
 	window.addEventListener("keydown", handleVolume);
@@ -905,7 +905,7 @@ function goKeyboard() {
 			source.connect(gainNode);
 			gainNode.connect(audioContext.destination);
 			source.connect(gainNode); // connect the source to the context's destination (the speakers)
-			gainNode.gain.value = volume;
+			gainNode.gain.value = Math.pow(10, volume / 12);
 			source.start(0); // play the source now
 			this.source = source;
 			this.gainNode = gainNode;
