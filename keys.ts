@@ -43,10 +43,11 @@ function initialize(): void {
 	hideRevealColors();
 	hideRevealEnum();
 	
-	if (initKeyboardOnload) {
-		setElemVisible("landing-page", false);
+	document.documentElement.style.removeProperty("display");
+	if (initKeyboardOnload)
 		goKeyboard();
-	}
+	else
+		setElemVisible("landing-page", true);
 }
 
 

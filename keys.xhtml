@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" style="display:none">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<title>Terpstra Keyboard WebApp</title>
@@ -13,7 +13,7 @@
 	</head>
 	
 	<body>
-		<div id="landing-page" class="section" style="display: block;">
+		<div id="landing-page" class="section">
 			<h2><a href="http://terpstrakeyboard.com/">Terpstra Keyboard</a> <a href="http://terpstrakeyboard.com/play-it-now/">WebApp</a></h2>
 			
 			<form id="settingsForm">
@@ -161,10 +161,10 @@
 									<span>Custom</span>
 								</label>
 							</div>
-							<label id="numberLabel" style="display: block;">Steps to equivalence interval:</label>
-							<input id="equivSteps" type="number" min="1" max="999" value="" onchange="noPreset();" style="display: block;" class="u-full-width"/>
-							<label id="namesLabel" style="display: none;">Note names:</label>
-							<textarea id="names" onchange="noPreset();" class="iosscrollable u-full-width" rows="12" spellcheck="false" style="display: none;">R
+							<label id="numberLabel">Steps to equivalence interval:</label>
+							<input id="equivSteps" type="number" min="1" max="999" value="" onchange="noPreset();" class="u-full-width"/>
+							<label id="namesLabel">Note names:</label>
+							<textarea id="names" onchange="noPreset();" class="iosscrollable u-full-width" rows="12" spellcheck="false">R
 22/21
 11/10
 9/8
@@ -195,8 +195,8 @@
 									<span>Custom</span>
 								</label>
 							</div>
-							<label id="fundamental_colorLabel" style="display: none;">Fundamental color:</label>
-							<input type="text" id="fundamental_color" style="display: none;" class="jscolor u-full-width" value="#55ff55"/>
+							<label id="fundamental_colorLabel">Fundamental color:</label>
+							<input type="text" id="fundamental_color" class="jscolor u-full-width" value="#55ff55"/>
 							<label id="note_colorsLabel">Color layout:</label>
 							<textarea id="note_colors" onchange="noPreset();" class="iosscrollable u-full-width" rows="12" spellcheck="false">47A2FF
 FFE496
