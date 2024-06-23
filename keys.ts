@@ -583,10 +583,10 @@ function changeURL(): void {
 }
 
 
-function calculateRotationMatrix(rotation: number, center: Point): Array<number> {
+function calculateRotationMatrix(angleRad: number, center: Point): Array<number> {
 	let m: Array<number> = [];
-	m[0] = Math.cos(rotation);
-	m[1] = Math.sin(rotation);
+	m[0] = Math.cos(angleRad);
+	m[1] = Math.sin(angleRad);
 	m[2] = -m[1];
 	m[3] = m[0];
 	m[4] = center.x - m[0] * center.x - m[2] * center.y;
@@ -621,7 +621,7 @@ function goKeyboard() {
 	const rSteps: number = parseFloat(rStepsInput.value);
 	const urSteps: number = rSteps - parseFloat(urStepsInput.value); // Adjust to different coordinate system
 	const hexSize: number = parseFloat(hexSizeInput.value);
-	const rotation: number = parseFloat(rotationInput.value) * Math.PI / 180;
+	const rotationRad: number = parseFloat(rotationInput.value) * Math.PI / 180;
 	
 	let scale: Array<number> = [];
 	for (const line of scaleTextarea.value.split("\n")) {
@@ -967,9 +967,9 @@ function goKeyboard() {
 			context.restore();
 		context.save();
 		
-		rotationMatrix = calculateRotationMatrix(-rotation, centerpoint);
+		rotationMatrix = calculateRotationMatrix(-rotationRad, centerpoint);
 		
-		const m: Array<number> = calculateRotationMatrix(rotation, centerpoint);
+		const m: Array<number> = calculateRotationMatrix(rotationRad, centerpoint);
 		context.setTransform(m[0], m[1], m[2], m[3], m[4], m[5]);
 		
 		// Redraw Grid
@@ -1265,7 +1265,7 @@ function goKeyboard() {
 		
 		context.save();
 		context.translate(hexCenter.x, hexCenter.y);
-		context.rotate(-rotation);
+		context.rotate(-rotationRad);
 		// hexcoords = p and screenCoords = hexCenter
 		
 		//context.fillStyle = "black"; //bdl_04062016
