@@ -122,10 +122,7 @@ select {
  *    `input` and others.
  */
 
-button,
-html input[type="button"], /* 1 */
-input[type="reset"],
-input[type="submit"] {
+button {
 	-webkit-appearance: button; /* 2 */
 	cursor: pointer; /* 3 */
 }
@@ -290,7 +287,7 @@ h2 a {
 
 /* Buttons
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-input[type="submit"] {
+button {
 	display: block;
 	height: 38px;
 	padding: 0 30px;
@@ -311,17 +308,17 @@ input[type="submit"] {
 	margin-right: auto;
 	margin-left: auto;
 }
-input[type="submit"]:hover,
-input[type="submit"]:focus {
+button:hover,
+button:focus {
 	color: #333;
 	border-color: #888;
 	outline: 0; }
-input[type="submit"].button-primary {
+button.button-primary {
 	color: #FFF;
 	background-color: #33C3F0;
 	border-color: #33C3F0; }
-input[type="submit"].button-primary:hover,
-input[type="submit"].button-primary:focus {
+button.button-primary:hover,
+button.button-primary:focus {
 	color: #FFF;
 	background-color: #1EAEDB;
 	border-color: #1EAEDB; }
@@ -471,7 +468,7 @@ select#quicklinks {
 	max-width: 100%;
 }
 
-.button, button, input[type="submit"], input[type="reset"], input[type="button"]
+button
 {
 	max-width: 100%;
 }
@@ -489,7 +486,7 @@ input[type=number] {
 	}
 }
 @media screen and (max-width: 350px) {
-	.button, button, input[type="submit"], input[type="reset"], input[type="button"]
+	button
 	{
 		padding: 0 10px;
 	}
