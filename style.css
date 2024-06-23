@@ -168,21 +168,6 @@ textarea {
 	padding: 0 20px;
 }
 
-/* For devices larger than 400px */
-@media (min-width: 400px) {
-	#landing-page {
-		width: 85%;
-		padding: 0;
-	}
-}
-
-/* For devices larger than 550px */
-@media (min-width: 550px) {
-	#landing-page {
-		width: 80%;
-	}
-}
-
 
 /* ---- Base Styles ---- */
 /* NOTE
@@ -353,9 +338,7 @@ form {
  */
 #landing-page {
 	margin: auto;
-	padding: 3em 5em;
-	border: 0.1em solid #D1D1D1;
-	border-radius: 3em;
+	padding: 1.0em 1.0em;
 	background-color: #FFFFFF;
 	background-image: url(Pattern3D_06.png);
 	background-repeat: repeat;
@@ -387,6 +370,13 @@ h2 {
 }
 
 @media (min-width: 550px) {
+	#landing-page {
+		width: 80%;
+		padding: 3em 5em;
+		border: 0.1em solid #D1D1D1;
+		border-radius: 3em;
+	}
+	
 	#landing-page .grid {
 		grid-template-columns: repeat(4, 1fr);
 		column-gap: 2.5%;
