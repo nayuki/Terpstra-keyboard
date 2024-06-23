@@ -452,7 +452,10 @@ h2 {
 #backButton {
 	position: absolute;
 	left: 0;
-	top: 50%;
+	top: 0;
+	bottom: 0;
+	margin-top: auto;
+	margin-bottom: auto;
 	display: none;
 	padding: 8px;
 	background-color: #FFFFFF;
