@@ -444,8 +444,8 @@ h2 {
 	float: left;
 }
 
-.rpad {
-	margin-right: 5%;
+.u-half-width + .u-half-width {
+	margin-left: 5%;
 }
 
 select#quicklinks {
