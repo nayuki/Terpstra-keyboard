@@ -1475,11 +1475,8 @@ function checkPreset(init: number): void {
 }
 
 
-let ms: HTMLSelectElement|null;
-
 function noPreset(): void {
-	ms = getElemById("quicklinks", HTMLSelectElement);
-	ms.value = ms.options[0].value;
+	getElemById("quicklinks", HTMLSelectElement).selectedIndex = 0;
 }
 
 
