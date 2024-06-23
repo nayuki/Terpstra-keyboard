@@ -111,18 +111,6 @@
 										<option value="WMRIByzantineST">WMRİ Byzantine (9 Harmonics) ST</option>
 									</optgroup>
 								</select>
-								<label>
-									<input id="enum" type="checkbox" name="number_or_name" value="fnord" onchange="hideRevealNames();noPreset();"/>
-									<span class="label-body">Enumerate Scale</span>
-								</label>
-								<label>
-									<input id="spectrum_colors" type="checkbox" name="spectrum_colors" value="fnord" onchange="hideRevealColors();noPreset();"/>
-									<span class="label-body">Use Spectrum Colors</span>
-								</label>
-								<label>
-									<input id="no_labels" type="checkbox" name="no_labels" value="fnord" onchange="hideRevealEnum();noPreset();"/>
-									<span class="label-body">Blank Keys (No labels)</span>
-								</label>
 							</div>
 						</div>
 					</div>
@@ -159,6 +147,14 @@
 						
 						<div class="one-half column thincol-parent">
 							<div class="u-half-width rpad">
+								<label>
+									<input id="no_labels" type="checkbox" name="no_labels" value="fnord" onchange="hideRevealEnum();noPreset();"/>
+									<span class="label-body">Blank Keys (No labels)</span>
+								</label>
+								<label>
+									<input id="enum" type="checkbox" name="number_or_name" value="fnord" onchange="hideRevealNames();noPreset();"/>
+									<span class="label-body">Enumerate Scale</span>
+								</label>
 								<label id="numberLabel" style="display: block;">Steps To Equivalence Interval</label>
 								<input id="equivSteps" type="number" min="1" max="999" value="" onchange="noPreset();" style="display: block;" class="u-full-width"/>
 								<label id="namesLabel" style="display: none;">Note Names</label>
@@ -182,6 +178,10 @@
 							</div>
 							
 							<div class="u-half-width">
+								<label>
+									<input id="spectrum_colors" type="checkbox" name="spectrum_colors" value="fnord" onchange="hideRevealColors();noPreset();"/>
+									<span class="label-body">Use Spectrum Colors</span>
+								</label>
 								<label id="fundamental_colorLabel" style="display: none;">Fundamental Color</label>
 								<input type="text" id="fundamental_color" style="display: none;" class="jscolor u-full-width" value="#55ff55"/>
 								<label id="note_colorsLabel">Color Layout</label>
