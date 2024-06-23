@@ -1137,8 +1137,8 @@ function goKeyboard() {
 		// This gets an approximation; now check neighbors for minimum distance
 		let minimum: number = 100000;
 		let closestHex: Point = new Point(q, r);
-		for (let qOffset = -1; qOffset < 2; qOffset++) {
-			for (let rOffset = -1; rOffset < 2; rOffset++) {
+		for (let qOffset = -1; qOffset <= 1; qOffset++) {
+			for (let rOffset = -1; rOffset <= 1; rOffset++) {
 				const neigbor: Point = new Point(q + qOffset, r + rOffset);
 				const diff: Point = hexCoordsToScreen(neigbor).minus(coords);
 				const distance: number = Math.hypot(diff.x, diff.y);
