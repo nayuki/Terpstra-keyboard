@@ -1358,11 +1358,4 @@ function getElemById<T>(id: string, type: Constructor<T>): T {
 }
 
 
-function notUndefined<T>(val: T|undefined): T {
-	if (val === undefined)
-		throw new TypeError();
-	return val;
-}
-
-
 initialize();
