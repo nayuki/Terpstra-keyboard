@@ -568,7 +568,7 @@ function changeURL(): void {
 		["enum", enumInput.checked.toString()],
 		["equivSteps", equivStepsInput.value],
 		["spectrum_colors", spectrumColorsInput.checked.toString()],
-		["fundamental_color", fundamentalColorInput.value],
+		["fundamental_color", encodeURIComponent(fundamentalColorInput.value)],
 		["no_labels", noLabelsInput.checked.toString()],
 		["scale", encodeURIComponent(scaleTextarea.value)],
 		["names", encodeURIComponent(namesTextarea.value)],
