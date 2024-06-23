@@ -20,19 +20,6 @@ body {
 	margin: 0;
 }
 
-/* HTML5 display definitions
-   ========================================================================== */
-
-/**
- * 1. Correct `inline-block` display not defined in IE 8/9.
- * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
- */
-
-canvas {
-	display: inline-block; /* 1 */
-	vertical-align: baseline; /* 2 */
-}
-
 /* Links
    ========================================================================== */
 
@@ -435,12 +422,9 @@ body {
 	cursor: pointer
 }
 #keyboard {
-	position: absolute;
-	height: 100%;
-	width: 100%;
-	top: 50%;
-	left: 50%;
-	display: none;
+	position: fixed;
+	left: 0;
+	top: 0;
 }
 #backButton {
 	position: absolute;

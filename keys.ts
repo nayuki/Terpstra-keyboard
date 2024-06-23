@@ -937,22 +937,13 @@ function goKeyboard() {
 	function resizeHandler(): void {
 		// Resize Inner and outer coordinates of canvas to preserve aspect ratio
 		
-		const newWidth: number = window.innerWidth;
-		const newHeight: number = window.innerHeight;
-		
-		canvas.style.height = newHeight + "px";
-		canvas.style.width = newWidth + "px";
-		
-		canvas.style.marginTop = (-newHeight / 2) + "px";
-		canvas.style.marginLeft = (-newWidth / 2) + "px";
-		
-		canvas.width = newWidth;
-		canvas.height = newHeight;
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
 		
 		// Find new centerpoint
 		
-		const centerX: number = newWidth / 2;
-		const centerY: number = newHeight / 2;
+		const centerX: number = canvas.width / 2;
+		const centerY: number = canvas.height / 2;
 		centerpoint = new Point(centerX, centerY);
 		
 		// Rotate about it
