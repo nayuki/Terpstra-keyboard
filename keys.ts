@@ -45,7 +45,7 @@ function initialize(): void {
 	
 	if (initKeyboardOnload) {
 		setElemVisible("landing-page", false);
-		setTimeout(goKeyboard, 1500);
+		goKeyboard();
 	}
 }
 
