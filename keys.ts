@@ -494,12 +494,10 @@ function goKeyboard() {
 	changeURL();
 	
 	// Set up screen
-	
 	setElemVisible("landing-page", false);
 	getHtmlById("keyboard-container").classList.remove("inactive");
 	
 	// set up settings constants
-	
 	const fundamental: number = parseFloat(fundamentalInput.value);
 	const rSteps: number = parseFloat(rStepsInput.value);
 	const urSteps: number = rSteps - parseFloat(urStepsInput.value);  // Adjust to different coordinate system
@@ -535,18 +533,15 @@ function goKeyboard() {
 	window.addEventListener("keydown", handleVolume);
 	
 	// Set up resize handler
-	
 	window.addEventListener("resize", resizeHandler, false);
 	window.addEventListener("orientationchange", resizeHandler, false);
 	
 	// ... and give it an initial call
-	
 	let rotationMatrix: Array<number> = [];
 	let centerpoint: Point = new Point(0, 0);
 	resizeHandler();
 	
 	// Set up synth
-	
 	let sampleBuffer: Array<AudioBuffer|undefined> = [undefined, undefined, undefined];
 	const instrumentOption: number = instrumentSelect.selectedIndex;
 	const instruments: Array<{fileName:string, fade:number}> = [
@@ -577,7 +572,6 @@ function goKeyboard() {
 	const sampleFadeout: number = instruments[instrumentOption].fade;
 	
 	// Set up keyboard, touch and mouse event handlers
-	
 	let sustain: boolean = false;
 	let sustainedNotes: Array<ActiveHex> = [];
 	//canvas.addEventListener("keydown", onKeyDown, false);  // Firefox isn't firing :(
@@ -769,18 +763,15 @@ function goKeyboard() {
 	
 	function resizeHandler(): void {
 		// Resize Inner and outer coordinates of canvas to preserve aspect ratio
-		
 		canvas.width = window.innerWidth;
 		canvas.height = window.innerHeight;
 		
 		// Find new centerpoint
-		
 		const centerX: number = canvas.width / 2;
 		const centerY: number = canvas.height / 2;
 		centerpoint = new Point(centerX, centerY);
 		
 		// Rotate about it
-		
 		if (rotationMatrix)
 			context.restore();
 		context.save();
@@ -791,7 +782,6 @@ function goKeyboard() {
 		context.setTransform(m[0], m[1], m[2], m[3], m[4], m[5]);
 		
 		// Redraw Grid
-		
 		drawGrid();
 	}
 	
@@ -1011,7 +1001,6 @@ function goKeyboard() {
 		const hexCenter: Point = hexCoordsToScreen(p);
 		
 		// Calculate hex vertices
-		
 		let x: Array<number> = [];
 		let y: Array<number> = [];
 		for (let i = 0; i < 6; i++) {
@@ -1021,7 +1010,6 @@ function goKeyboard() {
 		}
 		
 		// Draw filled hex
-		
 		context.beginPath();
 		context.moveTo(x[0], y[0]);
 		for (let i = 1; i < 6; i++)
@@ -1031,7 +1019,6 @@ function goKeyboard() {
 		context.fill();
 		
 		// Save context and create a hex shaped clip
-		
 		context.save();
 		context.beginPath();
 		context.moveTo(x[0], y[0]);
@@ -1041,7 +1028,6 @@ function goKeyboard() {
 		context.clip();
 		
 		// Calculate hex vertices outside clipped path
-		
 		let x2: Array<number> = [];
 		let y2: Array<number> = [];
 		for (let i = 0; i < 6; i++) {
@@ -1051,7 +1037,6 @@ function goKeyboard() {
 		}
 		
 		// Draw shadowed stroke outside clip to create pseudo-3d effect
-		
 		context.beginPath();
 		context.moveTo(x2[0], y2[0]);
 		for (let i = 1; i < 6; i++)
@@ -1067,7 +1052,6 @@ function goKeyboard() {
 		context.restore();
 		
 		// Add a clean stroke around hex
-		
 		context.beginPath();
 		context.moveTo(x[0], y[0]);
 		for (let i = 1; i < 6; i++)
@@ -1079,7 +1063,6 @@ function goKeyboard() {
 		context.stroke();
 		
 		// Add note name and equivalence interval multiple
-		
 		context.save();
 		context.translate(hexCenter.x, hexCenter.y);
 		context.rotate(-rotationRad);
@@ -1149,7 +1132,6 @@ function goKeyboard() {
 		r = Math.round(r);
 		
 		// This gets an approximation; now check neighbors for minimum distance
-		
 		let minimum: number = 100000;
 		let closestHex: Point = new Point(q, r);
 		for (let qOffset = -1; qOffset < 2; qOffset++) {
