@@ -761,9 +761,7 @@ function goKeyboard() {
 		canvas.width = window.innerWidth;
 		canvas.height = window.innerHeight;
 		
-		const centerX: number = canvas.width / 2;
-		const centerY: number = canvas.height / 2;
-		centerpoint = new Point(centerX, centerY);
+		centerpoint = new Point(canvas.width / 2, canvas.height / 2);
 		
 		if (rotationMatrix)
 			context.restore();
