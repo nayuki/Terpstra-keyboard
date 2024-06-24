@@ -48,14 +48,6 @@ textarea {
 	margin: 0;  /* 3 */
 }
 
-/**
- * 3. Improve usability and consistency of cursor style between image-type
- *    `input` and others.
- */
-button {
-	cursor: pointer;  /* 3 */
-}
-
 
 /*
  * Skeleton V2.0.4
@@ -131,6 +123,8 @@ h2 a {
 /* ---- Buttons ---- */
 button {
 	display: block;
+	max-width: 100%;
+	margin-bottom: 1rem;
 	padding: 0 30px;
 	color: #555555;
 	font-size: 11px;
@@ -143,6 +137,7 @@ button {
 	border: 1px solid #bbbbbb;
 	margin-right: auto;
 	margin-left: auto;
+	cursor: pointer;
 }
 
 button:hover,
@@ -192,10 +187,6 @@ input[type="radio"] {
 
 
 /* ---- Spacing ---- */
-button {
-	margin-bottom: 1rem;
-}
-
 input,
 textarea,
 select {
@@ -281,10 +272,6 @@ form {
 .iosscrollable {
 	height: auto;
 	-webkit-overflow-scrolling: touch;
-}
-
-button {
-	max-width: 100%;
 }
 
 input[type=number] {
