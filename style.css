@@ -69,6 +69,12 @@ button {
 #landing-page {
 	width: 100%;
 	max-width: 960px;
+	margin: auto;
+	padding: 1.0em 1.0em;
+	background-color: #FFFFFF;
+	background-image: url(Pattern3D_06.png);
+	background-repeat: repeat;
+	z-index: 1;
 }
 
 
@@ -206,15 +212,6 @@ form {
  * Terpstra Keyboard WebApp
  * http://terpstrakeyboard.com/play-it-now/keys.htm
  */
-#landing-page {
-	margin: auto;
-	padding: 1.0em 1.0em;
-	background-color: #FFFFFF;
-	background-image: url(Pattern3D_06.png);
-	background-repeat: repeat;
-	z-index: 1;
-}
-
 #landing-page input[type=number], #landing-page select, #landing-page textarea {
 	width: 100%;
 	box-sizing: border-box;
