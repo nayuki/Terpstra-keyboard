@@ -381,8 +381,11 @@ div.radio-group > label {
 	display: table-row;
 }
 
-div.radio-group > label > span {
+div.radio-group > label > * {
 	display: table-cell;
+}
+
+div.radio-group > label > span {
 	padding-left: 0.6em;
 	padding-bottom: 0.3em;
 	font-weight: normal;
