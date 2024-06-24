@@ -1,8 +1,12 @@
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 
+/* NOTE
+html is set to 62.5% so that all the REM measurements throughout Skeleton
+are based on 10px sizing. So basically 1.5rem = 15px :) */
 html {
 	height: 100%;
 	background-color: #000000;
+	font-size: 62.5%;
 }
 
 /**
@@ -64,13 +68,6 @@ button {
 
 
 /* ---- Base Styles ---- */
-/* NOTE
-html is set to 62.5% so that all the REM measurements throughout Skeleton
-are based on 10px sizing. So basically 1.5rem = 15px :) */
-html {
-	font-size: 62.5%;
-}
-
 body {
 	font-size: 1.5em;  /* currently ems cause chrome bug misinterpreting rems on body element */
 	line-height: 1.6;
