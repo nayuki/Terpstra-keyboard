@@ -371,10 +371,6 @@ h2 {
 	-webkit-overflow-scrolling: touch;
 }
 
-select#quicklinks {
-	max-width: 100%;
-}
-
 button {
 	max-width: 100%;
 }
@@ -396,15 +392,6 @@ div.radio-group > label > span {
 	padding-left: 0.6em;
 	padding-bottom: 0.3em;
 	font-weight: normal;
-}
-
-@media screen and (max-width: 550px) {
-	input[type="number"] {
-		width: 100%;
-	}
-	select#instrument {
-		width: 100%;
-	}
 }
 
 @media screen and (max-width: 350px) {
