@@ -1,4 +1,7 @@
-/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+/*
+ * Terpstra Keyboard WebApp
+ * http://terpstrakeyboard.com/play-it-now/keys.htm
+ */
 
 /* NOTE
 html is set to 62.5% so that all the REM measurements throughout Skeleton
@@ -47,16 +50,6 @@ textarea {
 	font: inherit;  /* 2 */
 	margin: 0;  /* 3 */
 }
-
-
-/*
- * Skeleton V2.0.4
- * Copyright 2014, Dave Gamache
- * www.getskeleton.com
- * Free to use under the MIT license.
- * http://www.opensource.org/licenses/mit-license.php
- * 12/29/2014
- */
 
 #landing-page {
 	width: 100%;
@@ -198,11 +191,6 @@ form {
 	margin-bottom: 2.5rem;
 }
 
-
-/*
- * Terpstra Keyboard WebApp
- * http://terpstrakeyboard.com/play-it-now/keys.htm
- */
 #landing-page input[type=number], #landing-page select, #landing-page textarea {
 	width: 100%;
 	box-sizing: border-box;
