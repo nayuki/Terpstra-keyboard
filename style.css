@@ -108,7 +108,7 @@ a:hover {
 	color: #0FA0CE;
 }
 
-h2 a {
+h2 a, label a {
 	color: #222222;
 	text-decoration: none;
 }
