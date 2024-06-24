@@ -236,7 +236,7 @@ form {
 	top: 0;
 }
 
-#keyboard-container.inactive #keyboard {
+#piano.inactive #keyboard {
 	opacity: 0.3;
 }
 
@@ -253,7 +253,7 @@ form {
 	border-radius: 50%;
 }
 
-#keyboard-container.inactive #backButton {
+#piano.inactive #backButton {
 	display: none;
 }
 

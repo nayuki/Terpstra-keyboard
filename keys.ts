@@ -495,7 +495,7 @@ function goKeyboard() {
 	
 	// Set up screen
 	setElemVisible("configuration", false);
-	getHtmlById("keyboard-container").classList.remove("inactive");
+	getHtmlById("piano").classList.remove("inactive");
 	
 	// set up settings constants
 	const fundamental: number = parseFloat(fundamentalInput.value);
@@ -812,7 +812,7 @@ function goKeyboard() {
 		}
 		window.history.replaceState({}, "", window.location.pathname);
 		// UI change
-		getHtmlById("keyboard-container").classList.add("inactive");
+		getHtmlById("piano").classList.add("inactive");
 		setElemVisible("configuration", true);
 	}
 	
