@@ -47,7 +47,7 @@ function initialize(): void {
 	if (initKeyboardOnload)
 		goKeyboard();
 	else
-		setElemVisible("landing-page", true);
+		setElemVisible("configuration", true);
 }
 
 
@@ -494,7 +494,7 @@ function goKeyboard() {
 	changeURL();
 	
 	// Set up screen
-	setElemVisible("landing-page", false);
+	setElemVisible("configuration", false);
 	getHtmlById("keyboard-container").classList.remove("inactive");
 	
 	// set up settings constants
@@ -813,7 +813,7 @@ function goKeyboard() {
 		window.history.replaceState({}, "", window.location.pathname);
 		// UI change
 		getHtmlById("keyboard-container").classList.add("inactive");
-		setElemVisible("landing-page", true);
+		setElemVisible("configuration", true);
 	}
 	
 	getHtmlById("backButton").onclick = back;
@@ -1303,7 +1303,7 @@ function presetChanged(): void {
 	hideRevealColors();
 	hideRevealEnum();
 	
-	setElemVisible("landing-page", false);
+	setElemVisible("configuration", false);
 	goKeyboard();
 }
 

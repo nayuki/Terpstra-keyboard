@@ -51,7 +51,7 @@ textarea {
 	margin: 0;  /* 3 */
 }
 
-#landing-page {
+#configuration {
 	width: 100%;
 	max-width: 960px;
 	margin: auto;
@@ -191,41 +191,41 @@ form {
 	margin-bottom: 2.5rem;
 }
 
-#landing-page input[type=number], #landing-page select, #landing-page textarea {
+#configuration input[type=number], #configuration select, #configuration textarea {
 	width: 100%;
 	box-sizing: border-box;
 }
 
-#landing-page > *:last-child {
+#configuration > *:last-child {
 	margin-bottom: 0em;
 }
 
-#landing-page .grid {
+#configuration .grid {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	margin-top: 3.0em;
 	column-gap: 4%;
 }
 
-#landing-page .grid > *:nth-child(3), #landing-page .grid > *:nth-child(4) {
+#configuration .grid > *:nth-child(3), #configuration .grid > *:nth-child(4) {
 	margin-bottom: 2.5em;
 }
 
 @media (min-width: 550px) {
-	#landing-page {
+	#configuration {
 		width: 80%;
 		padding: 3em 5em;
 		border: 0.1em solid #D1D1D1;
 		border-radius: 3em;
 	}
 	
-	#landing-page .grid {
+	#configuration .grid {
 		grid-template-columns: repeat(4, 1fr);
 		column-gap: 2.5%;
 		row-gap: 2.5em;
 	}
 	
-	#landing-page .grid > *:nth-child(3), #landing-page .grid > *:nth-child(4) {
+	#configuration .grid > *:nth-child(3), #configuration .grid > *:nth-child(4) {
 		margin-bottom: 0em;
 	}
 }
