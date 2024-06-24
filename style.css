@@ -1,14 +1,12 @@
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 
 /**
- * 1. Set default font family to sans-serif.
  * 2. Prevent iOS text size adjust after orientation change, without disabling
  *    user zoom.
  */
 html {
 	height: 100%;
 	background-color: #000000;
-	font-family: sans-serif;  /* 1 */
 	-ms-text-size-adjust: 100%;  /* 2 */
 	-webkit-text-size-adjust: 100%;  /* 2 */
 }
@@ -33,16 +31,6 @@ a:hover {
 	outline: 0;
 }
 
-/* ---- Text-level semantics ---- */
-
-/**
- * Address variable `h1` font-size and margin within `section` and `article`
- * contexts in Firefox 4+, Safari, and Chrome.
- */
-h1 {
-	font-size: 2em;
-	margin: 0.67em 0;
-}
 
 /* ---- Forms ---- */
 
@@ -73,7 +61,6 @@ textarea {
  * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
  * Correct `select` style inheritance in Firefox.
  */
-button,
 select {
 	text-transform: none;
 }
@@ -131,8 +118,6 @@ input[type="number"]::-webkit-outer-spin-button {
 	position: relative;
 	width: 100%;
 	max-width: 960px;
-	margin: 0 auto;
-	padding: 0 20px;
 }
 
 
@@ -219,7 +204,6 @@ button {
 	background-color: #ffffff /*transparent*/;
 	border-radius: 4px;
 	border: 1px solid #bbbbbb;
-	cursor: pointer;
 	box-sizing: border-box;
 	margin-right: auto;
 	margin-left: auto;
