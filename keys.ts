@@ -968,10 +968,7 @@ function goKeyboard() {
 	}
 	
 	function drawGrid(): void {
-		let max: number = centerpoint.x > centerpoint.y ?
-			centerpoint.x / hexSize :
-			centerpoint.y / hexSize;
-		max = Math.floor(max);
+		const max: number = Math.floor(Math.max(centerpoint.x, centerpoint.y) / hexSize);
 		for (let r = -max; r < max; r++) {
 			for (let ur = -max; ur < max; ur++) {
 				const coords: Point = new Point(r, ur);
