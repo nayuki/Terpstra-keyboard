@@ -26,13 +26,6 @@ body {
 /* ---- Links ---- */
 
 /**
- * Remove the gray background color from active links in IE 10.
- */
-a {
-	background-color: transparent;
-}
-
-/**
  * Improve readability when focused and also mouse hovered in all browsers.
  */
 a:active,
@@ -72,13 +65,6 @@ textarea {
 	color: inherit;  /* 1 */
 	font: inherit;  /* 2 */
 	margin: 0;  /* 3 */
-}
-
-/**
- * Address `overflow` set to `hidden` in IE 8/9/10/11.
- */
-button {
-	overflow: visible;
 }
 
 /**
@@ -122,18 +108,6 @@ input {
 }
 
 /**
- * It's recommended that you don't attempt to style these elements.
- * Firefox's implementation doesn't respect box-sizing, padding, or width.
- *
- * 1. Address box sizing set to `content-box` in IE 8/9/10.
- * 2. Remove excess padding in IE 8/9/10.
- */
-input[type="radio"] {
-	box-sizing: border-box;  /* 1 */
-	padding: 0;  /* 2 */
-}
-
-/**
  * Fix the cursor style for Chrome's increment/decrement buttons. For certain
  * `font-size` values of the `input`, it causes the cursor style of the
  * decrement button to change from `default` to `text`.
@@ -141,13 +115,6 @@ input[type="radio"] {
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
 	height: auto;
-}
-
-/**
- * Remove default vertical scrollbar in IE 8/9/10/11.
- */
-textarea {
-	overflow: auto;
 }
 
 
