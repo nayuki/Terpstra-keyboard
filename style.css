@@ -87,6 +87,7 @@ h1 {
 }
 
 h2 {
+	margin-top: 0em;
 	font-size: 3.6rem;
 	line-height: 1.25;
 	letter-spacing: -0.1rem;
@@ -212,10 +213,6 @@ form {
 	background-image: url(Pattern3D_06.png);
 	background-repeat: repeat;
 	z-index: 1;
-}
-
-h2 {
-	margin-top: 0em;
 }
 
 #landing-page input[type=number], #landing-page select, #landing-page textarea {
