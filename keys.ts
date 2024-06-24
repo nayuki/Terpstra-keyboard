@@ -437,7 +437,6 @@ function hideRevealEnum(): void {
 
 
 function changeURL(): void {
-	// Find scl file description for the page title
 	try {
 		const scl: ScalaScale = new ScalaScale(scaleTextarea.value);
 		if (scl.description == "")
@@ -493,7 +492,6 @@ let isKeyEventAdded: boolean = false;
 function goKeyboard() {
 	changeURL();
 	
-	// Set up screen
 	setElemVisible("configuration", false);
 	getHtmlById("piano").classList.remove("inactive");
 	
@@ -532,11 +530,8 @@ function goKeyboard() {
 	};
 	window.addEventListener("keydown", handleVolume);
 	
-	// Set up resize handler
 	window.addEventListener("resize", resizeHandler, false);
 	window.addEventListener("orientationchange", resizeHandler, false);
-	
-	// ... and give it an initial call
 	let rotationMatrix: Array<number> = [];
 	let centerpoint: Point = new Point(0, 0);
 	resizeHandler();
@@ -603,7 +598,6 @@ function goKeyboard() {
 			y2: number = 0,
 			z2: number = 0;
 		
-		// Listen to motion events and update the position
 		window.addEventListener("devicemotion", deviceMotion, false);
 		
 		deviceMotion = function(e: DeviceMotionEvent): void {
@@ -670,7 +664,6 @@ function goKeyboard() {
 			if (pressed)
 				v /= 2;
 			
-			// setup text color
 			currentTextColor = HSVtoRGB(h, s, v);
 			return currentTextColor.toCssRgb();
 			
@@ -710,7 +703,7 @@ function goKeyboard() {
 		
 		public noteOn(cents: number): void {
 			const freq: number = fundamental * Math.pow(2, cents / 1200);
-			let source = audioContext.createBufferSource();  // creates a sound source
+			let source = audioContext.createBufferSource();
 			// Choose sample
 			let sampleFreq: number;
 			let sampleNumber: number;
@@ -765,16 +758,13 @@ function goKeyboard() {
 	
 	
 	function resizeHandler(): void {
-		// Resize Inner and outer coordinates of canvas to preserve aspect ratio
 		canvas.width = window.innerWidth;
 		canvas.height = window.innerHeight;
 		
-		// Find new centerpoint
 		const centerX: number = canvas.width / 2;
 		const centerY: number = canvas.height / 2;
 		centerpoint = new Point(centerX, centerY);
 		
-		// Rotate about it
 		if (rotationMatrix)
 			context.restore();
 		context.save();
@@ -784,7 +774,6 @@ function goKeyboard() {
 		const m: Array<number> = calculateRotationMatrix(rotationRad, centerpoint);
 		context.setTransform(m[0], m[1], m[2], m[3], m[4], m[5]);
 		
-		// Redraw Grid
 		drawGrid();
 	}
 	
