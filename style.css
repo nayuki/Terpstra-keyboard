@@ -72,7 +72,6 @@ h1 {
 
 h2 {
 	font-size: 240%;
-	margin-bottom: 0.556em;
 	line-height: 1.25;
 	letter-spacing: -0.028em;
 }
@@ -87,7 +86,6 @@ h2 {
 	}
 	h2 {
 		font-size: 280%;
-		margin-bottom: 0.476em;
 		letter-spacing: -0.024em;
 	}
 }
@@ -111,7 +109,6 @@ h2 a, label a {
 button {
 	display: block;
 	max-width: 100%;
-	margin-bottom: 0.91em;
 	margin-right: auto;
 	margin-left: auto;
 	padding: 0 2.74em;
@@ -182,9 +179,9 @@ select {
 	margin-bottom: 1em;
 }
 
-p,
 form {
-	margin-bottom: 1.667em;
+	margin-top: 3.0em;
+	margin-bottom: 3.0em;
 }
 
 #configuration input[type=text], #configuration input[type=number], #configuration select, #configuration textarea {
@@ -192,12 +189,8 @@ form {
 	width: 100%;
 }
 
-#configuration > *:last-child {
-	margin-bottom: 0em;
-}
-
 #configuration .grid {
-	margin-top: 3.0em;
+	margin-bottom: 1.5em;
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	column-gap: 4%;
@@ -217,7 +210,7 @@ form {
 	#configuration .grid {
 		grid-template-columns: repeat(4, 1fr);
 		column-gap: 2.5%;
-		row-gap: 2.5em;
+		row-gap: 1.5em;
 	}
 	
 	#configuration .grid > *:nth-child(3), #configuration .grid > *:nth-child(4) {
