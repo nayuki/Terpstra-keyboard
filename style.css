@@ -60,14 +60,14 @@ textarea {
 
 /* ---- Typography ---- */
 h1, h2 {
-	margin-top: 1.25rem;
-	margin-bottom: 1.25rem;
 	font-weight: 300;
 	text-align: center;
 }
 
 h1 {
 	font-size: 267%;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
 	line-height: 1.2;
 	letter-spacing: -0.025em;
 }
@@ -75,6 +75,7 @@ h1 {
 h2 {
 	margin-top: 0em;
 	font-size: 240%;
+	margin-bottom: 0.556em;
 	line-height: 1.25;
 	letter-spacing: -0.028em;
 }
@@ -83,10 +84,13 @@ h2 {
 @media (min-width: 550px) {
 	h1 {
 		font-size: 333%;
+		margin-top: 0.4em;
+		margin-bottom: 0.4em;
 		letter-spacing: -0.020em;
 	}
 	h2 {
 		font-size: 280%;
+		margin-bottom: 0.476em;
 		letter-spacing: -0.024em;
 	}
 }
