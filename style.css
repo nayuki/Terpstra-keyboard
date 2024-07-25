@@ -80,7 +80,7 @@ h2 {
 }
 
 /* Larger than phablet */
-@media (min-width: 34.4em) {
+@media (min-width: 40em) {
 	h1 {
 		font-size: 333%;
 		margin-top: 0.4em;
@@ -211,10 +211,9 @@ form {
 	margin-bottom: 2.5em;
 }
 
-@media (min-width: 34.4em) {
+@media (min-width: 40em) {
 	#configuration {
-		width: 80%;
-		padding: 3em 5em;
+		padding: 3em clamp(1em, calc(1em + (100vw - 40em) * 0.1), 5em);
 		border: 0.1em solid #D1D1D1;
 		border-radius: 3em;
 	}
