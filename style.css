@@ -11,7 +11,7 @@
 html {
 	height: 100%;
 	background-color: #000000;
-	font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 	font-weight: 400;
 	line-height: 1.6;
 	color: #222222;
@@ -50,7 +50,7 @@ textarea {
 	margin: auto;
 	padding: 1.0em 1.0em;
 	background-color: #FFFFFF;
-	background-image: url(Pattern3D_06.png);
+	background-image: url("Pattern3D_06.png");
 	background-repeat: repeat;
 	z-index: 1;
 }
