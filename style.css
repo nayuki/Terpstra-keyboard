@@ -115,8 +115,8 @@ button {
 	margin-right: auto;
 	margin-left: auto;
 	padding: 0 2.74em;
-	background-color: #ffffff;
-	border: 0.09em solid #bbbbbb;
+	background-color: #FFFFFF;
+	border: 0.09em solid #BBBBBB;
 	border-radius: 0.37em;
 	font-size: 73%;
 	font-weight: 600;
@@ -142,7 +142,7 @@ select {
 	box-sizing: border-box;
 	height: 2.53em;
 	padding: 0.4em 0.67em;
-	background-color: #ffffff;
+	background-color: #FFFFFF;
 	border: 0.067em solid #D1D1D1;
 	border-radius: 0.267em;
 	box-shadow: none;
