@@ -283,9 +283,3 @@ div.radio-group > label > span {
 	padding-bottom: 0.3em;
 	font-weight: normal;
 }
-
-@media screen and (max-width: 350px) {
-	button {
-		padding: 0 10px;
-	}
-}
