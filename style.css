@@ -202,7 +202,7 @@ form {
 
 @media (min-width: 40em) {
 	#configuration {
-		padding: 3em clamp(1em, calc(1em + (100vw - 40em) * 0.1), 5em);
+		padding: 2em clamp(1em, calc(1em + (100vw - 40em) * 0.1), 4em);
 		border: 0.1em solid #D1D1D1;
 		border-radius: 3em;
 	}
