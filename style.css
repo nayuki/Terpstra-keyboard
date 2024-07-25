@@ -3,13 +3,9 @@
  * http://terpstrakeyboard.com/play-it-now/keys.htm
  */
 
-/* NOTE
-html is set to 62.5% so that all the REM measurements throughout Skeleton
-are based on 10px sizing. So basically 1.5rem = 15px :) */
 html {
 	height: 100%;
 	background-color: #000000;
-	font-size: 62.5%;
 }
 
 /**
@@ -18,7 +14,7 @@ html {
 body {
 	height: 100%;
 	margin: 0;
-	font-size: 1.5em;  /* currently ems cause chrome bug misinterpreting rems on body element */
+	font-size: 93.75%;
 	font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight: 400;
 	line-height: 1.6;
@@ -64,32 +60,34 @@ textarea {
 
 /* ---- Typography ---- */
 h1, h2 {
-	margin-top: 2rem;
-	margin-bottom: 2rem;
+	margin-top: 1.25rem;
+	margin-bottom: 1.25rem;
 	font-weight: 300;
 	text-align: center;
 }
 
 h1 {
-	font-size: 4.0rem;
+	font-size: 267%;
 	line-height: 1.2;
-	letter-spacing: -0.1rem;
+	letter-spacing: -0.025em;
 }
 
 h2 {
 	margin-top: 0em;
-	font-size: 3.6rem;
+	font-size: 240%;
 	line-height: 1.25;
-	letter-spacing: -0.1rem;
+	letter-spacing: -0.028em;
 }
 
 /* Larger than phablet */
 @media (min-width: 550px) {
 	h1 {
-		font-size: 5.0rem;
+		font-size: 333%;
+		letter-spacing: -0.020em;
 	}
 	h2 {
-		font-size: 4.2rem;
+		font-size: 280%;
+		letter-spacing: -0.024em;
 	}
 }
 
@@ -116,7 +114,7 @@ h2 a, label a {
 button {
 	display: block;
 	max-width: 100%;
-	margin-bottom: 1rem;
+	margin-bottom: 0.91em;
 	margin-right: auto;
 	margin-left: auto;
 	padding: 0 30px;
@@ -127,7 +125,7 @@ button {
 	font-weight: 600;
 	line-height: 38px;
 	color: #555555;
-	letter-spacing: 0.1rem;
+	letter-spacing: 0.091em;
 	text-transform: uppercase;
 	cursor: pointer;
 }
@@ -169,7 +167,7 @@ select:focus {
 
 label {
 	display: block;
-	margin-bottom: 0.5rem;
+	margin-bottom: 0.333em;
 	font-weight: 600;
 }
 
@@ -182,12 +180,12 @@ input[type="radio"] {
 input,
 textarea,
 select {
-	margin-bottom: 1.5rem;
+	margin-bottom: 1em;
 }
 
 p,
 form {
-	margin-bottom: 2.5rem;
+	margin-bottom: 1.667em;
 }
 
 #configuration input[type=number], #configuration select, #configuration textarea {
