@@ -3,17 +3,18 @@
  * http://terpstrakeyboard.com/play-it-now/keys.htm
  */
 
+* {
+	margin: 0;
+	padding: 0;
+}
+
 html {
 	height: 100%;
 	background-color: #000000;
 }
 
-/**
- * Remove default margin.
- */
 body {
 	height: 100%;
-	margin: 0;
 	font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight: 400;
 	line-height: 1.6;
@@ -34,14 +35,12 @@ body {
  * 1. Correct color not being inherited.
  *    Known issue: affects color of disabled elements.
  * 2. Correct font properties not being inherited.
- * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
  */
 button,
 input,
 optgroup,
 select,
 textarea {
-	margin: 0;  /* 3 */
 	font: inherit;  /* 2 */
 	color: inherit;  /* 1 */
 }
@@ -72,7 +71,6 @@ h1 {
 }
 
 h2 {
-	margin-top: 0em;
 	font-size: 240%;
 	margin-bottom: 0.556em;
 	line-height: 1.25;
@@ -92,10 +90,6 @@ h2 {
 		margin-bottom: 0.476em;
 		letter-spacing: -0.024em;
 	}
-}
-
-p {
-	margin-top: 0;
 }
 
 
