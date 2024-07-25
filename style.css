@@ -132,6 +132,7 @@ input[type=text],
 textarea,
 select {
 	height: 2.53em;
+	margin-bottom: 1em;
 	padding: 0.4em 0.67em;
 	background-color: #FFFFFF;
 	border: 0.067em solid #D1D1D1;
@@ -139,18 +140,8 @@ select {
 	box-shadow: none;
 }
 
-input,
-textarea,
-select {
-	margin-bottom: 1em;
-}
-
 input[type=number] {
 	text-align: right;
-}
-
-input[type=radio] {
-	margin-bottom: 0;
 }
 
 textarea {
