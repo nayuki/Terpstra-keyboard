@@ -71,7 +71,7 @@ h1 {
 }
 
 h2 {
-	font-size: 240%;
+	font-size: 200%;
 	line-height: 1.25;
 	letter-spacing: -0.028em;
 }
@@ -85,7 +85,7 @@ h2 {
 		letter-spacing: -0.020em;
 	}
 	h2 {
-		font-size: 280%;
+		font-size: 237.8%;
 		letter-spacing: -0.024em;
 	}
 }
@@ -115,7 +115,7 @@ button {
 	background-color: #FFFFFF;
 	border: 0.09em solid #BBBBBB;
 	border-radius: 0.37em;
-	font-size: 73%;
+	font-size: 84.1%;
 	font-weight: 600;
 	line-height: 3.47em;
 	color: #555555;
@@ -163,6 +163,7 @@ label {
 }
 
 label:not(:has(> div)), label > div {
+	font-size: 84.1%;
 	font-weight: 600;
 	margin-bottom: 0.333em;
 }
@@ -269,4 +270,8 @@ div.radio-group > label > span {
 	padding-left: 0.6em;
 	padding-bottom: 0.3em;
 	font-weight: normal;
+}
+
+footer {
+	font-size: 84.1%;
 }
