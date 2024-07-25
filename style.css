@@ -139,7 +139,6 @@ input[type=number],
 input[type=text],
 textarea,
 select {
-	box-sizing: border-box;
 	height: 2.53em;
 	padding: 0.4em 0.67em;
 	background-color: #FFFFFF;
@@ -185,7 +184,7 @@ form {
 	margin-bottom: 1.667em;
 }
 
-#configuration input[type=number], #configuration select, #configuration textarea {
+#configuration input[type=text], #configuration input[type=number], #configuration select, #configuration textarea {
 	box-sizing: border-box;
 	width: 100%;
 }
