@@ -23,28 +23,6 @@ body {
 	flex-direction: row;
 }
 
-
-/* ---- Forms ---- */
-
-/**
- * Known limitation: by default, Chrome and Safari on OS X allow very limited
- * styling of `select`, unless a `border` property is set.
- */
-
-/**
- * 1. Correct color not being inherited.
- *    Known issue: affects color of disabled elements.
- * 2. Correct font properties not being inherited.
- */
-button,
-input,
-optgroup,
-select,
-textarea {
-	font: inherit;  /* 2 */
-	color: inherit;  /* 1 */
-}
-
 #configuration {
 	max-width: 64em;
 	margin: auto;
@@ -55,8 +33,6 @@ textarea {
 	z-index: 1;
 }
 
-
-/* ---- Typography ---- */
 h1 {
 	text-align: center;
 	font-size: 200%;
@@ -65,7 +41,6 @@ h1 {
 	letter-spacing: -0.028em;
 }
 
-/* Larger than phablet */
 @media (min-width: 40em) {
 	h1 {
 		font-size: 237.8%;
@@ -73,8 +48,6 @@ h1 {
 	}
 }
 
-
-/* ---- Links ---- */
 a {
 	color: #1EAEDB;
 }
@@ -88,89 +61,9 @@ h1 a, label a {
 	text-decoration: none;
 }
 
-/* ---- Buttons ---- */
-button {
-	display: block;
-	max-width: 100%;
-	margin-right: auto;
-	margin-left: auto;
-	padding: 0 2.74em;
-	background-color: #FFFFFF;
-	border: 0.09em solid #BBBBBB;
-	border-radius: 0.37em;
-	font-size: 84.1%;
-	font-weight: 600;
-	line-height: 3.47em;
-	color: #555555;
-	letter-spacing: 0.091em;
-	text-transform: uppercase;
-	cursor: pointer;
-}
-
-button:hover,
-button:focus {
-	border-color: #888888;
-	color: #333333;
-}
-
-
-/* ---- Forms ---- */
-input[type=number],
-input[type=text],
-textarea,
-select {
-	height: 2.53em;
-	padding: 0.4em 0.67em;
-	background-color: #FFFFFF;
-	border: 0.067em solid #D1D1D1;
-	border-radius: 0.267em;
-	box-shadow: none;
-}
-
-textarea {
-	height: 21.2em;
-	padding-top: 0.4em;
-	padding-bottom: 0.4em;
-}
-
-input[type=number]:focus,
-input[type=text]:focus,
-textarea:focus,
-select:focus {
-	border-color: #33C3F0;
-	outline: 0;
-}
-
-label {
-	display: block;
-}
-
-label:not(:has(> div)), label > div {
-	font-size: 84.1%;
-	font-weight: 600;
-	margin-bottom: 0.333em;
-}
-
-input[type=radio] {
-	margin-bottom: 0;
-}
-
-
-/* ---- Spacing ---- */
-input,
-textarea,
-select {
-	margin-bottom: 1em;
-}
-
 form {
 	margin-top: 3.0em;
 	margin-bottom: 3.0em;
-}
-
-#configuration input[type=text], #configuration input[type=number], #configuration select, #configuration textarea {
-	box-sizing: border-box;
-	width: 100%;
 }
 
 #configuration .grid {
@@ -202,6 +95,128 @@ form {
 	}
 }
 
+label {
+	display: block;
+}
+
+label:not(:has(> div)), label > div {
+	font-size: 84.1%;
+	font-weight: 600;
+	margin-bottom: 0.333em;
+}
+
+/**
+ * Known limitation: by default, Chrome and Safari on OS X allow very limited
+ * styling of `select`, unless a `border` property is set.
+ * 
+ * 1. Correct color not being inherited.
+ *    Known issue: affects color of disabled elements.
+ * 2. Correct font properties not being inherited.
+ */
+button,
+input,
+optgroup,
+select,
+textarea {
+	font: inherit;  /* 2 */
+	color: inherit;  /* 1 */
+}
+
+#configuration input[type=text], #configuration input[type=number], #configuration select, #configuration textarea {
+	box-sizing: border-box;
+	width: 100%;
+}
+
+input[type=number],
+input[type=text],
+textarea,
+select {
+	height: 2.53em;
+	padding: 0.4em 0.67em;
+	background-color: #FFFFFF;
+	border: 0.067em solid #D1D1D1;
+	border-radius: 0.267em;
+	box-shadow: none;
+}
+
+input,
+textarea,
+select {
+	margin-bottom: 1em;
+}
+
+input[type=number] {
+	text-align: right;
+}
+
+input[type=radio] {
+	margin-bottom: 0;
+}
+
+textarea {
+	height: 21.2em;
+	padding-top: 0.4em;
+	padding-bottom: 0.4em;
+}
+
+.iosscrollable {
+	-webkit-overflow-scrolling: touch;
+}
+
+input[type=number]:focus,
+input[type=text]:focus,
+textarea:focus,
+select:focus {
+	border-color: #33C3F0;
+	outline: 0;
+}
+
+div.radio-group {
+	display: table;
+}
+
+div.radio-group > label {
+	display: table-row;
+}
+
+div.radio-group > label > * {
+	display: table-cell;
+}
+
+div.radio-group > label > span {
+	padding-left: 0.6em;
+	padding-bottom: 0.3em;
+	font-weight: normal;
+}
+
+button {
+	display: block;
+	max-width: 100%;
+	margin-right: auto;
+	margin-left: auto;
+	padding: 0 2.74em;
+	background-color: #FFFFFF;
+	border: 0.09em solid #BBBBBB;
+	border-radius: 0.37em;
+	font-size: 84.1%;
+	font-weight: 600;
+	line-height: 3.47em;
+	color: #555555;
+	letter-spacing: 0.091em;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+
+button:hover,
+button:focus {
+	border-color: #888888;
+	color: #333333;
+}
+
+footer {
+	font-size: 84.1%;
+}
+
 #keyboard {
 	position: fixed;
 	left: 0;
@@ -227,34 +242,4 @@ form {
 
 #piano.inactive #backButton {
 	display: none;
-}
-
-.iosscrollable {
-	-webkit-overflow-scrolling: touch;
-}
-
-input[type=number] {
-	text-align: right;
-}
-
-div.radio-group {
-	display: table;
-}
-
-div.radio-group > label {
-	display: table-row;
-}
-
-div.radio-group > label > * {
-	display: table-cell;
-}
-
-div.radio-group > label > span {
-	padding-left: 0.6em;
-	padding-bottom: 0.3em;
-	font-weight: normal;
-}
-
-footer {
-	font-size: 84.1%;
 }
