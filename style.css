@@ -57,21 +57,10 @@ textarea {
 
 
 /* ---- Typography ---- */
-h1, h2 {
-	font-weight: 300;
-	text-align: center;
-}
-
 h1 {
-	font-size: 267%;
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
-	line-height: 1.2;
-	letter-spacing: -0.025em;
-}
-
-h2 {
+	text-align: center;
 	font-size: 200%;
+	font-weight: 300;
 	line-height: 1.25;
 	letter-spacing: -0.028em;
 }
@@ -79,12 +68,6 @@ h2 {
 /* Larger than phablet */
 @media (min-width: 40em) {
 	h1 {
-		font-size: 333%;
-		margin-top: 0.4em;
-		margin-bottom: 0.4em;
-		letter-spacing: -0.020em;
-	}
-	h2 {
 		font-size: 237.8%;
 		letter-spacing: -0.024em;
 	}
@@ -100,7 +83,7 @@ a:hover {
 	color: #0FA0CE;
 }
 
-h2 a, label a {
+h1 a, label a {
 	color: inherit;
 	text-decoration: none;
 }
