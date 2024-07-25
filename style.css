@@ -135,8 +135,8 @@ button:focus {
 
 
 /* ---- Forms ---- */
-input[type="number"],
-input[type="text"],
+input[type=number],
+input[type=text],
 textarea,
 select {
 	box-sizing: border-box;
@@ -154,8 +154,8 @@ textarea {
 	padding-bottom: 0.4em;
 }
 
-input[type="number"]:focus,
-input[type="text"]:focus,
+input[type=number]:focus,
+input[type=text]:focus,
 textarea:focus,
 select:focus {
 	border-color: #33C3F0;
@@ -168,7 +168,7 @@ label {
 	font-weight: 600;
 }
 
-input[type="radio"] {
+input[type=radio] {
 	margin-bottom: 0;
 }
 
