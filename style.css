@@ -164,7 +164,7 @@ input[type="number"]:focus,
 input[type="text"]:focus,
 textarea:focus,
 select:focus {
-	border: 0.067em solid #33C3F0;
+	border-color: #33C3F0;
 	outline: 0;
 }
 
