@@ -163,8 +163,11 @@ select:focus {
 
 label {
 	display: block;
-	margin-bottom: 0.333em;
+}
+
+label:not(:has(> div)), label > div {
 	font-weight: 600;
+	margin-bottom: 0.333em;
 }
 
 input[type=radio] {
